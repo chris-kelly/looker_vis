@@ -78,11 +78,11 @@ looker.plugins.visualizations.add({
     var y = []
 
     console.log(queryResponse.fields.dimensions[0])
-    console.log(queryResponse.fields.dimensions[1])
+    console.log(queryResponse.fields.measures[0])
 
     for(var row of data) {
 			var x_i = row[queryResponse.fields.dimensions[0].name];
-      var y_i = row[queryResponse.fields.dimensions[1].name];
+      var y_i = row[queryResponse.fields.measures[0].name];
 			x += LookerCharts.Utils.textForCell(x_i);
       y += LookerCharts.Utils.textForCell(y_i);
 		}
