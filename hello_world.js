@@ -81,8 +81,8 @@ looker.plugins.visualizations.add({
     for(var row of data) {
 			var x_i = row[queryResponse.fields.dimensions[0].name];
       var y_i = row[queryResponse.fields.measures[0].name];
-			x += LookerCharts.Utils.textForCell(x_i);
-      y += LookerCharts.Utils.textForCell(y_i);
+			x.push(LookerCharts.Utils.textForCell(x_i));
+      y.push(LookerCharts.Utils.textForCell(y_i));
 		}
 
     console.log(x)
