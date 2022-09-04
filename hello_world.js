@@ -18,8 +18,7 @@ looker.plugins.visualizations.add({
   create: function(element, config) { 
 
     // Insert a <style> tag with some styles we'll use later.
-    element.innerHTML = ` 
-      <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+    element.innerHTML = `
       <style>
         .hello-world-vis {
           /* Vertical centering */
@@ -36,14 +35,6 @@ looker.plugins.visualizations.add({
           font-size: 18px;
         }
       </style>
-      <div id="tester" style="width:600px;height:250px;"></div>
-      <script>
-        TESTER = document.getElementById('tester');
-        Plotly.newPlot( TESTER, [{
-        x: [1, 2, 3, 4, 5],
-        y: [1, 2, 4, 8, 16] }], {
-        margin: { t: 0 } } );
-      </script>
     `;
 
     // Create a container element to let us center the text.
