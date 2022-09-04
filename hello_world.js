@@ -77,12 +77,17 @@ looker.plugins.visualizations.add({
     var x = []
     var y = []
 
+    console.log(queryResponse.fields.dimensions[0])
+    console.log(queryResponse.fields.dimensions[1])
+
     for(var row of data) {
 			var x_i = row[queryResponse.fields.dimensions[0].name];
       var y_i = row[queryResponse.fields.dimensions[1].name];
 			x += LookerCharts.Utils.textForCell(x_i);
       y += LookerCharts.Utils.textForCell(y_i);
 		}
+
+    console.log(x_i)
 
     Plotly.newPlot( this._plotly_test, [{
       x: x, // [1, 2, 3, 4, 5],
