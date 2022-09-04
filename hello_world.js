@@ -18,6 +18,7 @@ looker.plugins.visualizations.add({
 
     // Insert a <style> tag with some styles we'll use later.
     element.innerHTML = `
+    <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
       <style>
         .hello-world-vis {
           /* Vertical centering */
