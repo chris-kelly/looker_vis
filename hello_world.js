@@ -1,10 +1,7 @@
 looker.plugins.visualizations.add({
-  // Id and Label are legacy properties that no longer have any function besides documenting
-  // what the visualization used to have. The properties are now set via the manifest
-  // form within the admin/visualizations page of Looker
-  id: "hello_world",
-  label: "Hello World",
-  options: {
+  
+  // options for user to choose in the "edit" part of looker vis
+  options: { 
     font_size: {
       type: "string",
       label: "Font Size",
@@ -16,11 +13,13 @@ looker.plugins.visualizations.add({
       default: "large"
     }
   },
+
   // Set up the initial state of the visualization
-  create: function(element, config) {
+  create: function(element, config) { 
 
     // Insert a <style> tag with some styles we'll use later.
-    element.innerHTML = `
+    element.innerHTML = ` 
+      <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
       <style>
         .hello-world-vis {
           /* Vertical centering */
@@ -37,6 +36,14 @@ looker.plugins.visualizations.add({
           font-size: 18px;
         }
       </style>
+      <div id="tester" style="width:600px;height:250px;"></div>
+      <script>
+        TESTER = document.getElementById('tester');
+        Plotly.newPlot( TESTER, [{
+        x: [1, 2, 3, 4, 5],
+        y: [1, 2, 4, 8, 16] }], {
+        margin: { t: 0 } } );
+      </script>
     `;
 
     // Create a container element to let us center the text.
@@ -47,19 +54,20 @@ looker.plugins.visualizations.add({
     this._textElement = container.appendChild(document.createElement("div"));
 
   },
-  // Render in response to the data or settings changing
-  updateAsync: function(data, element, config, queryResponse, details, done) {
 
-    // Clear any errors from previous updates
+  
+  updateAsync: function(data, element, config, queryResponse, details, done) { // Update everytime data/settings change
+
+    // Clear errors from previous updates
     this.clearErrors();
 
-    // Throw some errors and exit if the shape of the data isn't what this chart needs
+    // Throw errors and exit if the shape of the data isn't what this chart requires
     if (queryResponse.fields.dimensions.length == 0) {
-      this.addError({title: "No Dimensions", message: "This chart requires dimensions."});
-      return;
+      this.addError({title: "No Dimensions", message: "This chart requires dimensions."}); // error
+      return; // exit
     }
 
-    // Grab the first cell of the data
+    // Grab first cell of the data
     var firstRow = data[0];
     var firstCell = firstRow[queryResponse.fields.dimensions[0].name];
 
@@ -73,7 +81,7 @@ looker.plugins.visualizations.add({
       this._textElement.className = "hello-world-text-large";
     }
 
-    // We are done rendering! Let Looker know.
+    // Let Looker know rendering is complete
     done()
   }
 });
