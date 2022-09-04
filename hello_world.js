@@ -1,19 +1,19 @@
-// https://github.com/looker/custom_visualizations_v2/blob/master/docs/api_reference.md
+// https://github.com/looker-open-source/custom_visualizations_v2/blob/master/docs/api_reference.md
 
 looker.plugins.visualizations.add({
   // options for user to choose in the "edit" part of looker vis
-  options: { 
-    font_size: {
-      type: "string",
-      label: "Font Size",
-      values: [
-        {"Large": "large"},
-        {"Small": "small"}
-      ],
-      display: "radio",
-      default: "large"
-    }
-  },
+  // options: { 
+  //   font_size: {
+  //     type: "string",
+  //     label: "Font Size",
+  //     values: [
+  //       {"Large": "large"},
+  //       {"Small": "small"}
+  //     ],
+  //     display: "radio",
+  //     default: "large"
+  //   }
+  // },
 
   // Set up the initial state of the visualization
   create: function(element, config) { 
@@ -42,15 +42,17 @@ looker.plugins.visualizations.add({
     var container = element.appendChild(document.createElement("div"));
     container.className = "hello-world-vis";
 
-    // Create an element to contain the text.
-    this._textElement = container.appendChild(document.createElement("div"));
-    
+    // import plotly script
     var script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "https://cdn.plot.ly/plotly-2.14.0.min.js";
     document.body.appendChild(script)
 
+    // Create an element to contain the plotly vis
     this._plotly_test = container.appendChild(document.createElement("div"));
+
+    // // Create an element to contain the text.
+    // this._textElement = container.appendChild(document.createElement("div"));
 
   },
 
@@ -66,26 +68,35 @@ looker.plugins.visualizations.add({
       return; // exit
     }
 
-    // Grab first cell of the data
-    var firstRow = data[0];
-    var firstCell = firstRow[queryResponse.fields.dimensions[0].name];
+    // // Grab first cell of the data
+    // var firstRow = data[0];
+    // var firstCell = firstRow[queryResponse.fields.dimensions[0].name];
+    // // Insert the data into the page
+    // this._textElement.innerHTML = LookerCharts.Utils.htmlForCell(firstCell);
 
-    // Insert the data into the page
-    this._textElement.innerHTML = LookerCharts.Utils.htmlForCell(firstCell);
+    var x = []
+    var y = []
+
+    for(var row of data) {
+			var x_i = row[queryResponse.fields.dimensions[0].name];
+      var y_i = row[queryResponse.fields.dimensions[1].name];
+			x += LookerCharts.Utils.textForCell(x_i);
+      y += LookerCharts.Utils.textForCell(y_i);
+		}
 
     Plotly.newPlot( this._plotly_test, [{
-      x: [1, 2, 3, 4, 5],
-      y: [1, 2, 4, 8, 16] 
+      x: x, // [1, 2, 3, 4, 5],
+      y: y // [1, 2, 4, 8, 16] 
     }], 
     {margin: { t: 0 } } 
     );
 
     // Set the size to the user-selected size
-    if (config.font_size == "small") {
-      this._textElement.className = "hello-world-text-small";
-    } else {
-      this._textElement.className = "hello-world-text-large";
-    }
+    // if (config.font_size == "small") {
+    //   this._textElement.className = "hello-world-text-small";
+    // } else {
+    //   this._textElement.className = "hello-world-text-large";
+    // }
 
     // Let Looker know rendering is complete
     done()
