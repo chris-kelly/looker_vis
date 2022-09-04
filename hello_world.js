@@ -3,18 +3,18 @@
 
 looker.plugins.visualizations.add({
   // options for user to choose in the "edit" part of looker vis
-  // options: { 
-  //   font_size: {
-  //     type: "string",
-  //     label: "Font Size",
-  //     values: [
-  //       {"Large": "large"},
-  //       {"Small": "small"}
-  //     ],
-  //     display: "radio",
-  //     default: "large"
-  //   }
-  // },
+  options: { 
+    graph_type: {
+      type: "string",
+      label: "Plot type",
+      values: [
+        {"Scatter": "scatter"},
+        {"Bar": "bar"}
+      ],
+      display: "radio",
+      default: "scatter"
+    }
+  },
 
   // Set up the initial state of the visualization
   create: function(element, config) { 
@@ -52,9 +52,6 @@ looker.plugins.visualizations.add({
     // Create an element to contain the plotly vis
     this._plotly_test = container.appendChild(document.createElement("div"));
 
-    // // Create an element to contain the text.
-    // this._textElement = container.appendChild(document.createElement("div"));
-
   },
 
   
@@ -69,12 +66,6 @@ looker.plugins.visualizations.add({
       return; // exit
     }
 
-    // // Grab first cell of the data
-    // var firstRow = data[0];
-    // var firstCell = firstRow[queryResponse.fields.dimensions[0].name];
-    // // Insert the data into the page
-    // this._textElement.innerHTML = LookerCharts.Utils.htmlForCell(firstCell);
-
     var x = []
     var y = []
 
@@ -85,22 +76,15 @@ looker.plugins.visualizations.add({
       y.push(LookerCharts.Utils.textForCell(y_i));
 		}
 
-    console.log(x)
-    console.log(y)
+    // Set the typr to the user-selected graph type
 
     Plotly.newPlot( this._plotly_test, [{ 
-      x: x, // [1, 2, 3, 4, 5],
-      y: y // [1, 2, 4, 8, 16] 
+      x: x,
+      y: y,
+      type: config.graph_type
     }], 
     {margin: { t: 0 } } 
     );
-
-    // Set the size to the user-selected size
-    // if (config.font_size == "small") {
-    //   this._textElement.className = "hello-world-text-small";
-    // } else {
-    //   this._textElement.className = "hello-world-text-large";
-    // }
 
     // Let Looker know rendering is complete
     done()
