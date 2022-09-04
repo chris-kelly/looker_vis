@@ -1,5 +1,6 @@
 looker.plugins.visualizations.add({
-  
+  id: "hello_world",
+  label: "Hello World",
   // options for user to choose in the "edit" part of looker vis
   options: { 
     font_size: {
