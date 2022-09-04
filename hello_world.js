@@ -1,4 +1,5 @@
 // https://github.com/looker-open-source/custom_visualizations_v2/blob/master/docs/api_reference.md
+// https://plotly.com/javascript/getting-started/
 
 looker.plugins.visualizations.add({
   // options for user to choose in the "edit" part of looker vis
@@ -77,9 +78,6 @@ looker.plugins.visualizations.add({
     var x = []
     var y = []
 
-    console.log(queryResponse.fields.dimensions[0])
-    console.log(queryResponse.fields.measures[0])
-
     for(var row of data) {
 			var x_i = row[queryResponse.fields.dimensions[0].name];
       var y_i = row[queryResponse.fields.measures[0].name];
@@ -87,9 +85,10 @@ looker.plugins.visualizations.add({
       y += LookerCharts.Utils.textForCell(y_i);
 		}
 
-    console.log(x_i)
+    console.log(x)
+    console.log(y)
 
-    Plotly.newPlot( this._plotly_test, [{
+    Plotly.newPlot( this._plotly_test, [{ 
       x: x, // [1, 2, 3, 4, 5],
       y: y // [1, 2, 4, 8, 16] 
     }], 
