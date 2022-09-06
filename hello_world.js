@@ -15,6 +15,17 @@ looker.plugins.visualizations.add({
       ],
       display: "radio",
       default: "scatter"
+    },
+    xaxis_label: {
+      type: "string",
+      label: "x axis label",
+      default: "Enter text"
+    },
+    yaxis_label: {
+      type: "string",
+      label: "y axis label",
+      default: "Enter text"
+
     }
   },
 
@@ -65,9 +76,12 @@ looker.plugins.visualizations.add({
     var x = []
     var y = []
 
+    first_dim_name = queryResponse.fields.dimensions[0].name
+    first_measure_name = queryResponse.fields.measures[0].name
+
     for(var row of data) { // for each row in data
-			var x_i = row[queryResponse.fields.dimensions[0].name]; // take first dimension
-      var y_i = row[queryResponse.fields.measures[0].name]; // take first measure
+			var x_i = row[first_dim_name]; // take first dimension
+      var y_i = row[first_measure_name]; // take first measure
 			x.push(LookerCharts.Utils.textForCell(x_i)); // append to array
       y.push(LookerCharts.Utils.textForCell(y_i)); // append to array
 		}
@@ -78,18 +92,32 @@ looker.plugins.visualizations.add({
       type: config.graph_type // Set the type to the user-selected graph type
     }]
 
-    layout = {
-      margin: { t: 0 },
-      title: 'Click Here to Edit Chart Title'
+    if (config.xaxis_label != "Enter text") {
+      xaxis_label = config.xaxis_label
+    } else {
+      xaxis_label = first_dim_name
     }
 
-    config = {editable: true}
+    if (config.yaxis_label != "Enter text") {
+      yaxis_label = config.yaxis_label
+    } else {
+      yaxis_label = first_measure_name
+    }
+
+    layout = {
+      margin: { t: 0 },
+      title: 'Click Here to Edit Chart Title',
+      xaxis : {title: {text: xaxis_label}},
+      yaxis : {title: {text: yaxis_label}},
+    }
+
+    // config = {editable: true}
 
     Plotly.newPlot( // use plotly library
       this._plotly_test, // graphDiv
       data,
       layout,
-      config
+      // config
     );
 
     // Let Looker know rendering is complete
