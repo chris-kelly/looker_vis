@@ -120,7 +120,7 @@ looker.plugins.visualizations.add({
       this._plotly_test, // graphDiv
       data,
       layout,
-      // config
+      config
     );
 
     // Let Looker know rendering is complete
