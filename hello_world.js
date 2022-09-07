@@ -117,7 +117,7 @@ looker.plugins.visualizations.add({
     }
 
     Plotly.newPlot( // use plotly library
-      this._plotly_test, // graphDiv
+      this.plotly_bit, // graphDiv
       data,
       layout,
       config
