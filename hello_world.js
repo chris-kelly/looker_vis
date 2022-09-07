@@ -34,6 +34,9 @@ looker.plugins.visualizations.add({
 
     // import plotly script to build that vis
     var script = document.createElement("script");
+    
+    window.plotlyLoad = new Promise(load => script.onload = load)
+    
     script.type = "text/javascript";
     script.src = "https://cdn.plot.ly/plotly-2.14.0.min.js";
     document.head.appendChild(script)    
@@ -50,6 +53,9 @@ looker.plugins.visualizations.add({
           text-align: center;
           top: 0px;
           margin: 0;
+        }
+        .container_style > .plot-container {
+            height: 100%;
         }
       </style>
     `;
@@ -115,13 +121,17 @@ looker.plugins.visualizations.add({
       // editable: true,
       responsive: true
     }
-
-    Plotly.newPlot( // use plotly library
-      this.plotly_bit, // graphDiv
-      data,
-      layout,
-      config
-    );
+    
+    window.plotlyLoad.then(() => {
+      
+      Plotly.newPlot( // use plotly library
+        this.plotly_bit, // graphDiv
+        data,
+        layout,
+        config
+      )
+      
+    })
 
     // Let Looker know rendering is complete
     done()
