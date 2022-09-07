@@ -57,7 +57,8 @@ looker.plugins.visualizations.add({
     container.className = "container_style";
 
     // Create an element to contain the plotly vis
-    this._plotly_test = container//.appendChild(document.createElement("div"));
+    this._plotly_test = container.appendChild(document.createElement("div"));
+    container.className = "container_style";
 
   },
 
