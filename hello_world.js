@@ -32,6 +32,12 @@ looker.plugins.visualizations.add({
   // Set up the initial state of the visualization
   create: function(element, config) { 
 
+    // import plotly script to build that vis
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://cdn.plot.ly/plotly-2.14.0.min.js";
+    document.head.appendChild(script)    
+
     // Insert a <style> tag with class to keep stuff centered.
     element.innerHTML = `
       <style>
@@ -50,11 +56,6 @@ looker.plugins.visualizations.add({
     var container = element.appendChild(document.createElement("div"));
     container.className = "container_style";
 
-    // import plotly script to build that vis
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "https://cdn.plot.ly/plotly-2.14.0.min.js";
-    document.body.appendChild(script)
 
     // Create an element to contain the plotly vis
     this._plotly_test = container.appendChild(document.createElement("div"));
