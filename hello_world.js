@@ -43,23 +43,21 @@ looker.plugins.visualizations.add({
       <style>
         .container_style {
           /* Vertical centering */
-          height: 100%;
+          height: 90%;
           display: flex;
           flex-direction: column;
           justify-content: center;
           text-align: center;
+          top: 0px
+          paddinh
         }
       </style>
     `;
 
-    // Create the container element with that class to let us center the text.
+    // Create the container element with that class to let us center the vis.
     var container = element.appendChild(document.createElement("div"));
     container.className = "container_style";
-
-    // Create an element to contain the plotly vis
-    plotly_bit = container.appendChild(document.createElement("div"));
-    plotly_bit.className = "container_style";
-    this.plotly_bit = plotly_bit
+    this.plotly_bit = container;    
 
   },
 
@@ -119,7 +117,7 @@ looker.plugins.visualizations.add({
     }
 
     Plotly.newPlot( // use plotly library
-      this.plotly_bit, // graphDiv
+      this._plotly_test, // graphDiv
       data,
       layout,
       config
