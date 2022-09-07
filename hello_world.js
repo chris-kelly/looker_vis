@@ -48,8 +48,8 @@ looker.plugins.visualizations.add({
           flex-direction: column;
           justify-content: center;
           text-align: center;
-          top: 0px
-          paddinh
+          top: 0px;
+          margin: 0;
         }
       </style>
     `;
