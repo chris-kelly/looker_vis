@@ -111,7 +111,10 @@ looker.plugins.visualizations.add({
       yaxis : {title: {text: yaxis_label}},
     }
 
-    // config = {editable: true}
+    config = {
+      // editable: true,
+      responsive: true
+    }
 
     Plotly.newPlot( // use plotly library
       this._plotly_test, // graphDiv
