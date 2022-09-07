@@ -57,8 +57,9 @@ looker.plugins.visualizations.add({
     container.className = "container_style";
 
     // Create an element to contain the plotly vis
-    this._plotly_test = container.appendChild(document.createElement("div"));
-    container.className = "container_style";
+    plotly_bit = container.appendChild(document.createElement("div"));
+    plotly_bit.className = "container_style";
+    this.plotly_bit = plotly_bit
 
   },
 
@@ -118,7 +119,7 @@ looker.plugins.visualizations.add({
     }
 
     Plotly.newPlot( // use plotly library
-      this._plotly_test, // graphDiv
+      this.plotly_bit, // graphDiv
       data,
       layout,
       config
