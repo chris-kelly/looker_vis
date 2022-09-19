@@ -90,53 +90,53 @@ looker.plugins.visualizations.add({
     }
 
     console.log(queryResponse)
-
-    data_m = math.matrix(data)
-
-    var x = []
-    var y = []
     
-    first_dim = queryResponse.fields.dimensions[0]
-    first_mea = queryResponse.fields.measures[0]
+    window.scriptLoad.then(() => { // do this first to ensure js loads in time
 
-    for(var row of data) { // for each row in data
-			var x_i = row[first_dim.name]; // take first dimension
-      var y_i = row[first_mea.name]; // take first measure
-			x.push(LookerCharts.Utils.textForCell(x_i)); // append to array
-      y.push(LookerCharts.Utils.textForCell(y_i)); // append to array
-		}
+      var x = []
+      var y = []
+      
+      first_dim = queryResponse.fields.dimensions[0]
+      first_mea = queryResponse.fields.measures[0]
 
-    plotly_data = [{  
-      x: x,
-      y: y,
-      type: config.graph_type // Set the type to the user-selected graph type
-    }]
+      for(var row of data) { // for each row in data
+        var x_i = row[first_dim.name]; // take first dimension
+        var y_i = row[first_mea.name]; // take first measure
+        x.push(LookerCharts.Utils.textForCell(x_i)); // append to array
+        y.push(LookerCharts.Utils.textForCell(y_i)); // append to array
+      }
 
-    if (config.xaxis_label != "Enter text") {
-      xaxis_label = config.xaxis_label
-    } else {
-      xaxis_label = first_dim.field_group_label
-    }
+      plotly_data = [{  
+        x: x,
+        y: y,
+        type: config.graph_type // Set the type to the user-selected graph type
+      }]
 
-    if (config.yaxis_label != "Enter text") {
-      yaxis_label = config.yaxis_label
-    } else {
-      yaxis_label = first_mea.field_group_label
-    }
+      if (config.xaxis_label != "Enter text") {
+        xaxis_label = config.xaxis_label
+      } else {
+        xaxis_label = first_dim.field_group_label
+      }
 
-    layout = {
-      margin: { t: 0 },
-      title: 'Click Here to Edit Chart Title',
-      xaxis : {title: {text: xaxis_label}},
-      yaxis : {title: {text: yaxis_label}},
-    }
+      if (config.yaxis_label != "Enter text") {
+        yaxis_label = config.yaxis_label
+      } else {
+        yaxis_label = first_mea.field_group_label
+      }
 
-    config = {
-      // editable: true,
-      responsive: true
-    }
-    
-    window.scriptLoad.then(() => {
+      layout = {
+        margin: { t: 0 },
+        title: 'Click Here to Edit Chart Title',
+        xaxis : {title: {text: xaxis_label}},
+        yaxis : {title: {text: yaxis_label}},
+      }
+
+      config = {
+        // editable: true,
+        responsive: true
+      }
+
+      // data_m = math.matrix(data)
       
       Plotly.newPlot( // use plotly library
         this.plotly_bit, // graphDiv
