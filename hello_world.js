@@ -32,14 +32,25 @@ looker.plugins.visualizations.add({
   // Set up the initial state of the visualization
   create: function(element, config) { 
 
-    // import plotly script to build that vis
-    var script = document.createElement("script");
+    // import scripts to allow matrix operations
+    var mathjs_script = document.createElement("script");
+    // import scripts to build that vis
+    var plotly_script = document.createElement("script");
     
-    window.plotlyLoad = new Promise(load => script.onload = load)
     
-    script.type = "text/javascript";
-    script.src = "https://cdn.plot.ly/plotly-2.14.0.min.js";
-    document.head.appendChild(script)    
+    window.scriptLoad = new Promise(load => {
+      mathjs_script.onload = load;
+      plotly_script.onload = load;
+    })
+    
+    mathjs_script.src = "https://cdnjs.com/libraries/mathjs";
+    plotly_script.src = "https://cdn.plot.ly/plotly-2.14.0.min.js";
+    
+    mathjs_script.type = "text/javascript";
+    plotly_script.type = "text/javascript";
+    
+    document.head.appendChild(mathjs_script)
+    document.head.appendChild(plotly_script)
 
     // Insert a <style> tag with class to keep stuff centered.
     element.innerHTML = `
@@ -122,7 +133,7 @@ looker.plugins.visualizations.add({
       responsive: true
     }
     
-    window.plotlyLoad.then(() => {
+    window.scriptLoad.then(() => {
       
       Plotly.newPlot( // use plotly library
         this.plotly_bit, // graphDiv
