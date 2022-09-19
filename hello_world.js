@@ -42,7 +42,7 @@ looker.plugins.visualizations.add({
       plotly_script.onload = load;
     })
     
-    mathjs_script.src = "https://cdnjs.com/libraries/mathjs";
+    mathjs_script.src = "https://pagecdn.io/lib/mathjs/11.0.1/math.min.js";
     plotly_script.src = "https://cdn.plot.ly/plotly-2.14.0.min.js";
     
     mathjs_script.type = "text/javascript";
@@ -95,13 +95,13 @@ looker.plugins.visualizations.add({
 
     var x = []
     var y = []
-
-    first_dim_name = queryResponse.fields.dimensions[0].name
-    first_measure_name = queryResponse.fields.measures[0].name
+    
+    first_dim = queryResponse.fields.dimensions[0]
+    first_mea = queryResponse.fields.measures[0]
 
     for(var row of data) { // for each row in data
-			var x_i = row[first_dim_name]; // take first dimension
-      var y_i = row[first_measure_name]; // take first measure
+			var x_i = row[first_dim.name]; // take first dimension
+      var y_i = row[first_mea.name]; // take first measure
 			x.push(LookerCharts.Utils.textForCell(x_i)); // append to array
       y.push(LookerCharts.Utils.textForCell(y_i)); // append to array
 		}
@@ -115,13 +115,13 @@ looker.plugins.visualizations.add({
     if (config.xaxis_label != "Enter text") {
       xaxis_label = config.xaxis_label
     } else {
-      xaxis_label = first_dim_name
+      xaxis_label = first_dim.field_group_label
     }
 
     if (config.yaxis_label != "Enter text") {
       yaxis_label = config.yaxis_label
     } else {
-      yaxis_label = first_measure_name
+      yaxis_label = first_mea.field_group_label
     }
 
     layout = {
