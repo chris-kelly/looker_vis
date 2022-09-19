@@ -25,7 +25,6 @@ looker.plugins.visualizations.add({
       type: "string",
       label: "y axis label",
       default: "Enter text"
-
     }
   },
 
@@ -90,6 +89,10 @@ looker.plugins.visualizations.add({
       return; // exit
     }
 
+    console.log(queryResponse)
+
+    data_m = math.matrix(data)
+
     var x = []
     var y = []
 
@@ -103,7 +106,7 @@ looker.plugins.visualizations.add({
       y.push(LookerCharts.Utils.textForCell(y_i)); // append to array
 		}
 
-    data = [{  
+    plotly_data = [{  
       x: x,
       y: y,
       type: config.graph_type // Set the type to the user-selected graph type
