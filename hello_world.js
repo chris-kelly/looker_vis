@@ -113,11 +113,6 @@ looker.plugins.visualizations.add({
         // y.push(LookerCharts.Utils.textForCell(y_i)); // append to array
       }
 
-      y_m = math.matrix(y)
-      y_m = math.add(1,math.multiply(y_m, -1))
-      console.log(y_m)
-      console.log(y_m._data)
-
       if (config.xaxis_label != "Enter text") {
         xaxis_label = config.xaxis_label
       } else {
@@ -145,7 +140,10 @@ looker.plugins.visualizations.add({
 
       if (config.inverse_log == true) {
 
-        plotly_data[0]['y'] = math.multiply(math.log10(y_m),-1)
+        y_m = math.matrix(y)
+        y_m = math.add(1,math.multiply(y_m, -1))
+        y_m = math.multiply(math.log10(y_m),-1)
+        plotly_data[0]['y'] = y_m._data
         plotly_data[0]['text'] = y
         plotly_data[0]['hovertemplate'] = '<b>%{text}</b>'
 
