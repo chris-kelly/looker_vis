@@ -152,6 +152,8 @@ looker.plugins.visualizations.add({
 
       }
 
+      console.log(plotly_data[0]['y'])
+
       config = {
         // editable: true,
         responsive: true
