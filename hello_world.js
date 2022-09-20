@@ -107,8 +107,10 @@ looker.plugins.visualizations.add({
       for(var row of data) { // for each row in data
         var x_i = row[first_dim.name]; // take first dimension
         var y_i = row[first_mea.name]; // take first measure
-        x.push(LookerCharts.Utils.textForCell(x_i)); // append to array
-        y.push(LookerCharts.Utils.textForCell(y_i)); // append to array
+        x.push(x_i['value']); // append to array
+        y.push(y_i['value']); // append to array
+        // x.push(LookerCharts.Utils.textForCell(x_i)); // append to array
+        // y.push(LookerCharts.Utils.textForCell(y_i)); // append to array
       }
 
       if (config.xaxis_label != "Enter text") {
