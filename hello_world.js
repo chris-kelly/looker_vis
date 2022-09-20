@@ -16,10 +16,11 @@ looker.plugins.visualizations.add({
       display: "radio",
       default: "scatter"
     },
-    // inverse_log: {
-    //   type: "boolean",
-    //   label: "scale y by inverse log"
-    // },
+    inverse_log: {
+      type: "boolean",
+      label: "scale y by inverse log",
+      default: false,
+    },
     xaxis_label: {
       type: "string",
       label: "x axis label",
@@ -122,22 +123,33 @@ looker.plugins.visualizations.add({
         yaxis_label = first_mea.field_group_label
       }
 
-      // if (config.inverse_log) {
-      //   x = math.log10(x)
-      // }
-
       plotly_data = [{  
         x: x,
         y: y,
         type: config.graph_type // Set the type to the user-selected graph type
       }]
 
-      
       layout = {
         margin: { t: 0 },
         title: 'Click Here to Edit Chart Title',
         xaxis : {title: {text: xaxis_label}},
         yaxis : {title: {text: yaxis_label}},
+      }
+
+      if (config.inverse_log == true) {
+
+        plotly_data[0]['y'] = math.multiply(math.log10(1-y),-1)
+        plotly_data[0]['text'] = y
+        plotly_data[0]['hovertemplate'] = '<b>%{text}</b>'
+
+        layout['yaxis'] = {
+          title: {text: yaxis_label},
+          tickmode: 'array',
+          tickvals: np.arange(n_nines_to_show+1),
+          ticktext: [0,0.9,0.99,0.999],
+          range: [0,0.999]
+        }
+
       }
 
       config = {
