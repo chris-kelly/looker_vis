@@ -114,8 +114,12 @@ looker.plugins.visualizations.add({
       }
 
       console.log(y)
+      console.log(math.matrix(y))
+      console.log(math.matrix(y)._data)
       console.log(math.log10(1-y))
+      console.log(math.log10(1-y)._data)
       console.log(math.multiply(math.log10(1-y),-1))
+      console.log(math.multiply(math.log10(1-y),-1)._data)
 
       if (config.xaxis_label != "Enter text") {
         xaxis_label = config.xaxis_label
