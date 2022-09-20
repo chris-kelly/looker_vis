@@ -113,6 +113,10 @@ looker.plugins.visualizations.add({
         // y.push(LookerCharts.Utils.textForCell(y_i)); // append to array
       }
 
+      console.log(y)
+      console.log(math.log10(1-y))
+      console.log(math.multiply(math.log10(1-y),-1))
+
       if (config.xaxis_label != "Enter text") {
         xaxis_label = config.xaxis_label
       } else {
