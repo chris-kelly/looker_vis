@@ -152,7 +152,7 @@ looker.plugins.visualizations.add({
           tickmode: 'array',
           tickvals: [0,1,2,3],
           ticktext: [0,0.9,0.99,0.999],
-          range: [0,0.999]
+          range: [0,3]
         }
 
       }
