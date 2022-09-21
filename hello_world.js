@@ -11,36 +11,34 @@ looker.plugins.visualizations.add({
       label: "Plot type",
       values: [
         {"Scatter": "scatter"},
-        {"Bar": "bar"}
+        {"Bar": "bar"},
+        // {"3d": "surface"},
       ],
       display: "radio",
       default: "scatter"
     },
-    inverse_log: {
-      type: "boolean",
-      label: "scale y by inverse log",
-      default: false,
-    },
     xaxis_label: {
       type: "string",
       label: "x axis label",
-      default: "Enter text"
     },
     yaxis_label: {
       type: "string",
       label: "y axis label",
-      default: "Enter text"
+    },
+    inverse_log: {
+      type: "boolean",
+      label: "Scale y by inverse log",
+      default: false,
     }
   },
 
   // Set up the initial state of the visualization
   create: function(element, config) { 
 
-    // import scripts to allow matrix operations
+    // import scripts to allow math operations
     var mathjs_script = document.createElement("script");
     // import scripts to build that vis
     var plotly_script = document.createElement("script");
-    
     
     window.scriptLoad = new Promise(load => {
       mathjs_script.onload = load;
@@ -94,9 +92,9 @@ looker.plugins.visualizations.add({
       return; // exit
     }
 
-    console.log(queryResponse)
+    console.log(queryResponse) // see everything returned by Looker
     
-    window.scriptLoad.then(() => { // do this first to ensure js loads in time
+    window.scriptLoad.then(() => { // Do this first to ensure js loads in time
 
       var x = []
       var y = []
@@ -109,17 +107,15 @@ looker.plugins.visualizations.add({
         var y_i = row[first_mea.name]; // take first measure
         x.push(x_i['value']); // append to array
         y.push(y_i['value']); // append to array
-        // x.push(LookerCharts.Utils.textForCell(x_i)); // append to array
-        // y.push(LookerCharts.Utils.textForCell(y_i)); // append to array
       }
 
-      if (config.xaxis_label != "Enter text") {
+      if (config.xaxis_label) {
         xaxis_label = config.xaxis_label
       } else {
         xaxis_label = first_dim.field_group_label
       }
 
-      if (config.yaxis_label != "Enter text") {
+      if (config.yaxis_label) {
         yaxis_label = config.yaxis_label
       } else {
         yaxis_label = first_mea.field_group_label
@@ -140,9 +136,19 @@ looker.plugins.visualizations.add({
 
       if (config.inverse_log == true) {
 
-        y_m = math.matrix(y)
-        y_m = math.add(1,math.multiply(y_m, -1))
-        y_m = math.multiply(math.log10(y_m),-1)
+        y_m = math.multiply(
+          math.log10(
+            math.add( // equivalent to 1-y
+              1,
+              math.multiply(
+                math.matrix(y), // convert y to mathjs vector
+                -1
+                )
+              )
+            ),
+          -1
+          )
+
         plotly_data[0]['y'] = y_m._data
         plotly_data[0]['text'] = y
         plotly_data[0]['hovertemplate'] = '<b>%{text}</b>'
@@ -152,15 +158,13 @@ looker.plugins.visualizations.add({
           tickmode: 'array',
           tickvals: [0,1,2,3],
           ticktext: [0,0.9,0.99,0.999],
-          range: [0,3]
+          range: [0,3.1]
         }
 
       }
 
-      console.log(plotly_data[0]['y'])
-
       config = {
-        // editable: true,
+        // editable: true, // allow user to edit axes by clicking on them
         responsive: true
       }
       
