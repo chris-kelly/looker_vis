@@ -136,6 +136,7 @@ looker.plugins.visualizations.add({
 
       if (config.inverse_log == true) {
 
+        // create scaled version of y
         y_m = math.multiply(
           math.log10(
             math.add( // equivalent to 1-y
@@ -148,11 +149,14 @@ looker.plugins.visualizations.add({
             ),
           -1
           )
-
-        plotly_data[0]['y'] = y_m._data
+        
+        // Set hover-text with original value of y
         plotly_data[0]['text'] = y
         plotly_data[0]['hovertemplate'] = '<b>%{text}</b>'
-
+        // Overwrite y with scaled y
+        plotly_data[0]['y'] = y_m._data
+        
+        // Overide yaxis labels
         layout['yaxis'] = {
           title: {text: yaxis_label},
           tickmode: 'array',
