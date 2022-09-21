@@ -40,10 +40,10 @@ looker.plugins.visualizations.add({
     // import scripts to build that vis
     var plotly_script = document.createElement("script");
     
-    window.scriptLoad = new Promise(load => {
-      mathjs_script.onload = load;
-      plotly_script.onload = load;
-    })
+    window.scriptLoad = Promise.all([
+      new Promise(load => mathjs_script.onload = load),
+      new Promise(load => plotly_script.onload = load),
+    ])
     
     mathjs_script.src = "https://pagecdn.io/lib/mathjs/11.0.1/math.min.js";
     plotly_script.src = "https://cdn.plot.ly/plotly-2.14.0.min.js";
