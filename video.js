@@ -70,7 +70,7 @@ looker.plugins.visualizations.add({
        vid2 = vid2.concat(config.video_src)
        vid2 = vid2.concat(' type="video/mp4"></video>')
 
-       this.video_bit.innerHTML = vid.cocat(vid2)
+       this.video_bit.innerHTML = vid.concat(vid2)
        
        document.getElementById("video_id").currentTime = config.video_start_at_1;
        document.getElementById("video_id2").currentTime = config.video_start_at_2;
