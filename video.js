@@ -9,10 +9,15 @@ looker.plugins.visualizations.add({
         type: "string",
         label: "Video link",
       },
-      video_start_at: {
+      video_start_at_1: {
         type: "string",
         label: "Video start at (s)",
         default: 30
+      },
+      video_start_at_2: {
+        type: "string",
+        label: "Video start at (s)",
+        default: 200
       },
     },
   
@@ -61,9 +66,14 @@ looker.plugins.visualizations.add({
        vid = vid.concat(config.video_src)
        vid = vid.concat(' type="video/mp4"></video>')
 
-       this.video_bit.innerHTML = vid
+       vid2 = "<video id ='video_id2' controls autoplay > <source src="
+       vid2 = vid2.concat(config.video_src)
+       vid2 = vid2.concat(' type="video/mp4"></video>')
+
+       this.video_bit.innerHTML = vid.cocat(vid2)
        
-       document.getElementById("video_id").currentTime = config.video_start_at;
+       document.getElementById("video_id").currentTime = config.video_start_at_1;
+       document.getElementById("video_id2").currentTime = config.video_start_at_2;
            
       // Let Looker know rendering is complete
       done()
