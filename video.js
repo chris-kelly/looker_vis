@@ -8,7 +8,7 @@ looker.plugins.visualizations.add({
       video_src: {
         type: "string",
         label: "Video link",
-      }.
+      },
     },
   
     // Set up the initial state of the visualization
