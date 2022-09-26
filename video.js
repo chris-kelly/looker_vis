@@ -9,6 +9,11 @@ looker.plugins.visualizations.add({
         type: "string",
         label: "Video link",
       },
+      video_start_at: {
+        type: "string",
+        label: "Video start at (s)",
+        default: 30
+      },
     },
   
     // Set up the initial state of the visualization
@@ -52,11 +57,13 @@ looker.plugins.visualizations.add({
         return; // exit
       }
       
-       vid = "<video> <source src="
+       vid = "<video id ='video_id' controls autoplay > <source src="
        vid = vid.concat(config.video_src)
        vid = vid.concat(' type="video/mp4"></video>')
 
        this.video_bit.innerHTML = vid
+       
+       document.getElementById("video_id").currentTime = config.video_start_at;
            
       // Let Looker know rendering is complete
       done()
