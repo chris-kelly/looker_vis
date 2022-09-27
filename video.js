@@ -62,11 +62,21 @@ looker.plugins.visualizations.add({
         return; // exit
       }
 
-      api_url = data[0]['trials_denormalised.video_url'][value]
-      response = await fetch(api_url);
-      myJson = await response.json(); // extract JSON from the http response
+      console.log(data)
 
-      console.log(myJson)
+      api_url = data[0]['trials_denormalised.video_url'][value]
+
+      console.log(api_url)
+
+      fetch_url = async() => {
+        response = await fetch(api_url);
+        myJson = await response.json(); // extract JSON from the http response
+        return(myJson)
+      }
+
+      api_response = fetch_url()
+
+      console.log(api_response)
       
        vid = "<video id ='video_id' controls autoplay > <source src="
        vid = vid.concat(config.video_src)
