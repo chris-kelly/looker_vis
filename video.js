@@ -55,16 +55,10 @@ looker.plugins.visualizations.add({
   
       // Clear errors from previous updates
       this.clearErrors();
-  
-      // Throw errors and exit if the shape of the data isn't what this chart requires
-      if (queryResponse.fields.dimensions.length == 0) {
-        this.addError({title: "No Dimensions", message: "This chart requires dimensions."}); // error
-        return; // exit
-      }
 
       console.log(data)
 
-      api_url = data[0]['trials_denormalised.video_url'][value]
+      api_url = data[0]['trials_denormalised.video_url']['value']
 
       console.log(api_url)
 
