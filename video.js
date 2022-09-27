@@ -74,9 +74,9 @@ looker.plugins.visualizations.add({
         return(myJson)
       }
 
-      api_response = fetch_url()
-
-      console.log(api_response)
+      fetch_url().then(
+        console.log(api_response)
+      )
       
        vid = "<video id ='video_id' controls autoplay > <source src="
        vid = vid.concat(config.video_src)
