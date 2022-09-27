@@ -14,11 +14,11 @@ looker.plugins.visualizations.add({
         label: "Video start at (s)",
         default: 30
       },
-      video_start_at_2: {
-        type: "string",
-        label: "Video start at (s)",
-        default: 200
-      },
+      // video_start_at_2: {
+      //   type: "string",
+      //   label: "Video start at (s)",
+      //   default: 200
+      // },
     },
   
     // Set up the initial state of the visualization
@@ -72,16 +72,18 @@ looker.plugins.visualizations.add({
         function(value) {console.log(value)},
         function(value) {console.log('API failed :(')}
       )
+
+      vid_url = data[0]['trials_denormalised.video_url_2']['value']
       
-       vid = "<video id ='video_id' controls autoplay > <source src="
-       vid = vid.concat(config.video_src)
-       vid = vid.concat(' type="video/mp4"></video>')
+      vid = "<video id ='video_id' controls autoplay > <source src="
+      vid = vid.concat(config.video_src)
+      vid = vid.concat(' type="video/mp4"></video>')
 
-       vid2 = "<video id ='video_id2' controls autoplay > <source src="
-       vid2 = vid2.concat(config.video_src)
-       vid2 = vid2.concat(' type="video/mp4"></video>')
+      vid2 = "<video id ='video_id2' controls autoplay > <source src="
+      vid2 = vid2.concat(vid_url)
+      vid2 = vid2.concat(' type="video/mp4"></video>')
 
-       this.video_bit.innerHTML = vid.concat(vid2)
+      this.video_bit.innerHTML = vid.concat(vid2)
        
        document.getElementById("video_id").currentTime = config.video_start_at_1;
        document.getElementById("video_id2").currentTime = config.video_start_at_2;
