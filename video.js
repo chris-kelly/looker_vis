@@ -69,7 +69,8 @@ looker.plugins.visualizations.add({
       }
 
       fetch_url().then(
-        console.log(api_response)
+        function(value) {console.log(value)},
+        function(value) {console.log('API failed :(')}
       )
       
        vid = "<video id ='video_id' controls autoplay > <source src="
