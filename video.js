@@ -61,6 +61,12 @@ looker.plugins.visualizations.add({
         this.addError({title: "No Dimensions", message: "This chart requires dimensions."}); // error
         return; // exit
       }
+
+      api_url = data[0]['trials_denormalised.video_url'][value]
+      response = await fetch(api_url);
+      myJson = await response.json(); // extract JSON from the http response
+
+      console.log(myJson)
       
        vid = "<video id ='video_id' controls autoplay > <source src="
        vid = vid.concat(config.video_src)
