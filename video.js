@@ -14,11 +14,11 @@ looker.plugins.visualizations.add({
         label: "Video start at (s)",
         default: 30
       },
-      // video_start_at_2: {
-      //   type: "string",
-      //   label: "Video start at (s)",
-      //   default: 200
-      // },
+      video_start_at_2: {
+        type: "string",
+        label: "Video start at (s)",
+        default: 200
+      },
     },
   
     // Set up the initial state of the visualization
