@@ -80,7 +80,8 @@ looker.plugins.visualizations.add({
       vid = vid.concat(' type="video/mp4"></video>')
 
       vid2 = "<video id ='video_id2' controls autoplay > <source src="
-      vid2 = vid2.concat(vid_url)
+      vid2 = vid2.concat(config.video_src)
+      // vid2 = vid2.concat(vid_url)
       vid2 = vid2.concat(' type="video/mp4"></video>')
 
       this.video_bit.innerHTML = vid.concat(vid2)
