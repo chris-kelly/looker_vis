@@ -1,7 +1,3 @@
-// https://github.com/looker-open-source/custom_visualizations_v2/blob/master/docs/api_reference.md
-// https://plotly.com/javascript/getting-started/
-// https://plotly.com/javascript/plotlyjs-function-reference/#plotlynewplot
-
 looker.plugins.visualizations.add({
 
     options: { 
@@ -79,9 +75,7 @@ looker.plugins.visualizations.add({
           console.log(value)
           vid_url = value['camera_video_urls']['front-forward']
           video = document.getElementById('video_id');
-          video.setAttribute('src', 'http://techslides.com/demos/sample-videos/small.mp4');
-          // document.getElementById('video_id').innerHTML
-          // this.video_bit.innerHTML = vid
+          video.setAttribute('src', vid_url);
         },
         function(value) {console.log('API failed :(')}
       )
