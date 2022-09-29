@@ -68,17 +68,20 @@ looker.plugins.visualizations.add({
         return(myJson)
       }
 
-      this.video_bit.innerHTML = ''
+      vid = "<video id ='video_id' controls autoplay > <source src="
+      vid = vid.concat('')
+      vid = vid.concat(' type="video/mp4"></video>')
+
+      this.video_bit.innerHTML = vid
 
       fetch_url().then(
         function(value) {
           console.log(value)
           vid_url = value['camera_video_urls']['front-forward']
-          console.log(vid_url)
-          vid = "<video id ='video_id' controls autoplay > <source src="
-          vid = vid.concat(vid_url)
-          vid = vid.concat(' type="video/mp4"></video>')
-          this.video_bit.innerHTML = vid
+          video = document.getElementById('video_id');
+          video.setAttribute('src', 'http://techslides.com/demos/sample-videos/small.mp4');
+          // document.getElementById('video_id').innerHTML
+          // this.video_bit.innerHTML = vid
         },
         function(value) {console.log('API failed :(')}
       )
