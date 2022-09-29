@@ -68,6 +68,8 @@ looker.plugins.visualizations.add({
         return(myJson)
       }
 
+      this.video_bit.innerHTML = ''
+
       fetch_url().then(
         function(value) {
           console.log(value)
