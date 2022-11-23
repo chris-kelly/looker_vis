@@ -45,7 +45,7 @@ looker.plugins.visualizations.add({
       new Promise(load => plotly_script.onload = load),
     ])
     
-    mathjs_script.src = "https://pagecdn.io/lib/mathjs/11.0.1/math.min.js";
+    mathjs_script.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.4.0/math.js";
     plotly_script.src = "https://cdn.plot.ly/plotly-2.14.0.min.js";
     
     mathjs_script.type = "text/javascript";
