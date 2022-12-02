@@ -88,7 +88,20 @@ looker.plugins.visualizations.add({
 
     console.log(queryResponse) // see everything returned by Looker
 
-    field_names = Object.keys(queryResponse.data[0])
+    // field_names = Object.keys(queryResponse.data[0])
+
+    dim_names = []
+    mea_names = []
+
+    for (i in queryResponse.fields.dimensions) {
+      dim_names.push(i)
+    }
+
+    for (i in queryResponse.fields.measures) {
+      mea_names.push(i)
+    }
+
+    field_names = dim_names + mea_names
 
     console.log(field_names)
 
