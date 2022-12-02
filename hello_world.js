@@ -94,11 +94,11 @@ looker.plugins.visualizations.add({
     mea_names = []
 
     for (i in queryResponse.fields.dimensions) {
-      dim_names.push(i)
+      dim_names.push(i.name)
     }
 
     for (i in queryResponse.fields.measures) {
-      mea_names.push(i)
+      mea_names.push(i.name)
     }
 
     field_names = dim_names + mea_names
