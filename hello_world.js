@@ -86,17 +86,17 @@ looker.plugins.visualizations.add({
     // Clear errors from previous updates
     this.clearErrors();
 
-    // Throw errors and exit if the shape of the data isn't what this chart requires
-    if (queryResponse.fields.dimensions.length == 0) {
-      this.addError({title: "No dimensions or measures.", message: "This chart requires dimensions."}); // error
-      return; // exit
-    }
-
     console.log(queryResponse) // see everything returned by Looker
 
     field_names = Object.keys(queryResponse.data[0])
 
     console.log(field_names)
+
+    // Throw errors and exit if the shape of the data isn't what this chart requires
+    if (field_names.length <= 1) { // (queryResponse.fields.dimensions.length == 0) {
+      this.addError({title: "<=1 dimensions or measures.", message: "This chart requires at least two fields!"}); // error
+      return; // exit
+    }
     
     window.scriptLoad.then(() => { // Do this first to ensure js loads in time
 
