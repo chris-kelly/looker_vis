@@ -6,7 +6,7 @@ looker.plugins.visualizations.add({
   // Options for user to choose in the "edit" part of looker vis
   // In this example, whether the plot is bar or scatter
   options: { 
-    graph_type: {
+    plot_type: {
       type: "string",
       label: "Plot type",
       values: [
@@ -16,6 +16,17 @@ looker.plugins.visualizations.add({
       ],
       display: "radio",
       default: "scatter"
+    },
+    mode_type: {
+      type: "string",
+      label: "Mode type",
+      values: [
+        {"Markers": "markers"},
+        {"Lines": "lines"},
+        {"Markers & Lines": "markers+lines"},
+      ],
+      display: "radio",
+      default: "markers"
     },
     xaxis_label: {
       type: "string",
@@ -140,7 +151,8 @@ looker.plugins.visualizations.add({
       plotly_data = [{  
         x: x,
         y: y,
-        type: config.graph_type // Set the type to the user-selected graph type
+        type: config.plot_type, // Set the type to the user-selected graph type
+        mode: config.mode_type
       }]
 
       layout = {
