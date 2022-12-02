@@ -106,12 +106,11 @@ looker.plugins.visualizations.add({
       // first_dim = queryResponse.fields.dimensions[0]
       // first_mea = queryResponse.fields.measures[0]
 
-      first_dim = field_names[0]
-      first_mea = field_names[1]
-
       for(var row of data) { // for each row in data
-        var x_i = row[first_dim.name]; // take first dimension
-        var y_i = row[first_mea.name]; // take first measure
+        // var x_i = row[first_dim.name]; // take first dimension
+        // var y_i = row[first_mea.name]; // take first measure
+        var x_i = row[field_names[0]]; // take first dimension
+        var y_i = row[field_names[1]]; // take first measure
         x.push(x_i['value']); // append to array
         y.push(y_i['value']); // append to array
       }
