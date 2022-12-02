@@ -88,19 +88,26 @@ looker.plugins.visualizations.add({
 
     // Throw errors and exit if the shape of the data isn't what this chart requires
     if (queryResponse.fields.dimensions.length == 0) {
-      this.addError({title: "No Dimensions", message: "This chart requires dimensions."}); // error
+      this.addError({title: "No dimensions or measures.", message: "This chart requires dimensions."}); // error
       return; // exit
     }
 
     console.log(queryResponse) // see everything returned by Looker
+
+    field_names = Object.keys(queryResponse.data[0])
+
+    console.log(field_names)
     
     window.scriptLoad.then(() => { // Do this first to ensure js loads in time
 
       var x = []
       var y = []
       
-      first_dim = queryResponse.fields.dimensions[0]
-      first_mea = queryResponse.fields.measures[0]
+      // first_dim = queryResponse.fields.dimensions[0]
+      // first_mea = queryResponse.fields.measures[0]
+
+      first_dim = field_names[0]
+      first_mea = field_names[1]
 
       for(var row of data) { // for each row in data
         var x_i = row[first_dim.name]; // take first dimension
