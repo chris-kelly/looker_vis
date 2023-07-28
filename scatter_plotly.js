@@ -139,25 +139,27 @@ looker.plugins.visualizations.add({
       console.log(x[1])
       console.log(y[1])
 
+      if (config.error_bands == true) {console.log[y_lb[2]]; console.log[y_ub[2]]}
+
       if (config.xaxis_label) { xaxis_label = config.xaxis_label} 
       else { xaxis_label = dim.field_group_label }
 
       if (config.yaxis_label) { yaxis_label = config.yaxis_label} 
       else { yaxis_label = mea[0].field_group_label }
 
-      plotly_data = [{  
+      plotly_data = {  
         x: x,
         y: y,
         type: config.plot_type, // Set the type to the user-selected graph type
         mode: config.mode_type
-      }]
+      }
 
       if (config.error_bands == true) {
-          plotly_data[0]['error_y'] = {
+          plotly_data['error_y'] = {
               type: 'data',
               symmetric: false,
               array: y_ub,
-              arrayminus: y_lb,
+              arrayminus: y_lb
             }
       }
 
@@ -206,7 +208,7 @@ looker.plugins.visualizations.add({
       
       Plotly.newPlot( // use plotly library
         this.plotly_bit, // graphDiv
-        plotly_data,
+        [plotly_data],
         layout,
         config
       )
