@@ -115,7 +115,7 @@ looker.plugins.visualizations.add({
       var dim = queryResponse.fields.dimensions[0] // get first dimension name
       var mea = [queryResponse.fields.measures[0]] // get first measure name
 
-      if (config.error_bands == True) {
+      if (config.error_bands == true) {
           try {
               mea.push(queryResponse.fields.measures[1])
               mea.push(queryResponse.fields.measures[2])
