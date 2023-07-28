@@ -139,7 +139,7 @@ looker.plugins.visualizations.add({
       console.log(x[1])
       console.log(y[1])
 
-      if (config.error_bands == true) {console.log[y_lb[2]]; console.log[y_ub[2]]}
+      if (config.error_bands == true) {console.log(y_lb[2]); console.log(y_ub[2])}
 
       if (config.xaxis_label) { xaxis_label = config.xaxis_label} 
       else { xaxis_label = dim.field_group_label }
@@ -185,10 +185,10 @@ looker.plugins.visualizations.add({
           -1)
         
         // Set hover-text with original value of y
-        plotly_data[0]['text'] = y
-        plotly_data[0]['hovertemplate'] = '<b>%{text}</b>'
+        plotly_data['text'] = y
+        plotly_data['hovertemplate'] = '<b>%{text}</b>'
         // Overwrite y with scaled y
-        plotly_data[0]['y'] = y_m._data
+        plotly_data['y'] = y_m._data
         
         // Overide yaxis labels
         layout['yaxis'] = {
