@@ -128,11 +128,11 @@ looker.plugins.visualizations.add({
 
       var x = []; var y = [];
       for(var row of data) { // for each row in data, append to array
-        x.push(row[dim.value]);
-        y.push(row[mea[0].value]);
+        x.push(row[dim.name].value);
+        y.push(row[mea[0].name].value);
         if (mea.size > 1) {
-            y_lb.push(row[mea[1].value])
-            y_ub.push(row[mea[2].value])
+            y_lb.push(row[mea[1].name].value)
+            y_ub.push(row[mea[2].name].value)
         }
       }
 
