@@ -117,8 +117,8 @@ looker.plugins.visualizations.add({
 
       if (config.error_bands == true) {
           try {
+              mea.push(queryResponse.fields.table_calculations[0])
               mea.push(queryResponse.fields.table_calculations[1])
-              mea.push(queryResponse.fields.table_calculations[2])
               var y_lb = []; var y_ub = [];
           } 
           catch {
