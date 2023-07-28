@@ -29,7 +29,7 @@ looker.plugins.visualizations.add({
     },
     error_bands: {
       type: "boolean",
-      label: "Include error bars/bands",
+      label: "Error bars?",
       default: false,
     },
     xaxis_label: {
@@ -104,6 +104,9 @@ looker.plugins.visualizations.add({
     dim_names = []; for (i of queryResponse.fields.dimensions) { dim_names.push(i['name']) }
     mes_names = []; for (i of queryResponse.fields.measures) { mes_names.push(i['name']) }
 
+    console.log(dim_names)
+    console.log(mes_names)
+
     // Throw errors and exit if the shape of the data isn't what this chart requires
     if (dim_names.length < 1 || mes_names.length < 1) {
       this.addError({title: "< 1 dimensions or measures.", message: "This chart requires at least two fields!"}); // error
@@ -126,6 +129,9 @@ looker.plugins.visualizations.add({
           }
       }
 
+      console.log(dim)
+      console.log(mea[0])
+
       var x = []; var y = [];
       for(var row of data) { // for each row in data, append to array
         x.push(row[dim.name]);
@@ -135,6 +141,9 @@ looker.plugins.visualizations.add({
             y_ub.push(row[mea[2].name])
         }
       }
+
+      console.log(x[1])
+      console.log(y[1])
 
       if (config.xaxis_label) { xaxis_label = config.xaxis_label} 
       else { xaxis_label = dim.field_group_label }
