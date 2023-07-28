@@ -152,6 +152,15 @@ looker.plugins.visualizations.add({
         mode: config.mode_type
       }]
 
+      if (config.error_bands == true) {
+          plotly_data[0]['error_y'] = {
+              type: 'data',
+              symmetric: false,
+              array: y_ub,
+              arrayminus: y_lb,
+            }
+      }
+
       layout = {
         margin: { t: 0 },
         title: 'Click Here to Edit Chart Title',
