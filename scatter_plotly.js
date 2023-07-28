@@ -105,8 +105,8 @@ looker.plugins.visualizations.add({
     mes_names = []; for (i of queryResponse.fields.measures) { mes_names.push(i['name']) }
 
     // Throw errors and exit if the shape of the data isn't what this chart requires
-    if (field_names.length <= 1) { // (queryResponse.fields.dimensions.length == 0) {
-      this.addError({title: "<=1 dimensions or measures.", message: "This chart requires at least two fields!"}); // error
+    if (dim_names.length < 1 || mes_names.length < 1) {
+      this.addError({title: "< 1 dimensions or measures.", message: "This chart requires at least two fields!"}); // error
       return; // exit
     }
     
