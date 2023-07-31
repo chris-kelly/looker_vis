@@ -40,6 +40,14 @@ looker.plugins.visualizations.add({
       type: "string",
       label: "y axis label",
     },
+    xaxis_lim: {
+      type: "string",
+      label: "x axis label",
+    },
+    yaxis_lim: {
+      type: "string",
+      label: "y axis label",
+    },
     inverse_log: {
       type: "boolean",
       label: "Scale y by inverse log",
@@ -167,6 +175,9 @@ looker.plugins.visualizations.add({
         yaxis : {title: {text: yaxis_label}},
       }
 
+      if (config.xaxis_lim) {var xlim = config.xaxis_lim.split(); layout['xaxis']['range'] = [xlim[0], xlim[1]]}
+      if (config.yaxis_lim) {var ylim = config.yaxis_lim.split(); layout['yaxis']['range'] = [ylim[0], ylim[1]]}
+      
       if (config.inverse_log == true) {
 
         // create scaled version of y
