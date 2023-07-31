@@ -139,10 +139,10 @@ looker.plugins.visualizations.add({
       if (config.error_bands == true) {console.log(y_lb[2]); console.log(y_ub[2])}
 
       if (config.xaxis_label) { xaxis_label = config.xaxis_label} 
-      else { xaxis_label = dim.field_group_label } // label axes
+      else { xaxis_label = queryResponse.fields.dimensions[0].field_group_label } // label axes
 
       if (config.yaxis_label) { yaxis_label = config.yaxis_label} 
-      else { yaxis_label = mea[0].field_group_label } // label axes
+      else { yaxis_label = queryResponse.fields.measures[0].field_group_label } // label axes
 
       plotly_data = {  
         x: x,
