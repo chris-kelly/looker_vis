@@ -101,8 +101,9 @@ looker.plugins.visualizations.add({
     this.clearErrors();
     console.log(queryResponse) // see everything that is returned by Looker - just for debugging
 
-    dim_names = []; for (i of queryResponse.fields.dimensions) { dim_names.push(i['name']) }
-    mes_names = []; for (i of queryResponse.fields.measures) { mes_names.push(i['name']) }
+    dim_names = []; for (i of queryResponse.fields.dimensions) { dim_names.push(i['name']) };
+    mes_names = []; for (i of queryResponse.fields.measures) { mes_names.push(i['name']) };
+    for (i of queryResponse.fields.table_calculations) { mes_names.push(i['name']) }
 
     // Throw errors and exit if the shape of the data isn't what this chart requires
     if (dim_names.length < 1 || mes_names.length < 1) {
@@ -111,14 +112,10 @@ looker.plugins.visualizations.add({
     }
     
     window.scriptLoad.then(() => { // Do this first to ensure js loads in time
-      
-      var dim = queryResponse.fields.dimensions[0] // get first dimension name
-      var mea = [queryResponse.fields.measures[0]] // get first measure name
 
       if (config.error_bands == true) {
           try {
-              mea.push(queryResponse.fields.table_calculations[0])
-              mea.push(queryResponse.fields.table_calculations[1])
+              mes_names[2]
               var y_lb = []; var y_ub = [];
           } 
           catch {
@@ -128,11 +125,11 @@ looker.plugins.visualizations.add({
 
       var x = []; var y = [];
       for(var row of data) { // for each row in data, append to array
-        x.push(row[dim.name].value);
-        y.push(row[mea[0].name].value);
+        x.push(row[dim_names[0]].value);
+        y.push(row[mes_names[0]].value);
         if (mea.size > 1) {
-            y_lb.push(row[mea[1].name].value)
-            y_ub.push(row[mea[2].name].value)
+            y_lb.push(row[mes_names[1]].value)
+            y_ub.push(row[mes_names[2]].value)
         }
       }
 
@@ -142,10 +139,10 @@ looker.plugins.visualizations.add({
       if (config.error_bands == true) {console.log(y_lb[2]); console.log(y_ub[2])}
 
       if (config.xaxis_label) { xaxis_label = config.xaxis_label} 
-      else { xaxis_label = dim.field_group_label }
+      else { xaxis_label = dim.field_group_label } // label axes
 
       if (config.yaxis_label) { yaxis_label = config.yaxis_label} 
-      else { yaxis_label = mea[0].field_group_label }
+      else { yaxis_label = mea[0].field_group_label } // label axes
 
       plotly_data = {  
         x: x,
