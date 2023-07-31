@@ -175,8 +175,8 @@ looker.plugins.visualizations.add({
         yaxis : {title: {text: yaxis_label}},
       }
 
-      if (config.xaxis_lim) {var xlim = config.xaxis_lim.split(); layout['xaxis']['range'] = [Number(xlim[0]), Number(xlim[1])]}
-      if (config.yaxis_lim) {var ylim = config.yaxis_lim.split(); layout['yaxis']['range'] = [Number(ylim[0]), Number(ylim[1])]}
+      if (config.xaxis_lim) {var xlim = config.xaxis_lim.split(","); layout['xaxis']['range'] = [Number(xlim[0]), Number(xlim[1])]}
+      if (config.yaxis_lim) {var ylim = config.yaxis_lim.split(","); layout['yaxis']['range'] = [Number(ylim[0]), Number(ylim[1])]}
       
       if (config.inverse_log == true) {
 
