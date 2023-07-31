@@ -46,7 +46,7 @@ looker.plugins.visualizations.add({
     },
     yaxis_lim: {
       type: "string",
-      label: "y axis label? (Comma delimited)",
+      label: "y axis limits? (Comma delimited)",
     },
     inverse_log: {
       type: "boolean",
@@ -140,11 +140,6 @@ looker.plugins.visualizations.add({
             y_ub.push(row[mes_names[2]].value)
         }
       }
-
-      console.log(x[1])
-      console.log(y[1])
-
-      if (config.error_bands == true) {console.log(y_lb[2]); console.log(y_ub[2])}
 
       if (config.xaxis_label) { xaxis_label = config.xaxis_label} 
       else { xaxis_label = queryResponse.fields.dimensions[0].field_group_label } // label axes
