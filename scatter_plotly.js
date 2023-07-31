@@ -42,11 +42,11 @@ looker.plugins.visualizations.add({
     },
     xaxis_lim: {
       type: "string",
-      label: "x axis label",
+      label: "x axis limits? (Comma delimited)",
     },
     yaxis_lim: {
       type: "string",
-      label: "y axis label",
+      label: "y axis label? (Comma delimited)",
     },
     inverse_log: {
       type: "boolean",
