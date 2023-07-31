@@ -18,7 +18,7 @@ looker.plugins.visualizations.add({
     },
     mode_type: {
       type: "string",
-      label: "Mode type",
+      label: "Scatter Mode",
       values: [
         {"Markers": "markers"},
         {"Lines": "lines"},
@@ -29,7 +29,7 @@ looker.plugins.visualizations.add({
     },
     error_bands: {
       type: "boolean",
-      label: "Error bars?",
+      label: "Add error bars?",
       default: false,
     },
     xaxis_label: {
