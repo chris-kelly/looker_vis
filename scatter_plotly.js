@@ -127,7 +127,7 @@ looker.plugins.visualizations.add({
       for(var row of data) { // for each row in data, append to array
         x.push(row[dim_names[0]].value);
         y.push(row[mes_names[0]].value);
-        if (mes_names.length > 1) {
+        if (config.error_bands == true) {
             y_lb.push(row[mes_names[1]].value)
             y_ub.push(row[mes_names[2]].value)
         }
