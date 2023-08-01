@@ -217,6 +217,10 @@ looker.plugins.visualizations.add({
         colorway : ['#f3cec9', '#e7a4b6', '#cd7eaf', '#a262a9', '#6f4d96', '#3d3b72', '#182844']
       }
 
+      if (config.plot_type == 'bar') {
+        layout['barmode'] = mode_type
+      }
+
       if (config.xaxis_lim) {var xlim = config.xaxis_lim.split(","); layout['xaxis']['range'] = [Number(xlim[0]), Number(xlim[1])]}
       if (config.yaxis_lim) {var ylim = config.yaxis_lim.split(","); layout['yaxis']['range'] = [Number(ylim[0]), Number(ylim[1])]}
       if (config.xaxis_hover_format) {layout['xaxis']['hoverformat'] = config.xaxis_hover_format};
