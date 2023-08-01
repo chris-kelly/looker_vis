@@ -152,6 +152,16 @@ looker.plugins.visualizations.add({
       else { yaxis_label = queryResponse.fields.measures[0].field_group_label } // label axes
       
       plotly_data = []
+      legend_labels = [] 
+      for (var i of mes_names) {
+        if (piv_keys) {
+          for (var j of piv_keys) {
+            legend_labels.push(i.concat(' | ', j))
+          }
+        } else {
+            legend_labels.push(i)
+        }
+      }
       for (var i = 0; i < y[0].length; i++) {
         var new_trace = {
           x: x.map(row => row[0]),
