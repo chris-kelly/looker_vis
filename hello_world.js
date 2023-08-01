@@ -115,7 +115,7 @@ looker.plugins.visualizations.add({
     console.log(dim_names); console.log(mes_names);
 
     if (queryResponse.fields.pivots.length > 0) {
-        var piv_keys = queryResponse.pivotTableColumns.map(p => p[0].key)
+        var piv_keys = queryResponse.pivots.map(p => p.key)
         console.log(piv_keys);
     }
 
@@ -132,8 +132,8 @@ looker.plugins.visualizations.add({
         x.push(dim_names.map(d => row[d].value).flat())
         x_r.push(dim_names.map(d => row[d].html).flat())
         if (piv_keys) {
-          y.push(mes_names.map(m => piv_keys.map(p => row[m][p].value).flat()))
-          y_r.push(mes_names.map(m => piv_keys.map(p => row[m][p].html).flat()))
+          y.push(mes_names.map(m => piv_keys.map(p => row[m][p].value)).flat())
+          y_r.push(mes_names.map(m => piv_keys.map(p => row[m][p].html)).flat())
           y_lab.push(mes_names.map(m => piv_keys.map(p => p.replace('FIELD','').concat(' | ', m))).flat())
         } else {
           y.push(mes_names.map(m => row[m].value).flat())
