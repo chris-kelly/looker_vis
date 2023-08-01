@@ -221,7 +221,7 @@ looker.plugins.visualizations.add({
       
       Plotly.newPlot( // use plotly library
         this.plotly_bit, // graphDiv
-        [plotly_data],
+        plotly_data,
         layout,
         config
       )
