@@ -112,9 +112,11 @@ looker.plugins.visualizations.add({
     let dim_names = queryResponse.fields.dimensions.map(d => d.name)
     var mes_names = queryResponse.fields.measures.map(m => m.name)
     var mes_names = mes_names.concat(queryResponse.fields.table_calculations.map(t => t.name)) // add table calcs to measures
+    console.log(dim_names); console.log(mes_names);
 
     if (queryResponse.fields.pivots.length > 0) {
         var piv_keys = queryResponse.fields.pivotTableColumns.map(p => p[0].key)
+        console.log(piv_keys);
     }
 
     // Throw errors and exit if the shape of the data isn't what this chart requires
@@ -138,6 +140,9 @@ looker.plugins.visualizations.add({
           y_r[row] = mes_names.map(m => row[m].html)
         }
       }
+
+      console.log(x)
+      console.log(y)
 
       if (config.xaxis_label) { xaxis_label = config.xaxis_label} 
       else { xaxis_label = queryResponse.fields.dimensions[0].field_group_label } // label axes
