@@ -113,8 +113,8 @@ looker.plugins.visualizations.add({
     var mes_names = queryResponse.fields.measures.map(m => m.name)
     var mes_names = mes_names.concat(queryResponse.fields.table_calculations.map(t => t.name)) // add table calcs to measures
 
-    if (queryResponse.fields.pivotTableColumns.length > 0) {
-        var piv_keys = queryResponse.fields.pivots.map(p => p[0].key)
+    if (queryResponse.fields.pivots.length > 0) {
+        var piv_keys = queryResponse.fields.pivotTableColumns.map(p => p[0].key)
     }
 
     // Throw errors and exit if the shape of the data isn't what this chart requires
