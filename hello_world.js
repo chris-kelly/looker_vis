@@ -143,6 +143,7 @@ looker.plugins.visualizations.add({
 
       console.log(x)
       console.log(y)
+      console.log(x.map(row => row[0]))
 
       if (config.xaxis_label) { xaxis_label = config.xaxis_label} 
       else { xaxis_label = queryResponse.fields.dimensions[0].field_group_label } // label axes
