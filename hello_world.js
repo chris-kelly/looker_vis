@@ -131,14 +131,14 @@ looker.plugins.visualizations.add({
       for (var row of data) {
         x.push(dim_names.map(d => row[d].value).flat())
         x_r.push(dim_names.map(d => row[d].html).flat())
-        // if (piv_keys) {
-        //   y.push(mes_names.map(m => piv_keys.map(p => row[m][p].value).flat()))
-        //   y_r.push(mes_names.map(m => piv_keys.map(p => row[m][p].html).flat()))
-        //   y_lab.push(mes_names.map(m => piv_keys.map(p => p.replace('FIELD','').concat(' | ', m))))
-        // } else {
-          y.push(mes_names.map(m => row[m].name))
-          y_r.push(mes_names.map(m => row[m].html))
-        // }
+        if (piv_keys) {
+          y.push(mes_names.map(m => piv_keys.map(p => row[m][p].value).flat()))
+          y_r.push(mes_names.map(m => piv_keys.map(p => row[m][p].html).flat()))
+          y_lab.push(mes_names.map(m => piv_keys.map(p => p.replace('FIELD','').concat(' | ', m))).flat())
+        } else {
+          y.push(mes_names.map(m => row[m].name).flat())
+          y_r.push(mes_names.map(m => row[m].html).flat())
+        }
       }
 
       console.log(x)
