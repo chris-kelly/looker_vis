@@ -12,14 +12,13 @@ looker.plugins.visualizations.add({
       values: [
         {"Scatter": "scatter"},
         {"Bar": "bar"},
-        // {"3d": "surface"},
       ],
       display: "radio",
       default: "scatter"
     },
     mode_type: {
       type: "string",
-      label: "Mode type",
+      label: "Scatter Mode",
       values: [
         {"Markers": "markers"},
         {"Lines": "lines"},
@@ -28,6 +27,11 @@ looker.plugins.visualizations.add({
       display: "radio",
       default: "markers"
     },
+    error_bands: {
+      type: "boolean",
+      label: "Add error bars?",
+      default: false,
+    },
     xaxis_label: {
       type: "string",
       label: "x axis label",
@@ -35,6 +39,14 @@ looker.plugins.visualizations.add({
     yaxis_label: {
       type: "string",
       label: "y axis label",
+    },
+    xaxis_lim: {
+      type: "string",
+      label: "x axis limits? (Comma delimited)",
+    },
+    yaxis_lim: {
+      type: "string",
+      label: "y axis limits? (Comma delimited)",
     },
     inverse_log: {
       type: "boolean",
@@ -48,19 +60,18 @@ looker.plugins.visualizations.add({
 
     // import scripts to allow math operations
     var mathjs_script = document.createElement("script");
+    mathjs_script.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.4.0/math.js";
+    mathjs_script.type = "text/javascript";
     // import scripts to build that vis
     var plotly_script = document.createElement("script");
+    plotly_script.src = "https://cdn.plot.ly/plotly-2.14.0.min.js";
+    plotly_script.type = "text/javascript";
     
+    // load these scripts first
     window.scriptLoad = Promise.all([
       new Promise(load => mathjs_script.onload = load),
       new Promise(load => plotly_script.onload = load),
     ])
-    
-    mathjs_script.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.4.0/math.js";
-    plotly_script.src = "https://cdn.plot.ly/plotly-2.14.0.min.js";
-    
-    mathjs_script.type = "text/javascript";
-    plotly_script.type = "text/javascript";
     
     document.head.appendChild(mathjs_script)
     document.head.appendChild(plotly_script)
@@ -91,70 +102,83 @@ looker.plugins.visualizations.add({
 
   },
 
-  
-  updateAsync: function(data, element, config, queryResponse, details, done) { // Update everytime data/settings change
+  // Update everytime data/settings change
+  updateAsync: function(data, element, config, queryResponse, details, done) { 
 
     // Clear errors from previous updates
     this.clearErrors();
+    console.log(queryResponse) // see everything that is returned by Looker - just for debugging
 
-    console.log(queryResponse) // see everything returned by Looker
+    
+    let dim_names = queryResponse.fields.dimensions.map(d => d.name)
+    var mes_names = queryResponse.fields.measures.map(m => m.name)
+    var mes_names = mes_names.concat(queryResponse.fields.table_calculations.map(t => t.name)) // add table calcs to measures
 
-    // field_names = Object.keys(queryResponse.data[0])
-
-    field_names = []
-
-    for (i of queryResponse.fields.dimensions) {
-      field_names.push(i['name'])
+    if (queryResponse.fields.pivotTableColumns.length > 0) {
+        var piv_names = queryResponse.fields.pivotTableColumns.map(p => p[0].key)
     }
-
-    for (i of queryResponse.fields.measures) {
-      field_names.push(i['name'])
-    }
-
-    console.log(field_names)
 
     // Throw errors and exit if the shape of the data isn't what this chart requires
-    if (field_names.length <= 1) { // (queryResponse.fields.dimensions.length == 0) {
-      this.addError({title: "<=1 dimensions or measures.", message: "This chart requires at least two fields!"}); // error
+    if (dim_names.length < 1 || mes_names.length < 1) {
+      this.addError({title: "< 1 dimensions or measures.", message: "This chart requires at least two fields!"}); // error
       return; // exit
     }
+
+    var doubledArray = array.map(nested => nested.map(element => element * 2));
     
     window.scriptLoad.then(() => { // Do this first to ensure js loads in time
 
-      var x = []
-      var y = []
+      var x = [], x_r = [], y = [], y_r = [];
+      for (var row of data) {
+        x[row] = dim_names.map(d => row[d].value)
+        x_r[row] = dim_names.map(d => row[d].html)
+        if (piv_names) {
+          y[row] = mes_names.map(m => piv_names.map(p => row[m][p].value).flat())
+          y_r[row] = mes_names.map(m => piv_names.map(p => row[m][p].html).flat())
+        } else {
+          y[row] = mes_names.map(m => row[m].name)
+          y_r[row] = mes_names.map(m => row[m].html)
+        }
+      }
+
+      if (config.xaxis_label) { xaxis_label = config.xaxis_label} 
+      else { xaxis_label = queryResponse.fields.dimensions[0].field_group_label } // label axes
+
+      if (config.yaxis_label) { yaxis_label = config.yaxis_label} 
+      else { yaxis_label = queryResponse.fields.measures[0].field_group_label } // label axes
+
+      if (config.error_bands == true) {
+          try {
+              mes_names[2]
+              var y_lb = []; var y_ub = [];
+          } 
+          catch {
+              this.addError({title: "Not enough measures", message: "Need to have at least 3 measures to add error bands"});
+          }
+      }
       
-      // first_dim = queryResponse.fields.dimensions[0]
-      // first_mea = queryResponse.fields.measures[0]
-
-      for(var row of data) { // for each row in data
-        // var x_i = row[first_dim.name]; // take first dimension
-        // var y_i = row[first_mea.name]; // take first measure
-        var x_i = row[field_names[0]]; // take first dimension
-        var y_i = row[field_names[1]]; // take first measure
-        x.push(x_i['value']); // append to array
-        y.push(y_i['value']); // append to array
+      plotly_data = []
+      for (var i = 0; i < mes_names.length; i++) {
+        var new_trace = {
+          x: x.map(row => row[0]),
+          y: y.map(row => row[i]),
+          type: config.plot_type, // Set the type to the user-selected graph type
+          mode: config.mode_type,
+          name: mes_names[i],
+        }
+        if (config.error_bands == true) {
+            new_trace['error_y'] = {
+                type: 'data',
+                symmetric: false,
+                array: y.map(row => row[i+2]),
+                arrayminus: y.map(row => row[i+1]),
+              }
+            i = i + 2
+        }
+        plotly_data.push({new_trace})
       }
 
-      if (config.xaxis_label) {
-        xaxis_label = config.xaxis_label
-      } else {
-        xaxis_label = first_dim.field_group_label
-      }
-
-      if (config.yaxis_label) {
-        yaxis_label = config.yaxis_label
-      } else {
-        yaxis_label = first_mea.field_group_label
-      }
-
-      plotly_data = [{  
-        x: x,
-        y: y,
-        type: config.plot_type, // Set the type to the user-selected graph type
-        mode: config.mode_type
-      }]
-
+      
       layout = {
         margin: { t: 0 },
         title: 'Click Here to Edit Chart Title',
@@ -162,27 +186,30 @@ looker.plugins.visualizations.add({
         yaxis : {title: {text: yaxis_label}},
       }
 
+      if (config.xaxis_lim) {var xlim = config.xaxis_lim.split(","); layout['xaxis']['range'] = [Number(xlim[0]), Number(xlim[1])]}
+      if (config.yaxis_lim) {var ylim = config.yaxis_lim.split(","); layout['yaxis']['range'] = [Number(ylim[0]), Number(ylim[1])]}
+      
       if (config.inverse_log == true) {
 
+        y = y.map(row => row[0])
+
         // create scaled version of y
-        y_m = math.multiply(
-          math.log10(
-            math.add( // equivalent to 1-y
+        y_m = math.multiply( math.log10( 
+          math.add( // equivalent to 1-y
               1,
-              math.multiply(
+              math.multiply( 
                 math.matrix(y), // convert y to mathjs vector
                 -1
                 )
               )
             ),
-          -1
-          )
+          -1)
         
         // Set hover-text with original value of y
-        plotly_data[0]['text'] = y
-        plotly_data[0]['hovertemplate'] = '<b>%{text}</b>'
+        plotly_data['text'] = y
+        plotly_data['hovertemplate'] = '<b>%{text}</b>'
         // Overwrite y with scaled y
-        plotly_data[0]['y'] = y_m._data
+        plotly_data['y'] = y_m._data
         
         // Overide yaxis labels
         layout['yaxis'] = {
@@ -202,7 +229,7 @@ looker.plugins.visualizations.add({
       
       Plotly.newPlot( // use plotly library
         this.plotly_bit, // graphDiv
-        plotly_data,
+        [plotly_data],
         layout,
         config
       )
