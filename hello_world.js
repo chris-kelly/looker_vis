@@ -152,7 +152,7 @@ looker.plugins.visualizations.add({
       else { yaxis_label = queryResponse.fields.measures[0].field_group_label } // label axes
       
       plotly_data = []
-      for (var i = 0; i < mes_names.length; i++) {
+      for (var i = 0; i < y[0].length; i++) {
         var new_trace = {
           x: x.map(row => row[0]),
           y: y.map(row => row[i]),
