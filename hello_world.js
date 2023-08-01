@@ -158,7 +158,7 @@ looker.plugins.visualizations.add({
         x_r.push(dim_names.map(d => row[d].html).flat())
         if (piv_keys) {
           y.push(piv_keys.map(p => mes_names.map(m => row[m][p].value)).flat())
-          y_r.push(mes_names.map(m => piv_keys.map(p => row[m][p].html)).flat())
+          y_r.push(piv_keys.map(p => mes_names.map(m => row[m][p].html)).flat())
         } else {
           y.push(mes_names.map(m => row[m].value).flat())
           y_r.push(mes_names.map(m => row[m].html).flat())
