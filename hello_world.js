@@ -169,7 +169,7 @@ looker.plugins.visualizations.add({
               }
             i = i + 2
         }
-        plotly_data.push({new_trace})
+        plotly_data.push(new_trace)
       }
 
       console.log(plotly_data)
