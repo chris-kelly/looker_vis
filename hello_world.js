@@ -39,27 +39,27 @@ looker.plugins.visualizations.add({
     },
     xaxis_label: {
       type: "string",
-      label: "x axis label",
+      label: "y axis: label",
     },
     yaxis_label: {
       type: "string",
-      label: "y axis label",
+      label: "y axis: label",
     },
     xaxis_lim: {
       type: "string",
-      label: "x axis limits? (Comma delimited)",
+      label: "x axis: manual limits (comma delimited)",
     },
     yaxis_lim: {
       type: "string",
-      label: "y axis limits? (Comma delimited)",
+      label: "y axis: manual limits (comma delimited)",
     },
     xaxis_hover_format: {
       type: "string",
-      label: "How to format x axis hover values",
+      label: "x axis: manual format values",
     },
     yaxis_hover_format: {
       type: "string",
-      label: "How to format y axis hover values",
+      label: "y axis: manual format values",
     },
     inverse_log: {
       type: "boolean",
@@ -199,7 +199,8 @@ looker.plugins.visualizations.add({
         xaxis : {title: {text: xaxis_label}},
         yaxis : {title: {text: yaxis_label}},
         showlegend: config.show_legend,
-        legend: {"orientation": "h"}
+        legend: {"orientation": "h"},
+        colorway : ['#f3cec9', '#e7a4b6', '#cd7eaf', '#a262a9', '#6f4d96', '#3d3b72', '#182844']
       }
 
       if (config.xaxis_lim) {var xlim = config.xaxis_lim.split(","); layout['xaxis']['range'] = [Number(xlim[0]), Number(xlim[1])]}
@@ -224,6 +225,7 @@ looker.plugins.visualizations.add({
           -1)
         
         // Set hover-text with original value of y
+        plotly_data = [plotly_data[0]]
         plotly_data['text'] = y
         plotly_data['hovertemplate'] = '<b>%{text}</b>'
         // Overwrite y with scaled y
