@@ -53,6 +53,14 @@ looker.plugins.visualizations.add({
       type: "string",
       label: "y axis limits? (Comma delimited)",
     },
+    xaxis_hover_format: {
+      type: "string",
+      label: "How to format x axis hover values",
+    },
+    yaxis_hover_format: {
+      type: "string",
+      label: "How to format y axis hover values",
+    },
     inverse_log: {
       type: "boolean",
       label: "Scale y by inverse log",
@@ -196,6 +204,8 @@ looker.plugins.visualizations.add({
 
       if (config.xaxis_lim) {var xlim = config.xaxis_lim.split(","); layout['xaxis']['range'] = [Number(xlim[0]), Number(xlim[1])]}
       if (config.yaxis_lim) {var ylim = config.yaxis_lim.split(","); layout['yaxis']['range'] = [Number(ylim[0]), Number(ylim[1])]}
+      if (config.xaxis_hover_format) {layout['xaxis']['hoverformat'] = config.xaxis_hover_format};
+      if (config.yaxis_hover_format) {layout['yaxis']['hoverformat'] = config.yaxis_hover_format};
       
       if (config.inverse_log == true) {
 
