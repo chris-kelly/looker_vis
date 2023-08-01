@@ -168,7 +168,7 @@ looker.plugins.visualizations.add({
           y: y.map(row => row[i]),
           type: config.plot_type, // Set the type to the user-selected graph type
           mode: config.mode_type,
-          name: mes_names[i],
+          name: legend_labels[i],
         }
         if (config.error_bands == true) {
             new_trace['error_y'] = {
