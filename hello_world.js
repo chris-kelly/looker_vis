@@ -151,7 +151,7 @@ looker.plugins.visualizations.add({
       plotly_data = []
       legend_labels = [] 
       if (piv_keys) {
-        for (var m of mes_names) { for (var p of piv_keys) { legend_labels.push(m.concat(' | ', p)) } }
+        for (var p of piv_keys) { for (var m of mes_names) { legend_labels.push(p.concat(' | ', m)) } }
       } else {
         for (var m of mes_names) { legend_labels.push(m) }
       }
@@ -173,7 +173,6 @@ looker.plugins.visualizations.add({
                 array: y.map(row => row[i+2]),
                 arrayminus: y.map(row => row[i+1]),
               }
-            
             i = i + 2
         }
         plotly_data.push(new_trace)
