@@ -115,7 +115,7 @@ looker.plugins.visualizations.add({
     console.log(dim_names); console.log(mes_names);
 
     if (queryResponse.fields.pivots.length > 0) {
-        var piv_keys = queryResponse.fields.pivotTableColumns.map(p => p.key)
+        var piv_keys = queryResponse.pivotTableColumns.map(p => p[0].key)
         console.log(piv_keys);
     }
 
