@@ -157,12 +157,9 @@ looker.plugins.visualizations.add({
         x.push(dim_names.map(d => row[d].value).flat())
         x_r.push(dim_names.map(d => row[d].html).flat())
         if (piv_keys) {
-          // y.push(mes_names.map(m => piv_keys.map(p => row[m][p].value)).flat())
           y.push(piv_keys.map(p => mes_names.map(m => row[m][p].value)).flat())
-          // y_r.push(piv_keys.map(p => mes_names.map(m => row[m][p].html)).flat())
           y_r.push(mes_names.map(m => piv_keys.map(p => row[m][p].html)).flat())
-          // y_lab.push(mes_names.map(m => piv_keys.map(p => p.replace('FIELD','').concat(' | ', m))).flat())
-          // y_lab.push(piv_keys.map(p => mes_names.map(m => p.replace('FIELD','').concat(' | ', m))).flat())
+          y_lab.push(mes_names.map(m => piv_keys.map(p => p.replace('FIELD','').concat(' | ', m).concat(' <br>', row[m][p].html) )).flat())
         } else {
           y.push(mes_names.map(m => row[m].value).flat())
           y_r.push(mes_names.map(m => row[m].html).flat())
@@ -191,9 +188,9 @@ looker.plugins.visualizations.add({
       
       for (var i = 0; i < y[0].length; i++) {
         
-        var hovertemplate = "%{xaxis.title.text}:<br> %{x}<br>" + "<br>" + "%{yaxis.title.text}:<br> %{y}<br>"
+        var hovertemplate = "%{xaxis.title.text}:<br> %{x}<br>" + "<br>" + "%{name}:<br> %{text}<br>"
         if (config.xaxis_hover_format) { hovertemplate = hovertemplate.replace("%{x}", "%{x:" + config.xaxis_hover_format + "}") }
-        if (config.yaxis_hover_format) { hovertemplate = hovertemplate.replace("%{y}", "%{y:" + config.yaxis_hover_format + "}") }
+        if (config.yaxis_hover_format) { hovertemplate = hovertemplate.replace("%{text}", "%{y:" + config.yaxis_hover_format + "}") }
 
         var new_trace = {
           x: x.map(row => row[0]),
