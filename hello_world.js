@@ -129,8 +129,8 @@ looker.plugins.visualizations.add({
 
       var x = [], x_r = [], y = [], y_r = [], y_lab = [];
       for (var row of data) {
-        x[row] = dim_names.map(d => row[d].value)
-        x_r[row] = dim_names.map(d => row[d].html)
+        x.push(dim_names.map(d => row[d].value))
+        x_r.push(dim_names.map(d => row[d].html))
         if (piv_keys) {
           y.push(mes_names.map(m => piv_keys.map(p => row[m][p].value).flat()))
           y_r.push(mes_names.map(m => piv_keys.map(p => row[m][p].html).flat()))
