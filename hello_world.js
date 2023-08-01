@@ -16,13 +16,23 @@ looker.plugins.visualizations.add({
       display: "radio",
       default: "scatter"
     },
-    mode_type: {
+    scatter_mode: {
       type: "string",
-      label: "Scatter Mode",
+      label: "Plot type detail: scatter mode",
       values: [
         {"Markers": "markers"},
         {"Lines": "lines"},
         {"Markers & Lines": "markers+lines"},
+      ],
+      display: "radio",
+      default: "markers"
+    },
+    bar_mode: {
+      type: "string",
+      label: "Plot type detail: bar mode",
+      values: [
+        {"Grouped": "group"},
+        {"Stacked": "stack"},
       ],
       display: "radio",
       default: "markers"
@@ -55,11 +65,11 @@ looker.plugins.visualizations.add({
     },
     xaxis_hover_format: {
       type: "string",
-      label: "x axis: manual format values",
+      label: "x axis: manual format hover values",
     },
     yaxis_hover_format: {
       type: "string",
-      label: "y axis: manual format values",
+      label: "y axis: manual format hover values",
     },
     inverse_log: {
       type: "boolean",
@@ -164,19 +174,23 @@ looker.plugins.visualizations.add({
       plotly_data = []
       legend_labels = [] 
       if (piv_keys) {
-        for (var p of piv_keys) { for (var m of mes_names) { legend_labels.push(p.concat(' | ', m)) } }
+        for (var p of piv_keys) { for (var m of mes_names) { legend_labels.push(p.replace('|FIELD|','').concat(' | ', m)) } }
       } else {
         for (var m of mes_names) { legend_labels.push(m) }
       }
 
-      console.log(legend_labels)
+      if (config.plot_type == 'scatter') {
+          var mode_type = config.scatter_mode
+      } else {
+          var mode_type = config.bar_mode
+      }
       
       for (var i = 0; i < y[0].length; i++) {
         var new_trace = {
           x: x.map(row => row[0]),
           y: y.map(row => row[i]),
-          type: config.plot_type, // Set the type to the user-selected graph type
-          mode: config.mode_type,
+          type: config.plot_type,
+          mode: mode_type,
           name: legend_labels[i],
         }
         if (config.error_bands == true) {
