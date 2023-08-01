@@ -151,12 +151,12 @@ looker.plugins.visualizations.add({
       plotly_data = []
       legend_labels = [] 
       if (piv_keys) {
-        for (var p of piv_keys) {
-          for (var m of mes_names) { legend_labels.push(m.concat(' | ', p)) }
-        }
+        for (var m of mes_names) { for (var p of piv_keys) { legend_labels.push(m.concat(' | ', p)) } }
       } else {
-        legend_labels.push(m)
+        for (var m of mes_names) { legend_labels.push(m) }
       }
+
+      console.log(legend_labels)
       
       for (var i = 0; i < y[0].length; i++) {
         var new_trace = {
