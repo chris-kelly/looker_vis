@@ -172,6 +172,8 @@ looker.plugins.visualizations.add({
         plotly_data.push({new_trace})
       }
 
+      console.log(plotly_data)
+
       layout = {
         margin: { t: 0 },
         title: 'Click Here to Edit Chart Title',
