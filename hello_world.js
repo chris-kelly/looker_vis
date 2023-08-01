@@ -136,7 +136,7 @@ looker.plugins.visualizations.add({
           y_r.push(mes_names.map(m => piv_keys.map(p => row[m][p].html).flat()))
           y_lab.push(mes_names.map(m => piv_keys.map(p => p.replace('FIELD','').concat(' | ', m))).flat())
         } else {
-          y.push(mes_names.map(m => row[m].name).flat())
+          y.push(mes_names.map(m => row[m].value).flat())
           y_r.push(mes_names.map(m => row[m].html).flat())
         }
       }
