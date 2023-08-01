@@ -173,11 +173,6 @@ looker.plugins.visualizations.add({
                 array: y.map(row => row[i+2]),
                 arrayminus: y.map(row => row[i+1]),
               }
-            if (piv_keys) {
-              new_trace['name'] = piv_keys
-            } else {
-
-            }
             
             i = i + 2
         }
