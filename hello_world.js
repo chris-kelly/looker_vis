@@ -159,7 +159,6 @@ looker.plugins.visualizations.add({
         if (piv_keys) {
           y.push(piv_keys.map(p => mes_names.map(m => row[m][p].value)).flat())
           y_r.push(mes_names.map(m => piv_keys.map(p => row[m][p].html)).flat())
-          y_lab.push(mes_names.map(m => piv_keys.map(p => p.replace('FIELD','').concat(' | ', m).concat(' <br>', row[m][p].html) )).flat())
         } else {
           y.push(mes_names.map(m => row[m].value).flat())
           y_r.push(mes_names.map(m => row[m].html).flat())
@@ -188,7 +187,7 @@ looker.plugins.visualizations.add({
       
       for (var i = 0; i < y[0].length; i++) {
         
-        var hovertemplate = "%{xaxis.title.text}:<br> %{x}<br>" + "<br>" + "%{fullData.name}:<br> %{text}<br> <extra></extra>"
+        var hovertemplate = "%{xaxis.title.text}: <br> %{x} <br>" + "<br>" + "%{fullData.name}: <br> %{text} <extra></extra>"
         if (config.xaxis_hover_format) { hovertemplate = hovertemplate.replace("%{x}", "%{x:" + config.xaxis_hover_format + "}") }
         if (config.yaxis_hover_format) { hovertemplate = hovertemplate.replace("%{text}", "%{y:" + config.yaxis_hover_format + "}") }
 
