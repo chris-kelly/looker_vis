@@ -109,13 +109,12 @@ looker.plugins.visualizations.add({
     this.clearErrors();
     console.log(queryResponse) // see everything that is returned by Looker - just for debugging
 
-    
     let dim_names = queryResponse.fields.dimensions.map(d => d.name)
     var mes_names = queryResponse.fields.measures.map(m => m.name)
     var mes_names = mes_names.concat(queryResponse.fields.table_calculations.map(t => t.name)) // add table calcs to measures
 
     if (queryResponse.fields.pivotTableColumns.length > 0) {
-        var piv_names = queryResponse.fields.pivotTableColumns.map(p => p[0].key)
+        var piv_keys = queryResponse.fields.pivots.map(p => p[0].key)
     }
 
     // Throw errors and exit if the shape of the data isn't what this chart requires
@@ -123,18 +122,17 @@ looker.plugins.visualizations.add({
       this.addError({title: "< 1 dimensions or measures.", message: "This chart requires at least two fields!"}); // error
       return; // exit
     }
-
-    var doubledArray = array.map(nested => nested.map(element => element * 2));
     
     window.scriptLoad.then(() => { // Do this first to ensure js loads in time
 
-      var x = [], x_r = [], y = [], y_r = [];
+      var x = [], x_r = [], y = [], y_r = [], y_lab = [];
       for (var row of data) {
         x[row] = dim_names.map(d => row[d].value)
         x_r[row] = dim_names.map(d => row[d].html)
-        if (piv_names) {
-          y[row] = mes_names.map(m => piv_names.map(p => row[m][p].value).flat())
-          y_r[row] = mes_names.map(m => piv_names.map(p => row[m][p].html).flat())
+        if (piv_keys) {
+          y[row] = mes_names.map(m => piv_keys.map(p => row[m][p].value).flat())
+          y_r[row] = mes_names.map(m => piv_keys.map(p => row[m][p].html).flat())
+          y_lab[row] = mes_names.map(m => piv_keys.map(p => p.replace('FIELD','').concat(' | ', m)))
         } else {
           y[row] = mes_names.map(m => row[m].name)
           y_r[row] = mes_names.map(m => row[m].html)
@@ -146,16 +144,6 @@ looker.plugins.visualizations.add({
 
       if (config.yaxis_label) { yaxis_label = config.yaxis_label} 
       else { yaxis_label = queryResponse.fields.measures[0].field_group_label } // label axes
-
-      if (config.error_bands == true) {
-          try {
-              mes_names[2]
-              var y_lb = []; var y_ub = [];
-          } 
-          catch {
-              this.addError({title: "Not enough measures", message: "Need to have at least 3 measures to add error bands"});
-          }
-      }
       
       plotly_data = []
       for (var i = 0; i < mes_names.length; i++) {
@@ -178,7 +166,6 @@ looker.plugins.visualizations.add({
         plotly_data.push({new_trace})
       }
 
-      
       layout = {
         margin: { t: 0 },
         title: 'Click Here to Edit Chart Title',
