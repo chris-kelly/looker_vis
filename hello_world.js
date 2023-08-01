@@ -132,12 +132,12 @@ looker.plugins.visualizations.add({
         x[row] = dim_names.map(d => row[d].value)
         x_r[row] = dim_names.map(d => row[d].html)
         if (piv_keys) {
-          y[row] = mes_names.map(m => piv_keys.map(p => row[m][p].value).flat())
-          y_r[row] = mes_names.map(m => piv_keys.map(p => row[m][p].html).flat())
-          y_lab[row] = mes_names.map(m => piv_keys.map(p => p.replace('FIELD','').concat(' | ', m)))
+          y.push(mes_names.map(m => piv_keys.map(p => row[m][p].value).flat()))
+          y_r.push(mes_names.map(m => piv_keys.map(p => row[m][p].html).flat()))
+          y_lab.push(mes_names.map(m => piv_keys.map(p => p.replace('FIELD','').concat(' | ', m))))
         } else {
-          y[row] = mes_names.map(m => row[m].name)
-          y_r[row] = mes_names.map(m => row[m].html)
+          y.push(mes_names.map(m => row[m].name))
+          y_r.push(mes_names.map(m => row[m].html))
         }
       }
 
