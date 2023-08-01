@@ -42,6 +42,11 @@ looker.plugins.visualizations.add({
       label: "Add error bars?",
       default: false,
     },
+    value_labels: {
+      type: "boolean",
+      label: "Labels: annotate?",
+      default: false,
+    },
     show_legend: {
       type: "boolean",
       label: "Show Legend?",
