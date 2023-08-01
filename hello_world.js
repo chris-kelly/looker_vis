@@ -49,7 +49,7 @@ looker.plugins.visualizations.add({
     },
     xaxis_label: {
       type: "string",
-      label: "y axis: label",
+      label: "x axis: label",
     },
     yaxis_label: {
       type: "string",
