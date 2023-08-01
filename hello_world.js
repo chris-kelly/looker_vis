@@ -135,6 +135,10 @@ looker.plugins.visualizations.add({
     let dim_names = queryResponse.fields.dimensions.map(d => d.name)
     var mes_names = queryResponse.fields.measures.map(m => m.name)
     var mes_names = mes_names.concat(queryResponse.fields.table_calculations.map(t => t.name)) // add table calcs to measures
+    
+    var mes_labels = queryResponse.fields.measures.map(m => m.label_short)
+    var mes_labels = mes_labels.concat(queryResponse.fields.table_calculations.map(t => t.label_short)) // get labels for nice formatting
+
 
     if (queryResponse.fields.pivots.length > 0) {
         var piv_keys = queryResponse.pivots.map(p => p.key)
@@ -158,7 +162,7 @@ looker.plugins.visualizations.add({
           // y_r.push(piv_keys.map(p => mes_names.map(m => row[m][p].html)).flat())
           y_r.push(mes_names.map(m => piv_keys.map(p => row[m][p].html)).flat())
           // y_lab.push(mes_names.map(m => piv_keys.map(p => p.replace('FIELD','').concat(' | ', m))).flat())
-          y_lab.push(piv_keys.map(p => mes_names.map(m => p.replace('FIELD','').concat(' | ', m))).flat())
+          // y_lab.push(piv_keys.map(p => mes_names.map(m => p.replace('FIELD','').concat(' | ', m))).flat())
         } else {
           y.push(mes_names.map(m => row[m].value).flat())
           y_r.push(mes_names.map(m => row[m].html).flat())
@@ -166,17 +170,17 @@ looker.plugins.visualizations.add({
       }
 
       if (config.xaxis_label) { xaxis_label = config.xaxis_label} 
-      else { xaxis_label = queryResponse.fields.dimensions[0].field_group_label } // label axes
+      else { xaxis_label = queryResponse.fields.dimensions[0].label_short } // label axes
 
       if (config.yaxis_label) { yaxis_label = config.yaxis_label} 
-      else { yaxis_label = queryResponse.fields.measures[0].field_group_label } // label axes
+      else { yaxis_label = queryResponse.fields.measures[0].label_short } // label axes
       
       plotly_data = []
       legend_labels = [] 
       if (piv_keys) {
-        for (var p of piv_keys) { for (var m of mes_names) { legend_labels.push(p.replace('|FIELD|','').concat(' | ', m)) } }
+        for (var p of piv_keys) { for (var m of mes_labels) { legend_labels.push(p.replace('|FIELD|','').concat(' | ', m)) } }
       } else {
-        for (var m of mes_names) { legend_labels.push(m) }
+        for (var m of mes_labels) { legend_labels.push(m) }
       }
 
       if (config.plot_type == 'scatter') {
@@ -186,12 +190,19 @@ looker.plugins.visualizations.add({
       }
       
       for (var i = 0; i < y[0].length; i++) {
+        
+        var hovertemplate = "%{xaxis.title.text}:<br> %{x}<br>" + "<br>" + "%{yaxis.title.text}:<br> %{y}<br>"
+        if (config.xaxis_hover_format) { hovertemplate = hovertemplate.replace("%{x}", "%{x:" + config.xaxis_hover_format + "}") }
+        if (config.yaxis_hover_format) { hovertemplate = hovertemplate.replace("%{y}", "%{y:" + config.yaxis_hover_format + "}") }
+
         var new_trace = {
           x: x.map(row => row[0]),
           y: y.map(row => row[i]),
           type: config.plot_type,
           mode: mode_type,
           name: legend_labels[i],
+          text: y_r.map(row => row[i]),
+          hovertemplate: hovertemplate,
         }
         if (config.error_bands == true) {
             new_trace['error_y'] = {
@@ -223,8 +234,8 @@ looker.plugins.visualizations.add({
 
       if (config.xaxis_lim) {var xlim = config.xaxis_lim.split(","); layout['xaxis']['range'] = [Number(xlim[0]), Number(xlim[1])]}
       if (config.yaxis_lim) {var ylim = config.yaxis_lim.split(","); layout['yaxis']['range'] = [Number(ylim[0]), Number(ylim[1])]}
-      if (config.xaxis_hover_format) {layout['xaxis']['hoverformat'] = config.xaxis_hover_format};
-      if (config.yaxis_hover_format) {layout['yaxis']['hoverformat'] = config.yaxis_hover_format};
+      // if (config.xaxis_hover_format) {layout['xaxis']['hoverformat'] = config.xaxis_hover_format};
+      // if (config.yaxis_hover_format) {layout['yaxis']['hoverformat'] = config.yaxis_hover_format};
       
       if (config.inverse_log == true) {
 
