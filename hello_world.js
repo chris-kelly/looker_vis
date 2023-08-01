@@ -187,10 +187,10 @@ looker.plugins.visualizations.add({
       
       for (var i = 0; i < y[0].length; i++) {
         
-        var hovertemplate = "<b> %{xaxis.title.text}: </b> <br> %{x} <br>" + "<br>" + "<b>%{fullData.name}: </b> <br> %{text} <extra></extra>"
+        var hovertemplate = "<b>%{xaxis.title.text}: </b> <br>%{x} <br>" + "<br>" + "<b>%{fullData.name}: </b> <br>%{text} <extra></extra>"
         if (config.xaxis_hover_format) { hovertemplate = hovertemplate.replace("%{x}", "%{x:" + config.xaxis_hover_format + "}") }
         if (config.yaxis_hover_format) { hovertemplate = hovertemplate.replace("%{text}", "%{y:" + config.yaxis_hover_format + "}") }
-
+        
         var new_trace = {
           x: x.map(row => row[0]),
           y: y.map(row => row[i]),
@@ -199,6 +199,9 @@ looker.plugins.visualizations.add({
           name: legend_labels[i],
           text: y_r.map(row => row[i]),
           hovertemplate: hovertemplate,
+        }
+        if (config.value_labels == true) {
+          new_trace['textposition'] = 'top'
         }
         if (config.error_bands == true) {
             new_trace['error_y'] = {
