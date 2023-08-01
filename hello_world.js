@@ -170,6 +170,8 @@ looker.plugins.visualizations.add({
         }
       }
 
+      console.log(y_r)
+
       if (config.xaxis_label) { xaxis_label = config.xaxis_label} 
       else { xaxis_label = queryResponse.fields.dimensions[0].label_short } // label axes
 
