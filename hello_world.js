@@ -32,6 +32,11 @@ looker.plugins.visualizations.add({
       label: "Add error bars?",
       default: false,
     },
+    show_legend: {
+      type: "boolean",
+      label: "Show Legend?",
+      default: true,
+    },
     xaxis_label: {
       type: "string",
       label: "x axis label",
@@ -185,6 +190,8 @@ looker.plugins.visualizations.add({
         title: 'Click Here to Edit Chart Title',
         xaxis : {title: {text: xaxis_label}},
         yaxis : {title: {text: yaxis_label}},
+        showlegend: config.show_legend,
+        legend: {"orientation": "h"}
       }
 
       if (config.xaxis_lim) {var xlim = config.xaxis_lim.split(","); layout['xaxis']['range'] = [Number(xlim[0]), Number(xlim[1])]}
