@@ -19,7 +19,8 @@ looker.plugins.visualizations.add({
       ],
       display: "radio",
       default: "scatter",
-      section: 'Plot type',
+      section: '1. Plot',
+      order: 1
     },
     scatter_mode: {
       type: "string",
@@ -31,7 +32,8 @@ looker.plugins.visualizations.add({
       ],
       display: "radio",
       default: "markers",
-      section: 'Plot type',
+      section: '1. Plot',
+      order: 2
     },
     bar_mode: {
       type: "string",
@@ -42,25 +44,29 @@ looker.plugins.visualizations.add({
       ],
       display: "radio",
       default: "markers",
-      section: 'Plot type',
+      section: '1. Plot',
+      order: 3
     },
     error_bands: {
       type: "boolean",
       label: "Add error bars? (LB/UB is every 2nd/3rd col)",
       default: false,
-      section: 'Series',
+      section: '1. Plot',
+      order: 4
     },
     inverse_log: {
       type: "boolean",
       label: "Scale y by inverse log?",
       default: false,
-      section: 'Series',
+      section: '1. Plot',
+      order: 4
     },
     value_labels: {
       type: "boolean",
       label: "Value labels?",
       default: false,
-      section: 'Values',
+      section: '2. Values',
+      order: 1,
     },
     value_labels_pos_v: {
       type: "string",
@@ -72,7 +78,10 @@ looker.plugins.visualizations.add({
       ],
       display: "radio",
       default: "middle",
-      section: 'Values',
+      section: '2. Values',
+      display_size: half,
+      order: 2,
+      
     },
     value_labels_pos_h: {
       type: "string",
@@ -84,13 +93,16 @@ looker.plugins.visualizations.add({
       ],
       display: "radio",
       default: "center",
-      section: 'Values',
+      section: '2. Values',
+      display_size: half,
+      order: 3,
     },
     value_labels_format: {
       type: "string",
       label: "Custom format",
       placeholder: "e.g. .2f",
-      section: 'Values',
+      section: '2. Values',
+      order: 4
     },
     show_legend: {
       type: "string",
@@ -100,47 +112,58 @@ looker.plugins.visualizations.add({
         {"Horizontal": "h"},
         {"Vertical": "v"},
       ],
-      display: "radio",
+      display: "select",
       default: "z",
-      section: 'Format',
+      section: '3. Style',
+      order: 1
     },
     xaxis_label: {
       type: "string",
       label: "Axis: x axis title",
-      section: 'Format',
+      section: '3. Style',
+      order: 2
     },
     yaxis_label: {
       type: "string",
       label: "Axis: y axis title",
-      section: 'Format',
+      section: '3. Style',
+      order: 3
     },
     xaxis_lim: {
       type: "string",
-      label: "Axis: x axis range (comma delimited)",
-      section: 'Format',
+      label: "x axis range (comma delim)",
+      section: '3. Style',
+      order: 4,
+      display_size: half,
     },
     yaxis_lim: {
       type: "string",
-      label: "Axis: y axis range (comma delimited)",
-      section: 'Format',
+      label: "y axis range (comma delim)",
+      section: '3. Style',
+      order: 5,
+      display_size: half,
     },
     xaxis_hover_format: {
       type: "string",
       label: "Hover: x custom value format",
       placeholder: "e.g. %d-%b",
-      section: 'Format',
+      section: '3. Style',
+      order: 6,
+      display_size: half,
     },
     yaxis_hover_format: {
       type: "string",
       label: "Hover: t custom value format",
       placeholder: "e.g. .2f",
-      section: 'Format',
+      section: '3. Style',
+      order: 7,
+      display_size: half,
     },
     colorPreSet: {
       type: 'string',
       display: 'select',
       label: '6a. Color Range',
-      section: 'Format',
+      section: '3. Style',
       values: [
         {'Custom': 'c'},
         {'Tomato to Steel Blue': '#F16358,#DF645F,#CD6566,#BB666D,#A96774,#97687B,#856982,#736A89,#616B90,#4F6C97,#3D6D9E'},
@@ -148,13 +171,13 @@ looker.plugins.visualizations.add({
         {'Green to Red': '#7FCDAE, #7ED09C, #7DD389, #85D67C, #9AD97B, #B1DB7A, #CADF79, #E2DF78, #E5C877, #E7AF75, #EB9474, #EE7772'},
         {'White to Green': '#ffffe5,#f7fcb9 ,#d9f0a3,#addd8e,#78c679,#41ab5d,#238443,#006837,#004529'}],
         default: 'c',
-        order: 1
+        order: 8
     },
     colorRange: {
       type: 'array',
       label: '6b. Custom Color Ranges',
-      section: 'Format',
-      order: 2,
+      section: '3. Style',
+      order: 9,
       placeholder: '#fff, red, etc...'
     },
   },
