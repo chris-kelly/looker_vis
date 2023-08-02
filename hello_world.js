@@ -58,25 +58,25 @@ looker.plugins.visualizations.add({
     },
     value_labels_pos_v: {
       type: "string",
-      label: "5a (i) Format: Value labels position (vertical)?",
+      label: "5a (i) Format: Value labels position (vertical)",
       values: [
         {"Top": "top"},
         {"Centre": "middle"},
         {"Bottom": "bottom"},
       ],
       display: "select",
-      default: "z",
+      default: "middle",
     },
     value_labels_pos_h: {
       type: "string",
-      label: "5a (i) Format: Annotate labels?",
+      label: "5a (i) Format: Value labels position (horizontal)",
       values: [
         {"Left": "top"},
         {"Centre": "center"},
         {"Right": "bottom"},
       ],
       display: "select",
-      default: "z",
+      default: "center",
     },
     value_labels_format: {
       type: "string",
