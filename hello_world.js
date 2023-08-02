@@ -98,7 +98,7 @@ looker.plugins.visualizations.add({
     },
     value_labels_pos_h: {
       type: "string",
-      label: "Horiontal position",
+      label: "Horizontal position",
       values: [
         {"Left": "left"},
         {"Centre": "center"},
@@ -112,13 +112,13 @@ looker.plugins.visualizations.add({
     },
     value_labels_pos_b: {
       type: "string",
-      label: "Horiontal position",
+      label: "Bar position",
       values: [
         {"Inside": "inside"},
         {"Outside": "outside"},
       ],
       display: "select",
-      default: "center",
+      default: "inside",
       section: '2. Values',
       display_size: 'third',
       order: 3,
