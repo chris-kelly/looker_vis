@@ -64,7 +64,7 @@ looker.plugins.visualizations.add({
         {"Centre": "middle"},
         {"Bottom": "bottom"},
       ],
-      display: "radio",
+      display: "select",
       default: "z",
     },
     value_labels_pos_h: {
@@ -75,7 +75,7 @@ looker.plugins.visualizations.add({
         {"Centre": "center"},
         {"Right": "bottom"},
       ],
-      display: "radio",
+      display: "select",
       default: "z",
     },
     value_labels_format: {
