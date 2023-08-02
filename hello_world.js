@@ -92,7 +92,7 @@ looker.plugins.visualizations.add({
       display: "select",
       default: "middle",
       section: '2. Values',
-      display_size: 'half',
+      display_size: 'third',
       order: 2,
       
     },
@@ -107,7 +107,20 @@ looker.plugins.visualizations.add({
       display: "select",
       default: "center",
       section: '2. Values',
-      display_size: 'half',
+      display_size: 'third',
+      order: 3,
+    },
+    value_labels_pos_b: {
+      type: "string",
+      label: "Horiontal position",
+      values: [
+        {"Inside": "inside"},
+        {"Outside": "outside"},
+      ],
+      display: "select",
+      default: "center",
+      section: '2. Values',
+      display_size: 'third',
       order: 3,
     },
     value_labels_format: {
@@ -310,9 +323,16 @@ looker.plugins.visualizations.add({
           mode: mode_type,
           name: legend_labels[i],
           text: y_r.map(row => row[i]),
+          textposition: "none",
           hovertemplate: hovertemplate,
         }
-        if (config.value_labels) {new_trace['mode'] = new_trace.mode + "+text"; new_trace['textposition'] = config.value_labels_pos_v + " " + config.value_labels_pos_h } // Show values
+        if (config.value_labels) {
+          if (config.plot_type == 'scatter') {
+            new_trace['mode'] = new_trace.mode + "+text"; new_trace['textposition'] = config.value_labels_pos_v + " " + config.value_labels_pos_h 
+          } else {
+            new_trace['textposition'] = config.value_labels_pos_b
+          }
+        } // Show values
         if (config.value_labels_format) { new_trace['texttemplate'] = "%{y:" + config.value_labels_format + "}" }
         if (config.error_bands == true) { // if error bands, make every 2nd and 3rd column an error bar
             new_trace['error_y'] = {
