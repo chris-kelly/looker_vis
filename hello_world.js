@@ -56,7 +56,7 @@ looker.plugins.visualizations.add({
     },
     inverse_log: {
       type: "boolean",
-      label: "Scale y by inverse log?",
+      label: "Scale y by inverse log? (Non-pivot only)",
       default: false,
       section: '1. Plot',
       order: 5
