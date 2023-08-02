@@ -12,7 +12,7 @@ looker.plugins.visualizations.add({
     // },
     plot_type: {
       type: "string",
-      label: "2. Plot type",
+      label: "1. Plot type",
       values: [
         {"Scatter": "scatter"},
         {"Bar": "bar"},
@@ -53,12 +53,12 @@ looker.plugins.visualizations.add({
     },
     value_labels: {
       type: "boolean",
-      label: "5a (i) Format: Annotate value labels?",
+      label: "5a.i Format: Annotate value labels?",
       default: false,
     },
     value_labels_pos_v: {
       type: "string",
-      label: "5a (i) Format: Value labels position (vertical)",
+      label: "5a.ii Format: Value labels position (vertical)",
       values: [
         {"Top": "top"},
         {"Centre": "middle"},
@@ -69,7 +69,7 @@ looker.plugins.visualizations.add({
     },
     value_labels_pos_h: {
       type: "string",
-      label: "5a (i) Format: Value labels position (horizontal)",
+      label: "5a.iii Format: Value labels position (horizontal)",
       values: [
         {"Left": "left"},
         {"Centre": "center"},
@@ -80,7 +80,7 @@ looker.plugins.visualizations.add({
     },
     value_labels_format: {
       type: "string",
-      label: "5a (ii) Format: specify format of value labels",
+      label: "5a.iv Format: specify format of value labels",
     },
     show_legend: {
       type: "string",
@@ -95,27 +95,51 @@ looker.plugins.visualizations.add({
     },
     xaxis_label: {
       type: "string",
-      label: "5c. Format: x axis title",
+      label: "5c.i Format: x axis title",
     },
     yaxis_label: {
       type: "string",
-      label: "5d. Format: y axis title",
+      label: "5d.i Format: y axis title",
     },
     xaxis_lim: {
       type: "string",
-      label: "5c. Format: x axis range (comma delimited)",
+      label: "5c.ii Format: x axis range (comma delimited)",
     },
     yaxis_lim: {
       type: "string",
-      label: "5d. Format: y axis range (comma delimited)",
+      label: "5d.ii Format: y axis range (comma delimited)",
     },
     xaxis_hover_format: {
       type: "string",
-      label: "5c. Format: specify hover value format",
+      label: "5c.iii Format: specify hover value format",
+      placeholder: "e.g. %d-%b"
     },
     yaxis_hover_format: {
       type: "string",
-      label: "5d. Format: specify hover value format",
+      label: "5d.iii Format: specify hover value format (e.g. .2f)",
+      placeholder: "e.g. .2f"
+    },
+    colorPreSet: {
+      type: 'string',
+      display: 'select',
+      label: '6a. Color Range',
+      section: 'Data',
+      values: [
+        {'Custom': 'c'},
+        {'Default': "#f3cec9,#e7a4b6,#cd7eaf,#a262a9,#6f4d96,#3d3b72,#182844"},
+        {'Tomato to Steel Blue': '#F16358,#DF645F,#CD6566,#BB666D,#A96774,#97687B,#856982,#736A89,#616B90,#4F6C97,#3D6D9E'},
+        {'Pink to Black': '#170108, #300211, #49031A, #620423, #79052B, #910734, #AA083D, #C30946, #DA0A4E, #F30B57, #F52368, #F63378, #F63C79, #F75389, #F86C9A, #F985AB, #FB9DBC, #FCB4CC, #FDCDDD, #FEE6EE'},
+        {'Green to Red': '#7FCDAE, #7ED09C, #7DD389, #85D67C, #9AD97B, #B1DB7A, #CADF79, #E2DF78, #E5C877, #E7AF75, #EB9474, #EE7772'},
+        {'White to Green': '#ffffe5,#f7fcb9 ,#d9f0a3,#addd8e,#78c679,#41ab5d,#238443,#006837,#004529'}],
+        default: 'Default',
+        order: 1
+    },
+    colorRange: {
+      type: 'array',
+      label: '6b. Custom Color Ranges',
+      section: 'Data',
+      order: 2,
+      placeholder: '#fff, red, etc...'
     },
   },
 
@@ -264,13 +288,18 @@ looker.plugins.visualizations.add({
       else { xaxis_label = queryResponse.fields.dimensions[0].label_short } 
       if (config.yaxis_label) { yaxis_label = config.yaxis_label} 
       else { yaxis_label = queryResponse.fields.measures[0].label_short } // label axes
+
+      // set colours
+      if (settings.colorPreSet  == 'c') { var colorSettings =  settings.colorRange || ['#f3cec9', '#e7a4b6', '#cd7eaf', '#a262a9', '#6f4d96', '#3d3b72', '#182844'] }// put a default in
+      else { var colorSettings =  settings.colorPreSet.split(",");}
+
       layout = {
         margin: { t: 0 },
         title: 'Click Here to Edit Chart Title',
         xaxis : {title: {text: xaxis_label}},
         yaxis : {title: {text: yaxis_label}},
         showlegend: false,
-        colorway : ['#f3cec9', '#e7a4b6', '#cd7eaf', '#a262a9', '#6f4d96', '#3d3b72', '#182844']
+        colorway : colorSettings
       }
 
       // Show legend and set orientation
