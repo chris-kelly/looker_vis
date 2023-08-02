@@ -53,7 +53,7 @@ looker.plugins.visualizations.add({
     },
     value_labels: {
       type: "string",
-      label: "5a. Format: Annotate labels?",
+      label: "5a (i) Format: Annotate labels?",
       values: [
         {"None": "none"},
         {"Top": "top"},
@@ -61,6 +61,10 @@ looker.plugins.visualizations.add({
       ],
       display: "radio",
       default: "z",
+    },
+    value_labels_format: {
+      type: "string",
+      label: "5a (ii) Format: specify format of value labels",
     },
     show_legend: {
       type: "string",
@@ -225,6 +229,7 @@ looker.plugins.visualizations.add({
           hovertemplate: hovertemplate,
         }
         if (config.value_labels != "none") {new_trace['mode'] = new_trace.mode + "+text"} // Show values
+        if (config.value_labels_format) { new_trace['texttemplate'] = "%{y:" + config.value_labels_format + "}" }
         if (config.error_bands == true) { // if error bands, make every 2nd and 3rd column an error bar
             new_trace['error_y'] = {
                 type: 'data',
