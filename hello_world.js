@@ -242,7 +242,7 @@ looker.plugins.visualizations.add({
       var mes_names = queryResponse.fields.measures.map(m => m.name) // measure names
       var mes_names = mes_names.concat(queryResponse.fields.table_calculations.map(t => t.name)) // add table calcs to measures
       var mes_labels = queryResponse.fields.measures.map(m => m.label_short) // get measure labels for nice formatting
-      var mes_labels = mes_labels.concat(queryResponse.fields.table_calculations.map(t => t.label_short)) 
+      var mes_labels = mes_labels.concat(queryResponse.fields.table_calculations.map(t => t.label)) 
       if (queryResponse.fields.pivots.length > 0) { var piv_keys = queryResponse.pivots.map(p => p.key) } // get pivot names (if any)
 
       // Throw errors and exit if the shape of the data isn't what this chart requires
