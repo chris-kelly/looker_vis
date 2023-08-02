@@ -71,9 +71,9 @@ looker.plugins.visualizations.add({
       type: "string",
       label: "5a (i) Format: Value labels position (horizontal)",
       values: [
-        {"Left": "top"},
+        {"Left": "left"},
         {"Centre": "center"},
-        {"Right": "bottom"},
+        {"Right": "right"},
       ],
       display: "select",
       default: "center",
@@ -95,11 +95,11 @@ looker.plugins.visualizations.add({
     },
     xaxis_label: {
       type: "string",
-      label: "5c. Format: x axis label",
+      label: "5c. Format: x axis title",
     },
     yaxis_label: {
       type: "string",
-      label: "5d. Format: y axis label",
+      label: "5d. Format: y axis title",
     },
     xaxis_lim: {
       type: "string",
