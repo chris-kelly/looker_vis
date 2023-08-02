@@ -64,6 +64,7 @@ looker.plugins.visualizations.add({
         {"Horizontal": "h"},
         {"Vertical": "v"},
       ],
+      display: "radio",
       default: "z",
     },
     xaxis_label: {
@@ -163,8 +164,8 @@ looker.plugins.visualizations.add({
 
       // Function to try and find nicest rendered value for formatting
       function get_pretty_data(d) {
-        if ('html' in d.keys()) { result = d.html } 
-        else if ('rendered' in d.keys()) { result = d.rendered } 
+        if ('html' in Object.keys(d)) { result = d.html } 
+        else if ('rendered' in Object.keys(d)) { result = d.rendered } 
         else { result = d.value }
         return result
       }
