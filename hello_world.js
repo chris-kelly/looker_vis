@@ -164,8 +164,8 @@ looker.plugins.visualizations.add({
 
       // Function to try and find nicest rendered value for formatting
       function get_pretty_data(d) {
-        if ('html' in Object.keys(d)) { result = d.html } 
-        else if ('rendered' in Object.keys(d)) { result = d.rendered } 
+        if (d.hasOwnProperty('html')) { result = d.html } 
+        else if (d.hasOwnProperty('rendered')) { result = d.rendered } 
         else { result = d.value }
         return result
       }
@@ -249,7 +249,7 @@ looker.plugins.visualizations.add({
       }
 
       // Show legend and set orientation
-      if (config.show_legend != "z") { layout['showlegend'] = true; layout['legend'] = config.show_legend }
+      if (config.show_legend != "z") { layout['showlegend'] = true; layout['legend'] = {"orientation": config.show_legend} }
 
       // set barmode is bar selected
       if (config.plot_type == 'bar') { layout['barmode'] = mode_type}
