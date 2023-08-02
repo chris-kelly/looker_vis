@@ -59,7 +59,20 @@ looker.plugins.visualizations.add({
       label: "Scale y by inverse log?",
       default: false,
       section: '1. Plot',
-      order: 4
+      order: 5
+    },
+    show_legend: {
+      type: "string",
+      label: "Legend options",
+      values: [
+        {"Hide": "z"},
+        {"Horizontal": "h"},
+        {"Vertical": "v"},
+      ],
+      display: "select",
+      default: "z",
+      section: '1. Plot',
+      order: 6
     },
     value_labels: {
       type: "boolean",
@@ -76,7 +89,7 @@ looker.plugins.visualizations.add({
         {"Centre": "middle"},
         {"Bottom": "bottom"},
       ],
-      display: "radio",
+      display: "select",
       default: "middle",
       section: '2. Values',
       display_size: 'half',
@@ -91,7 +104,7 @@ looker.plugins.visualizations.add({
         {"Centre": "center"},
         {"Right": "right"},
       ],
-      display: "radio",
+      display: "select",
       default: "center",
       section: '2. Values',
       display_size: 'half',
@@ -104,28 +117,15 @@ looker.plugins.visualizations.add({
       section: '2. Values',
       order: 4
     },
-    show_legend: {
-      type: "string",
-      label: "5b. Format: Display Legend?",
-      values: [
-        {"Hide": "z"},
-        {"Horizontal": "h"},
-        {"Vertical": "v"},
-      ],
-      display: "select",
-      default: "z",
-      section: '3. Style',
-      order: 1
-    },
     xaxis_label: {
       type: "string",
-      label: "Axis: x axis title",
+      label: "x axis title",
       section: '3. Style',
       order: 2
     },
     yaxis_label: {
       type: "string",
-      label: "Axis: y axis title",
+      label: "y axis title",
       section: '3. Style',
       order: 3
     },
