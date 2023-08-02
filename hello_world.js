@@ -145,7 +145,7 @@ looker.plugins.visualizations.add({
     },
     xaxis_hover_format: {
       type: "string",
-      label: "Hover: x custom value format",
+      label: "Custom value format (x)",
       placeholder: "e.g. %d-%b",
       section: '3. Style',
       order: 6,
@@ -153,7 +153,7 @@ looker.plugins.visualizations.add({
     },
     yaxis_hover_format: {
       type: "string",
-      label: "Hover: t custom value format",
+      label: "Custom value format (y)",
       placeholder: "e.g. .2f",
       section: '3. Style',
       order: 7,
@@ -162,10 +162,10 @@ looker.plugins.visualizations.add({
     colorPreSet: {
       type: 'string',
       display: 'select',
-      label: '6a. Color Range',
+      label: 'Color Range',
       section: '3. Style',
       values: [
-        {'Custom': 'c'},
+        {'Default': 'c'},
         {'Tomato to Steel Blue': '#F16358,#DF645F,#CD6566,#BB666D,#A96774,#97687B,#856982,#736A89,#616B90,#4F6C97,#3D6D9E'},
         {'Pink to Black': '#170108, #300211, #49031A, #620423, #79052B, #910734, #AA083D, #C30946, #DA0A4E, #F30B57, #F52368, #F63378, #F63C79, #F75389, #F86C9A, #F985AB, #FB9DBC, #FCB4CC, #FDCDDD, #FEE6EE'},
         {'Green to Red': '#7FCDAE, #7ED09C, #7DD389, #85D67C, #9AD97B, #B1DB7A, #CADF79, #E2DF78, #E5C877, #E7AF75, #EB9474, #EE7772'},
@@ -175,7 +175,7 @@ looker.plugins.visualizations.add({
     },
     colorRange: {
       type: 'array',
-      label: '6b. Custom Color Ranges',
+      label: 'Custom Color Ranges',
       section: '3. Style',
       order: 9,
       placeholder: '#fff, red, etc...'
