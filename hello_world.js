@@ -158,7 +158,7 @@ looker.plugins.visualizations.add({
     },
     xaxis_hover_format: {
       type: "string",
-      label: "Custom value format (x)",
+      label: "Custom hover format (x)",
       placeholder: "e.g. %d-%b",
       section: '3. Style',
       order: 6,
@@ -166,7 +166,7 @@ looker.plugins.visualizations.add({
     },
     yaxis_hover_format: {
       type: "string",
-      label: "Custom value format (y)",
+      label: "Custom hover format (y)",
       placeholder: "e.g. .2f",
       section: '3. Style',
       order: 7,
