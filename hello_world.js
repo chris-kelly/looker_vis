@@ -52,12 +52,28 @@ looker.plugins.visualizations.add({
       default: false,
     },
     value_labels: {
+      type: "boolean",
+      label: "5a (i) Format: Annotate value labels?",
+      default: false,
+    },
+    value_labels_pos_v: {
+      type: "string",
+      label: "5a (i) Format: Value labels position (vertical)?",
+      values: [
+        {"Top": "top"},
+        {"Centre": "middle"},
+        {"Bottom": "bottom"},
+      ],
+      display: "radio",
+      default: "z",
+    },
+    value_labels_pos_h: {
       type: "string",
       label: "5a (i) Format: Annotate labels?",
       values: [
-        {"None": "none"},
-        {"Top": "top"},
-        {"Bottom": "bottom"},
+        {"Left": "top"},
+        {"Centre": "center"},
+        {"Right": "bottom"},
       ],
       display: "radio",
       default: "z",
@@ -225,10 +241,9 @@ looker.plugins.visualizations.add({
           mode: mode_type,
           name: legend_labels[i],
           text: y_r.map(row => row[i]),
-          textposition: config.value_labels,
           hovertemplate: hovertemplate,
         }
-        if (config.value_labels != "none") {new_trace['mode'] = new_trace.mode + "+text"} // Show values
+        if (config.value_labels) {new_trace['mode'] = new_trace.mode + "+text"; new_trace['textposition'] = config.value_labels_pos_v + " " + config.value_labels_pos_h } // Show values
         if (config.value_labels_format) { new_trace['texttemplate'] = "%{y:" + config.value_labels_format + "}" }
         if (config.error_bands == true) { // if error bands, make every 2nd and 3rd column an error bar
             new_trace['error_y'] = {
