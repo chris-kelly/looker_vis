@@ -292,8 +292,6 @@ looker.plugins.visualizations.add({
           y_r.push(mes_names.map(m => get_pretty_data(row[m])).flat())
         }
       }
-
-      console.log(y_r) // for debugging
       
       // if there are pivot keys, legend labels should include them
       legend_labels = [] 
@@ -380,13 +378,13 @@ looker.plugins.visualizations.add({
       // Function to do inverse log
       if (config.inverse_log == true) {
 
-        y = y.map(row => row[0])
+        yn = y.map(row => row[0])
         // create scaled version of y
         y_m = math.multiply( math.log10( 
           math.add( // equivalent to 1-y
               1,
               math.multiply( 
-                math.matrix(y), // convert y to mathjs vector
+                math.matrix(yn), // convert y to mathjs vector
                 -1
                 )
               )
