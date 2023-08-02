@@ -12,75 +12,85 @@ looker.plugins.visualizations.add({
     // },
     plot_type: {
       type: "string",
-      label: "1. Plot type",
+      label: "Plot",
       values: [
         {"Scatter": "scatter"},
         {"Bar": "bar"},
       ],
       display: "radio",
-      default: "scatter"
+      default: "scatter",
+      section: 'Plot type',
     },
     scatter_mode: {
       type: "string",
-      label: "2a. Plot type detail: scatter mode",
+      label: "Plot type detail: scatter mode",
       values: [
         {"Markers": "markers"},
         {"Lines": "lines"},
         {"Markers & Lines": "markers+lines"},
       ],
       display: "radio",
-      default: "markers"
+      default: "markers",
+      section: 'Plot type',
     },
     bar_mode: {
       type: "string",
-      label: "2b. Plot type detail: bar mode",
+      label: "Plot type detail: bar mode",
       values: [
         {"Grouped": "group"},
         {"Stacked": "stack"},
       ],
       display: "radio",
-      default: "markers"
+      default: "markers",
+      section: 'Plot type',
     },
     error_bands: {
       type: "boolean",
-      label: "3. Add error bars? (LB/UB is every 2nd/3rd col)",
+      label: "Add error bars? (LB/UB is every 2nd/3rd col)",
       default: false,
+      section: 'Series',
     },
     inverse_log: {
       type: "boolean",
-      label: "4. Scale y by inverse log?",
+      label: "Scale y by inverse log?",
       default: false,
+      section: 'Series',
     },
     value_labels: {
       type: "boolean",
-      label: "5a.i Format: Annotate value labels?",
+      label: "Value labels?",
       default: false,
+      section: 'Values',
     },
     value_labels_pos_v: {
       type: "string",
-      label: "5a.ii Format: Value labels position (vertical)",
+      label: "Vertical position",
       values: [
         {"Top": "top"},
         {"Centre": "middle"},
         {"Bottom": "bottom"},
       ],
-      display: "select",
+      display: "radio",
       default: "middle",
+      section: 'Values',
     },
     value_labels_pos_h: {
       type: "string",
-      label: "5a.iii Format: Value labels position (horizontal)",
+      label: "Horiontal position",
       values: [
         {"Left": "left"},
         {"Centre": "center"},
         {"Right": "right"},
       ],
-      display: "select",
+      display: "radio",
       default: "center",
+      section: 'Values',
     },
     value_labels_format: {
       type: "string",
-      label: "5a.iv Format: specify format of value labels",
+      label: "Custom format",
+      placeholder: "e.g. .2f",
+      section: 'Values',
     },
     show_legend: {
       type: "string",
@@ -92,38 +102,45 @@ looker.plugins.visualizations.add({
       ],
       display: "radio",
       default: "z",
+      section: 'Format',
     },
     xaxis_label: {
       type: "string",
-      label: "5c.i Format: x axis title",
+      label: "Axis: x axis title",
+      section: 'Format',
     },
     yaxis_label: {
       type: "string",
-      label: "5d.i Format: y axis title",
+      label: "Axis: y axis title",
+      section: 'Format',
     },
     xaxis_lim: {
       type: "string",
-      label: "5c.ii Format: x axis range (comma delimited)",
+      label: "Axis: x axis range (comma delimited)",
+      section: 'Format',
     },
     yaxis_lim: {
       type: "string",
-      label: "5d.ii Format: y axis range (comma delimited)",
+      label: "Axis: y axis range (comma delimited)",
+      section: 'Format',
     },
     xaxis_hover_format: {
       type: "string",
-      label: "5c.iii Format: specify hover value format",
-      placeholder: "e.g. %d-%b"
+      label: "Hover: x custom value format",
+      placeholder: "e.g. %d-%b",
+      section: 'Format',
     },
     yaxis_hover_format: {
       type: "string",
-      label: "5d.iii Format: specify hover value format (e.g. .2f)",
-      placeholder: "e.g. .2f"
+      label: "Hover: t custom value format",
+      placeholder: "e.g. .2f",
+      section: 'Format',
     },
     colorPreSet: {
       type: 'string',
       display: 'select',
       label: '6a. Color Range',
-      section: 'Data',
+      section: 'Format',
       values: [
         {'Custom': 'c'},
         {'Default': "#f3cec9,#e7a4b6,#cd7eaf,#a262a9,#6f4d96,#3d3b72,#182844"},
@@ -137,7 +154,7 @@ looker.plugins.visualizations.add({
     colorRange: {
       type: 'array',
       label: '6b. Custom Color Ranges',
-      section: 'Data',
+      section: 'Format',
       order: 2,
       placeholder: '#fff, red, etc...'
     },
