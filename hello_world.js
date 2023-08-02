@@ -79,7 +79,7 @@ looker.plugins.visualizations.add({
       display: "radio",
       default: "middle",
       section: '2. Values',
-      display_size: half,
+      display_size: 'half',
       order: 2,
       
     },
@@ -94,7 +94,7 @@ looker.plugins.visualizations.add({
       display: "radio",
       default: "center",
       section: '2. Values',
-      display_size: half,
+      display_size: 'half',
       order: 3,
     },
     value_labels_format: {
@@ -134,14 +134,14 @@ looker.plugins.visualizations.add({
       label: "x axis range (comma delim)",
       section: '3. Style',
       order: 4,
-      display_size: half,
+      display_size: 'half',
     },
     yaxis_lim: {
       type: "string",
       label: "y axis range (comma delim)",
       section: '3. Style',
       order: 5,
-      display_size: half,
+      display_size: 'half',
     },
     xaxis_hover_format: {
       type: "string",
@@ -149,7 +149,7 @@ looker.plugins.visualizations.add({
       placeholder: "e.g. %d-%b",
       section: '3. Style',
       order: 6,
-      display_size: half,
+      display_size: 'half',
     },
     yaxis_hover_format: {
       type: "string",
@@ -157,7 +157,7 @@ looker.plugins.visualizations.add({
       placeholder: "e.g. .2f",
       section: '3. Style',
       order: 7,
-      display_size: half,
+      display_size: 'half',
     },
     colorPreSet: {
       type: 'string',
