@@ -55,7 +55,7 @@ looker.plugins.visualizations.add({
       type: "string",
       label: "5a. Format: Annotate labels?",
       values: [
-        {"None": "z"},
+        {"None": "none"},
         {"Top": "top"},
         {"Bottom": "bottom"},
       ],
@@ -221,9 +221,10 @@ looker.plugins.visualizations.add({
           mode: mode_type,
           name: legend_labels[i],
           text: y_r.map(row => row[i]),
+          textposition: config.value_labels,
           hovertemplate: hovertemplate,
         }
-        if (config.value_labels != "z") {new_trace['mode'] = new_trace.mode + "+text" ; new_trace['showlegend'] = config.value_labels} // Show values
+        if (config.value_labels != "none") {new_trace['mode'] = new_trace.mode + "+text"} // Show values
         if (config.error_bands == true) { // if error bands, make every 2nd and 3rd column an error bar
             new_trace['error_y'] = {
                 type: 'data',
