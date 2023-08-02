@@ -112,7 +112,7 @@ looker.plugins.visualizations.add({
     },
     value_labels_pos_b: {
       type: "string",
-      label: "Bar position",
+      label: "Position in/out of bar",
       values: [
         {"Inside": "inside"},
         {"Outside": "outside"},
@@ -121,14 +121,14 @@ looker.plugins.visualizations.add({
       default: "inside",
       section: '2. Values',
       display_size: 'third',
-      order: 3,
+      order: 4,
     },
     value_labels_format: {
       type: "string",
       label: "Custom format",
       placeholder: "e.g. .2f",
       section: '2. Values',
-      order: 4
+      order: 5
     },
     xaxis_label: {
       type: "string",
