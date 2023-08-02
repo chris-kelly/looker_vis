@@ -238,11 +238,17 @@ looker.plugins.visualizations.add({
     
     window.scriptLoad.then(() => { // Do this first to ensure js loads in time
 
+      function get_pretty_labels(d) {
+        if (d.hasOwnProperty('label_short')) { result = d.label_short } 
+        else { result = d.label }
+        return result
+      }
+
       let dim_names = queryResponse.fields.dimensions.map(d => d.name) // dimension names
       var mes_names = queryResponse.fields.measures.map(m => m.name) // measure names
       var mes_names = mes_names.concat(queryResponse.fields.table_calculations.map(t => t.name)) // add table calcs to measures
-      var mes_labels = queryResponse.fields.measures.map(m => m.label_short) // get measure labels for nice formatting
-      var mes_labels = mes_labels.concat(queryResponse.fields.table_calculations.map(t => t.label)) 
+      var mes_labels = queryResponse.fields.measures.map(m => get_pretty_labels(m)) // get measure labels for nice formatting
+      var mes_labels = mes_labels.concat(queryResponse.fields.table_calculations.map(t => get_pretty_labels(t))) 
       if (queryResponse.fields.pivots.length > 0) { var piv_keys = queryResponse.pivots.map(p => p.key) } // get pivot names (if any)
 
       // Throw errors and exit if the shape of the data isn't what this chart requires
@@ -324,9 +330,9 @@ looker.plugins.visualizations.add({
 
       // set layout
       if (config.xaxis_label) { xaxis_label = config.xaxis_label} // label axes
-      else { xaxis_label = queryResponse.fields.dimensions[0].label_short } 
+      else { xaxis_label = get_pretty_labels(queryResponse.fields.dimensions[0]) } 
       if (config.yaxis_label) { yaxis_label = config.yaxis_label} 
-      else { yaxis_label = queryResponse.fields.measures[0].label_short } // label axes
+      else { yaxis_label = get_pretty_labels(queryResponse.fields.measures[0]) } // label axes
 
       // set colours
       if (config.colorPreSet  == 'c') { var colorSettings =  config.colorRange || ['#f3cec9', '#e7a4b6', '#cd7eaf', '#a262a9', '#6f4d96', '#3d3b72', '#182844'] }// put a default in
