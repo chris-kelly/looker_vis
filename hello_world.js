@@ -138,7 +138,7 @@ looker.plugins.visualizations.add({
       order: 5
     },
     graph_title: {
-      type: string,
+      type: "string",
       label: "x axis title",
       section: '3. Style',
       default: "",
