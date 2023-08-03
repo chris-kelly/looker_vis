@@ -179,6 +179,12 @@ looker.plugins.visualizations.add({
       order: 7,
       display_size: 'half',
     },
+    custom_hover_format: {
+      type: "string",
+      label: "Custom hover field",
+      placeholder: "Insert column name",
+      order: 8,
+    },
     colorPreSet: {
       type: 'string',
       display: 'select',
@@ -191,13 +197,13 @@ looker.plugins.visualizations.add({
         {'Green to Red': '#7FCDAE, #7ED09C, #7DD389, #85D67C, #9AD97B, #B1DB7A, #CADF79, #E2DF78, #E5C877, #E7AF75, #EB9474, #EE7772'},
         {'White to Green': '#ffffe5,#f7fcb9 ,#d9f0a3,#addd8e,#78c679,#41ab5d,#238443,#006837,#004529'}],
         default: 'c',
-        order: 8
+        order: 9
     },
     colorRange: {
       type: 'array',
       label: 'Custom Color Ranges',
       section: '3. Style',
-      order: 9,
+      order: 10,
       placeholder: '#fff, red, etc...'
     },
   },
@@ -293,10 +299,19 @@ looker.plugins.visualizations.add({
         x_r.push(dim_names.map(d => get_pretty_data(row[d])).flat())
         if (piv_keys) { // if pivot, json has extra level, specified
           y.push(piv_keys.map(p => mes_names.map(m => row[m][p].value)).flat())
-          y_r.push(piv_keys.map(p => mes_names.map(m => get_pretty_data(row[m][p]))).flat())
+          if (config.custom_hover_format) {
+            y_r.push(piv_keys.map(p => get_pretty_data(row[config.custom_hover_format][p])).flat())
+          } else { 
+            y_r.push(piv_keys.map(p => mes_names.map(m => get_pretty_data(row[m][p]))).flat()) 
+          }
         } else {
           y.push(mes_names.map(m => row[m].value).flat())
-          y_r.push(mes_names.map(m => get_pretty_data(row[m])).flat())
+          if (config.custom_hover_format) {
+            y_r.push(get_pretty_data(row[config.custom_hover_format]).flat())
+          } else { 
+            y_r.push(mes_names.map(m => get_pretty_data(row[m])).flat())
+          }
+          
         }
       }
       
