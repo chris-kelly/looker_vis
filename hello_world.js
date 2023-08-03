@@ -308,7 +308,7 @@ looker.plugins.visualizations.add({
         } else {
           y.push(mes_names.map(m => row[m].value).flat())
           if (config.custom_hover_format) {
-            y_r.push(get_pretty_data(row[config.custom_hover_format]).flat())
+            y_r.push(get_pretty_data(row[config.custom_hover_format]))
           } else { 
             y_r.push(mes_names.map(m => get_pretty_data(row[m])).flat())
           }
@@ -336,7 +336,8 @@ looker.plugins.visualizations.add({
         var hovertemplate = "<b>%{xaxis.title.text}: </b> <br>%{x} <br>" + "<br>" + "<b>%{fullData.name}: </b> <br>%{text} <extra></extra>"
         if (config.xaxis_hover_format) { hovertemplate = hovertemplate.replace("%{x}", "%{x:" + config.xaxis_hover_format + "}") }
         if (config.yaxis_hover_format) { hovertemplate = hovertemplate.replace("%{text}", "%{y:" + config.yaxis_hover_format + "}") }
-        
+        if (config.custom_hover_format) { hovertemplate = config.custom_hover_format }
+
         var new_trace = {
           x: x.map(row => row[0]),
           y: y.map(row => row[i]),
