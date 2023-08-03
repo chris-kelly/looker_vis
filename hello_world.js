@@ -47,19 +47,26 @@ looker.plugins.visualizations.add({
       section: '1. Plot',
       order: 3
     },
+    swap_axes: {
+      type: "boolean",
+      label: "Swap X and Y",
+      default: false,
+      section: '1. Plot',
+      order: 4
+    },
     error_bands: {
       type: "boolean",
       label: "Add error bars? (LB/UB is every 2nd/3rd col)",
       default: false,
       section: '1. Plot',
-      order: 4
+      order: 5
     },
     inverse_log: {
       type: "boolean",
       label: "Scale y by inverse log? (Non-pivot only)",
       default: false,
       section: '1. Plot',
-      order: 5
+      order: 6
     },
     show_legend: {
       type: "string",
@@ -72,7 +79,7 @@ looker.plugins.visualizations.add({
       display: "select",
       default: "z",
       section: '1. Plot',
-      order: 6
+      order: 7
     },
     value_labels: {
       type: "boolean",
@@ -375,6 +382,21 @@ looker.plugins.visualizations.add({
       if (config.xaxis_lim) {var xlim = config.xaxis_lim.split(","); layout['xaxis']['range'] = [Number(xlim[0]), Number(xlim[1])]}
       if (config.yaxis_lim) {var ylim = config.yaxis_lim.split(","); layout['yaxis']['range'] = [Number(ylim[0]), Number(ylim[1])]}
       
+      if (config.swap_axes) {
+        for (var i = 0; i < plotly_data.length; i++) {
+          x = plotly_data[i]['x'].copy()
+          y = plotly_data[i]['y'].copy()
+          plotly_data[i]['x'] = y
+          plotly_data[i]['y'] = x
+          plotly_data[i]['error_x'] = plotly_data[i]['error_y'].copy()
+          delete plotly_data[i].error_y
+        }
+        xaxis = layout['xaxis'].copy()
+        yaxis = layout['yaxis'].copy()
+        layout['yaxis'] = xaxis
+        layout['xaxis'] = yaxis
+      }
+
       // Function to do inverse log
       if (config.inverse_log == true) {
 
