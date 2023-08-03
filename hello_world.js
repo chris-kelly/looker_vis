@@ -207,6 +207,13 @@ looker.plugins.visualizations.add({
       order: 10,
       placeholder: '#fff, red, etc...'
     },
+    margins: {
+      type: 'string',
+      label: 'Margins: L,R,B,T (comma delim)',
+      section: '3. Style',
+      order: 11,
+      default: "0,0,0,0"
+    }
   },
 
   // Set up the initial state of the visualization
@@ -381,10 +388,15 @@ looker.plugins.visualizations.add({
       else { var colorSettings =  config.colorPreSet.split(",");}
 
       layout = {
-        margin: { t: 0 },
+        margin: { 
+          l: parseInt(config.margins.split(',')[0]),
+          r: parseInt(config.margins.split(',')[1]),
+          b: parseInt(config.margins.split(',')[2]),
+          t: parseInt(config.margins.split(',')[3]),
+        },
         title: 'Click Here to Edit Chart Title',
-        xaxis : {title: {text: xaxis_label}},
-        yaxis : {title: {text: yaxis_label}},
+        xaxis : {title: {text: xaxis_label}, automargin: true},
+        yaxis : {title: {text: yaxis_label}, automargin: true},
         showlegend: false,
         colorway : colorSettings
       }
