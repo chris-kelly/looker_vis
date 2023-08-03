@@ -141,6 +141,7 @@ looker.plugins.visualizations.add({
       type: string,
       label: "x axis title",
       section: '3. Style',
+      default: "",
       order: 1,
     },
     xaxis_label: {
