@@ -137,6 +137,12 @@ looker.plugins.visualizations.add({
       section: '2. Values',
       order: 5
     },
+    graph_title: {
+      type: string,
+      label: "x axis title",
+      section: '3. Style',
+      order: 1,
+    },
     xaxis_label: {
       type: "string",
       label: "x axis title",
@@ -209,10 +215,10 @@ looker.plugins.visualizations.add({
     },
     margins: {
       type: 'string',
-      label: 'Margins: L,R,B,T (comma delim)',
+      label: 'Margins: L,R,B,T,pad (comma delim)',
       section: '3. Style',
       order: 11,
-      default: "0,0,0,0"
+      default: "0,0,0,0,0"
     }
   },
 
@@ -393,8 +399,9 @@ looker.plugins.visualizations.add({
           r: parseInt(config.margins.split(',')[1]),
           b: parseInt(config.margins.split(',')[2]),
           t: parseInt(config.margins.split(',')[3]),
+          pad: parseInt(config.margins.split(',')[4]),
         },
-        title: 'Click Here to Edit Chart Title',
+        title: config.graph_title,
         xaxis : {title: {text: xaxis_label}, automargin: true},
         yaxis : {title: {text: yaxis_label}, automargin: true},
         showlegend: false,
