@@ -183,6 +183,7 @@ looker.plugins.visualizations.add({
       type: "string",
       label: "Custom hover field",
       placeholder: "Insert column name",
+      section: '3. Style',
       order: 8,
     },
     colorPreSet: {
