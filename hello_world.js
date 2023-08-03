@@ -301,14 +301,14 @@ looker.plugins.visualizations.add({
         if (piv_keys) { // if pivot, json has extra level, specified
           y.push(piv_keys.map(p => mes_names.map(m => row[m][p].value)).flat())
           if (config.custom_hover_format) {
-            y_r.push(piv_keys.map(p => get_pretty_data(row[config.custom_hover_format][p])).flat())
+            y_r.push(piv_keys.map(p => mes_names.map(m => get_pretty_data(row[config.custom_hover_format][p]))).flat())
           } else { 
             y_r.push(piv_keys.map(p => mes_names.map(m => get_pretty_data(row[m][p]))).flat()) 
           }
         } else {
           y.push(mes_names.map(m => row[m].value).flat())
           if (config.custom_hover_format) {
-            y_r.push(get_pretty_data(row[config.custom_hover_format]))
+            y_r.push(mes_names.map(m => get_pretty_data(row[config.custom_hover_format])).flat())
           } else { 
             y_r.push(mes_names.map(m => get_pretty_data(row[m])).flat())
           }
