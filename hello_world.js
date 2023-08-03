@@ -336,7 +336,7 @@ looker.plugins.visualizations.add({
         var hovertemplate = "<b>%{xaxis.title.text}: </b> <br>%{x} <br>" + "<br>" + "<b>%{fullData.name}: </b> <br>%{text} <extra></extra>"
         if (config.xaxis_hover_format) { hovertemplate = hovertemplate.replace("%{x}", "%{x:" + config.xaxis_hover_format + "}") }
         if (config.yaxis_hover_format) { hovertemplate = hovertemplate.replace("%{text}", "%{y:" + config.yaxis_hover_format + "}") }
-        if (config.custom_hover_format) { hovertemplate = config.custom_hover_format }
+        if (config.custom_hover_format) { hovertemplate = "%{text} <extra></extra>" }
 
         var new_trace = {
           x: x.map(row => row[0]),
