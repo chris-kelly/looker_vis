@@ -384,15 +384,15 @@ looker.plugins.visualizations.add({
       
       if (config.swap_axes) {
         for (var i = 0; i < plotly_data.length; i++) {
-          x = plotly_data[i]['x'].copy()
-          y = plotly_data[i]['y'].copy()
+          x = structuredClone(plotly_data[i]['x'])
+          y = structuredClone(plotly_data[i]['y'])
           plotly_data[i]['x'] = y
           plotly_data[i]['y'] = x
-          plotly_data[i]['error_x'] = plotly_data[i]['error_y'].copy()
+          plotly_data[i]['error_x'] = structuredClone(plotly_data[i]['error_y'])
           delete plotly_data[i].error_y
         }
-        xaxis = layout['xaxis'].copy()
-        yaxis = layout['yaxis'].copy()
+        xaxis = structuredClone(layout['xaxis'])
+        yaxis = structuredClone(layout['yaxis'])
         layout['yaxis'] = xaxis
         layout['xaxis'] = yaxis
       }
