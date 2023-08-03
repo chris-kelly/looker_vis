@@ -139,7 +139,7 @@ looker.plugins.visualizations.add({
     },
     graph_title: {
       type: "string",
-      label: "x axis title",
+      label: "Graph title",
       section: '3. Style',
       default: "",
       order: 1,
