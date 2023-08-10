@@ -276,6 +276,7 @@ looker.plugins.visualizations.add({
     // Clear errors from previous updates
     this.clearErrors();
     console.log(queryResponse) // see everything that is returned by Looker - just for debugging
+    console.log(data)
 
     var colnames = []
     for (field of data[0]) {
