@@ -278,7 +278,7 @@ looker.plugins.visualizations.add({
     console.log(queryResponse) // see everything that is returned by Looker - just for debugging
 
     var colnames = []
-    for (field of queryResponse.data[0]) {
+    for (field of data[0]) {
       if (field.hasOwnProperty('value')) { colnames.push([field.key]) } 
       else { for (subfield of field) { colnames.push([fields.key, subfield.key]) } }
     }
@@ -286,7 +286,7 @@ looker.plugins.visualizations.add({
 
     var data_dict = {}
     for (field of colnames) {
-      data_dict[field.join(' | ').replace('|FIELD|',' | ')] = queryResponse.data.map(row => field.length == 1 ? row[field[0]].value : row[field[0]][field[1]].value)
+      data_dict[field.join(' | ').replace('|FIELD|',' | ')] = data.map(row => field.length == 1 ? row[field[0]].value : row[field[0]][field[1]].value)
     }
 
     console.log(data_dict)
