@@ -276,21 +276,24 @@ looker.plugins.visualizations.add({
     // Clear errors from previous updates
     this.clearErrors();
     console.log(queryResponse) // see everything that is returned by Looker - just for debugging
+
+    var colnames = []
+    for (field of queryResponse.data[0]) {
+      if (field.hasOwnProperty('value')) { colnames.push([field.key]) } 
+      else { for (subfield of field) { colnames.push([fields.key, subfield.key]) } }
+    }
+    console.log(colnames)
+
+    var data_dict = {}
+    for (field of colnames) {
+      data_dict[field.join(' | ').replace('|FIELD|',' | ')] = queryResponse.data.map(row => field.length == 1 ? row[field[0]].value : row[field[0]][field[1]].value)
+    }
+
+    console.log(nice_data)
     
     window.scriptLoad.then(() => { // Do this first to ensure js loads in time
 
-      var colnames = []
-      for (field of queryResponse.data[0]) {
-        if (field.hasOwnProperty('value')) { colnames.push([field.key]) } 
-        else { for (subfield of field) { colnames.push([fields.key, subfield.key]) } }
-      }
-
-      var data_dict = {}
-      for (field of colnames) {
-        data_dict[field.join(' | ').replace('|FIELD|',' | ')] = queryResponse.data.map(row => field.length == 1 ? row[field[0]].value : row[field[0]][field[1]].value)
-      }
-
-      console.log(nice_data)
+      
 
       function get_pretty_labels(d) {
         if (d.hasOwnProperty('label_short')) { result = d.label_short } 
