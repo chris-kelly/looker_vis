@@ -278,10 +278,12 @@ looker.plugins.visualizations.add({
     console.log(queryResponse) // see everything that is returned by Looker - just for debugging
     console.log(data)
 
-    var colnames = []
-    for (field of data[0]) {
-      if (field.hasOwnProperty('value')) { colnames.push([field.key]) } 
-      else { for (subfield of field) { colnames.push([fields.key, subfield.key]) } }
+    var colnames = []; var row0 = data[0];
+    for (k of Object.keys(row0)) {
+      if (row0[k].hasOwnProperty('value')) { colnames.push([k]) } 
+      else { 
+        var rowS = row0[k];
+        for (k2 of Object.keys(rowS)) { colnames.push([k, k2]) } }
     }
     console.log(colnames)
 
@@ -289,7 +291,6 @@ looker.plugins.visualizations.add({
     for (field of colnames) {
       data_dict[field.join(' | ').replace('|FIELD|',' | ')] = data.map(row => field.length == 1 ? row[field[0]].value : row[field[0]][field[1]].value)
     }
-
     console.log(data_dict)
     
     window.scriptLoad.then(() => { // Do this first to ensure js loads in time
