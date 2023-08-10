@@ -1,26 +1,12 @@
-// https://github.com/looker-open-source/custom_visualizations_v2/blob/master/docs/api_reference.md
-// https://plotly.com/javascript/getting-started/
-// https://plotly.com/javascript/plotlyjs-function-reference/#plotlynewplot
-
 looker.plugins.visualizations.add({
-  // Options for user to choose in the "edit" part of looker vis
-  // In this example, whether the plot is bar or scatter
-  options: { 
-    // title: {
-    //   type: "string",
-    //   label: "1. Chart title",
-    // },
-    plot_type: {
+  options: {
+    column_selector: {
+      label: "column selector: [x,y,v,h]",
       type: "string",
-      label: "Plot",
-      values: [
-        {"Scatter": "scatter"},
-        {"Bar": "bar"},
-      ],
-      display: "radio",
-      default: "scatter",
-      section: '1. Plot',
-      order: 1
+      default: "[1,2,,]",
+      placeholder: "[1,2,,], [1,3,4,5]",
+      section: '0. Data',
+      order: 1,
     },
     scatter_mode: {
       type: "string",
@@ -35,18 +21,6 @@ looker.plugins.visualizations.add({
       section: '1. Plot',
       order: 2
     },
-    bar_mode: {
-      type: "string",
-      label: "Plot type detail: bar mode",
-      values: [
-        {"Grouped": "group"},
-        {"Stacked": "stack"},
-      ],
-      display: "radio",
-      default: "markers",
-      section: '1. Plot',
-      order: 3
-    },
     swap_axes: {
       type: "boolean",
       label: "Swap X and Y",
@@ -60,13 +34,6 @@ looker.plugins.visualizations.add({
       default: false,
       section: '1. Plot',
       order: 5
-    },
-    inverse_log: {
-      type: "boolean",
-      label: "Scale y by inverse log? (Non-pivot only)",
-      default: false,
-      section: '1. Plot',
-      order: 6
     },
     show_legend: {
       type: "string",
@@ -226,22 +193,13 @@ looker.plugins.visualizations.add({
   // Set up the initial state of the visualization
   create: function(element, config) { 
 
-    // import scripts to allow math operations
-    var mathjs_script = document.createElement("script");
-    mathjs_script.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.4.0/math.js";
-    mathjs_script.type = "text/javascript";
     // import scripts to build that vis
     var plotly_script = document.createElement("script");
     plotly_script.src = "https://cdn.plot.ly/plotly-2.14.0.min.js";
     plotly_script.type = "text/javascript";
     
     // load these scripts first
-    window.scriptLoad = Promise.all([
-      new Promise(load => mathjs_script.onload = load),
-      new Promise(load => plotly_script.onload = load),
-    ])
-    
-    document.head.appendChild(mathjs_script)
+    window.scriptLoad = Promise.all([ new Promise(load => plotly_script.onload = load) ])
     document.head.appendChild(plotly_script)
 
     // Insert a <style> tag with class to keep stuff centered.
@@ -249,7 +207,7 @@ looker.plugins.visualizations.add({
       <style>
         .container_style {
           /* Vertical centering */
-          height: 90%;
+          height: 100%;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -276,24 +234,48 @@ looker.plugins.visualizations.add({
     // Clear errors from previous updates
     this.clearErrors();
     console.log(queryResponse) // see everything that is returned by Looker - just for debugging
-
-    var colnames = []
-    for (field of queryResponse.data[0]) {
-      if (field.hasOwnProperty('value')) { colnames.push([field.key]) } 
-      else { for (subfield of field) { colnames.push([fields.key, subfield.key]) } }
-    }
-    console.log(colnames)
-
-    var data_dict = {}
-    for (field of colnames) {
-      data_dict[field.join(' | ').replace('|FIELD|',' | ')] = queryResponse.data.map(row => field.length == 1 ? row[field[0]].value : row[field[0]][field[1]].value)
-    }
-
-    console.log(data_dict)
     
     window.scriptLoad.then(() => { // Do this first to ensure js loads in time
 
+      var colnames = []
+      for (field of queryResponse.data[0]) {
+        if (field.hasOwnProperty('value')) { colnames.push([field.key]) } 
+        else { for (subfield of field) { colnames.push([fields.key, subfield.key]) } }
+      }
+
+      var data_dict = {}
+      for (field of colnames) {
+        data_dict[field.join(' | ').replace('|FIELD|',' | ')] = queryResponse.data.map(row => field.length == 1 ? row[field[0]].value : row[field[0]][field[1]].value)
+      }
+
+      console.log(nice_data)
+
+      // 
       
+      // note - uses "_like", to obtain table calcs in correct split between dimension (non-pivotable) and measures (pivotable)
+      var dim_names = queryResponse.fields.dimension_like.map(d => d.name) // retrieve both dimensions and non-pivotable table calcs
+      var mes_names = queryResponse.fields.measures_like.map(m => m.name) // retrieve both measures and pivotable table calcs
+      if (queryResponse.pivots.length > 0) {
+        var piv_keys = queryResponse.pivots.map(p => p.key)
+        mes_names = mes_names.map(m => )
+      }
+      
+      function get_data(d, pretty=false) {
+        if (pretty) {
+          // if pretty = True, try to get "html" or "rendered" version of fields
+          if (d.hasOwnProperty('html')) { var result = d.html } 
+          else if (d.hasOwnProperty('rendered')) { var result = d.rendered } 
+        }
+        if (pretty == false || !result) {
+          // if value is available, retrieve it 
+          if (d.hasOwnProperty('value')) { var result = d.value }
+          // otherwise we need to go a level deeper to get the 
+          else { var result = d.map(subfield => get_data(subfield, pretty))}
+        }
+        
+        else { result = d.value }
+        return result
+      }
 
       function get_pretty_labels(d) {
         if (d.hasOwnProperty('label_short')) { result = d.label_short } 
@@ -306,7 +288,7 @@ looker.plugins.visualizations.add({
       var mes_names = mes_names.concat(queryResponse.fields.table_calculations.map(t => t.name)) // add table calcs to measures
       var mes_labels = queryResponse.fields.measures.map(m => get_pretty_labels(m)) // get measure labels for nice formatting
       var mes_labels = mes_labels.concat(queryResponse.fields.table_calculations.map(t => get_pretty_labels(t))) 
-      if (queryResponse.fields.pivots.length > 0) { var piv_keys = queryResponse.pivots.map(p => p.key) } // get pivot names (if any)
+      if (queryResponse.fields.pivots.length > 0) {  } // get pivot names (if any)
 
       // Throw errors and exit if the shape of the data isn't what this chart requires
       if (dim_names.length < 1 || mes_names.length < 1) {
