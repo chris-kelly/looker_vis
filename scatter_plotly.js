@@ -298,6 +298,7 @@ looker.plugins.visualizations.add({
       console.log(queryResponse)
       
       const nicedata = new Map(), row0 = data[0] // use first row of data as blueprint. Use Map to preserve order
+      for (var k of Object.keys())
       for (var k of Object.keys(row0)) {
         if (row0[k].hasOwnProperty('value')) { 
           // simply add keys of column if no pivot. Add name and "Label_short" or "label" data.
