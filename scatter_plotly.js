@@ -307,7 +307,7 @@ looker.plugins.visualizations.add({
         for (k2 of Object.keys(rowS)) { 
           var kc = [k2, k]
           colnames.push(kc) // return pivot name and measure
-          colmetadata[colname_format(kc)] = {}; colmetadata[colname_format(kc)]['type'] = 'pivot + measure'; colmetadata[colname_format(kc)]['label'] = colname_format(k2) + mea2[mea1.indexOf(k)];
+          colmetadata[colname_format(kc)] = {}; colmetadata[colname_format(kc)]['type'] = 'pivot + measure'; colmetadata[colname_format(kc)]['label'] = colname_format([k2]) + mea2[mea1.indexOf(k)];
         } 
       } 
     }
@@ -334,7 +334,7 @@ looker.plugins.visualizations.add({
     var text_dict = {}
     for (field of colnames) {
       var k = colname_format(field)
-      var v = data.map(row => field.length == 1 ? get_pretty_data(row[field[0]]) : get_pretty_data(row[field[0]][field[1]]) )
+      var v = data.map(row => field.length == 1 ? get_pretty_data(row[field[0]]) : get_pretty_data(row[field[0]][field[1]]) )  // if two cols (due to pivot), i.e. length > 1, go into level below
       text_dict[k] = v
     }
     console.log(text_dict)
