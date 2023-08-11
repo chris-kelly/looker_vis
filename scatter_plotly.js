@@ -317,30 +317,17 @@ looker.plugins.visualizations.add({
     console.log(colnames)
     console.log(colmetadata)
 
-    // make nice dict of values
-    var values_dict = {}
+    // make nice dict of values and another of labels/text
+    var values_dict = {}, text_dict = {}
     for (col of Object.values(object1)) {
       var k = col['label']
       var v = data.map(row => col.keys == 1 ? row[col.keys[0]].value : row[col.keys[0]][col.keys[1]].value) // if two cols (due to pivot), i.e. length > 1, go into level below
       values_dict[k] = v
+      var v2 = data.map(row => col.keys == 1 ? get_pretty_data(row[col.keys[0]]) : get_pretty_data(row[col.keys[0]][col.keys[1]]) ) // if two cols (due to pivot), i.e. length > 1, go into level below
+      text_dict[k] = v2
     }
     console.log(values_dict)
-
-    // make nice dict of labels/text
-    function get_pretty_data(d) {
-      if (d.hasOwnProperty('html')) { result = d.html } 
-      else if (d.hasOwnProperty('rendered')) { result = d.rendered } 
-      else { result = d.value }
-      return result
-    }
-    var text_dict = {}
-    for (field of colnames) {
-      var k = colname_format(field)
-      var v = data.map(row => col.keys == 1 ? get_pretty_data(row[col.keys[0]]) : get_pretty_data(row[col.keys[0]][col.keys[1]]) ) // if two cols (due to pivot), i.e. length > 1, go into level below
-      text_dict[k] = v
-    }
     console.log(text_dict)
-
     
     window.scriptLoad.then(() => { // Do this first to ensure js loads in time
 
