@@ -298,20 +298,20 @@ looker.plugins.visualizations.add({
     var row0 = data[0]; // use first row of data as blueprint
     for (var k of Object.keys(row0)) {
       if (row0[k].hasOwnProperty('value')) { 
-        colmetadata[k] = {}
-        colmetadata[k]['keys'] = [k] // simply add keys of column if no pivot
-        if (dimN.includes(k)) { colmetadata[k]['type'] = 'dimension'; colmetadata[k]['label'] = dimL[dimN.indexOf(k)] }
-        if (mesN.includes(k)) { colmetadata[k]['type'] = 'measure'; colmetadata[k]['label'] = mesL[mesN.indexOf(k)] }
+        // simply add keys of column if no pivot
+        if (dimN.includes(k)) { colmetadata[k] = {}; colmetadata[k]['keys'] = [k]; colmetadata[k]['type'] = 'dimension'; colmetadata[k]['label'] = dimL[dimN.indexOf(k)] }
+        if (mesN.includes(k)) { colmetadata[k] = {}; colmetadata[k]['keys'] = [k]; colmetadata[k]['type'] = 'measure'; colmetadata[k]['label'] = mesL[mesN.indexOf(k)] }
       } else { 
-        NEED TO EXCLUDE COLS THAT ARE HIDDEN BUT FEATURE IN DATA
-        var rowS = row0[k]; // the pivot (k2) is nested below each measure (k) in the data. Split these into seperate columns
-        for (var k2 of Object.keys(rowS)) { 
+        if (mesN.includes(k)) { // data includes hidden columns! So don't include these
+          var rowS = row0[k]; // the pivot (k2) is nested below each measure (k) in the data. Split these into seperate columns
+        for (var k2 of Object.keys(rowS)) {
           var kc = colname_format([k2, k])
           colmetadata[kc] = {}
           colmetadata[kc]['keys'] = [k,k2] // both measure and pivot name
           colmetadata[kc]['type'] = 'pivot + measure'
           colmetadata[kc]['label'] = colname_format( [k2, mesL[mesN.indexOf(k)] ] )
         } 
+        }
       }
     }
 
