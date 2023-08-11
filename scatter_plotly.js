@@ -300,8 +300,8 @@ looker.plugins.visualizations.add({
       if (row0[k].hasOwnProperty('value')) { 
         colnames.push([k]) // add keys of column if no pivot
         colmetadata[k] = {}
-        if (dim1.includes(k)) { colmetadata[k]['type'] = 'dimension'; colmetadata[k]['label'] = dim2[dim1.indexOf(field[0])] }
-        if (mea1.includes(k)) { colmetadata[k]['type'] = 'measure'; colmetadata[k]['label'] = mea2[mea1.indexOf(field[0])] }
+        if (dim1.includes(k)) { colmetadata[k]['type'] = 'dimension'; colmetadata[k]['label'] = dim2[dim1.indexOf(k)] }
+        if (mea1.includes(k)) { colmetadata[k]['type'] = 'measure'; colmetadata[k]['label'] = mea2[mea1.indexOf(k)] }
       } else { 
         var rowS = row0[k]; // format is pivot (k2) nested below each measure (k).
         for (k2 of Object.keys(rowS)) { 
