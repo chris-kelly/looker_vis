@@ -294,6 +294,8 @@ looker.plugins.visualizations.add({
       var mes_names = queryResponse.fields.measure_like.map(m => [m.name, get_pretty_cols(m)]) // retrieve both measures and pivotable table calcs, with nice labels too
       var mesN = mes_names.map(m => m[0]), mesL = mes_names.map(m => m[1]);
       if (queryResponse.pivots.length > 0) { var pivK = queryResponse.pivots.map(p => p.key) } // get pivot column names
+
+      console.log(queryResponse)
       
       var nicedata = {}, row0 = data[0]; // use first row of data as blueprint
       for (var k of Object.keys(row0)) {
