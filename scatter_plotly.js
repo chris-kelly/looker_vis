@@ -318,12 +318,18 @@ looker.plugins.visualizations.add({
     console.log(colmetadata)
 
     // make nice dict of values and another of labels/text
+    function get_pretty_data(d) {
+      if (d.hasOwnProperty('html')) { result = d.html } 
+      else if (d.hasOwnProperty('rendered')) { result = d.rendered } 
+      else { result = d.value }
+      return result
+    }
     var values_dict = {}, text_dict = {}
     for (col of Object.values(colmetadata)) {
       var k = col['label']
       var v = data.map(row => col.keys.length == 1 ? row[col.keys[0]].value : row[col.keys[0]][col.keys[1]].value) // if two cols (due to pivot), i.e. length > 1, go into level below
       values_dict[k] = v
-      var v2 = data.map(row => col.keys.length == 1 ? get_pretty_cols(row[col.keys[0]]) : get_pretty_cols(row[col.keys[0]][col.keys[1]]) ) // if two cols (due to pivot), i.e. length > 1, go into level below
+      var v2 = data.map(row => col.keys.length == 1 ? get_pretty_data(row[col.keys[0]]) : get_pretty_data(row[col.keys[0]][col.keys[1]]) ) // if two cols (due to pivot), i.e. length > 1, go into level below
       text_dict[k] = v2
     }
     console.log(values_dict)
