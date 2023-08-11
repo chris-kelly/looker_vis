@@ -297,25 +297,21 @@ looker.plugins.visualizations.add({
 
       console.log(queryResponse)
       
-      var nicedata = {}, row0 = data[0], i = 0; // use first row of data as blueprint
+      var nicedata = Map(), row0 = data[0] // use first row of data as blueprint. Use Map to preserve order
       for (var k of Object.keys(row0)) {
         if (row0[k].hasOwnProperty('value')) { 
           // simply add keys of column if no pivot. Add name and "Label_short" or "label" data.
-          if (dimN.includes(k)) { nicedata[k] = {}; nicedata[k]['keys'] = [k]; nicedata[k]['type'] = 'dimension'; nicedata[k]['name'] = dimN[dimN.indexOf(k)]; nicedata[k]['label'] = dimL[dimN.indexOf(k)]; nicedata[k]['pos'] = i;}
-          if (mesN.includes(k)) { nicedata[k] = {}; nicedata[k]['keys'] = [k]; nicedata[k]['type'] = 'measure'; nicedata[k]['name'] = mesN[mesN.indexOf(k)]; nicedata[k]['label'] = mesL[mesN.indexOf(k)]; nicedata[k]['pos'] = i; }
-          i++
+          if (dimN.includes(k)) { nicedata.set(k, {'keys': [k], 'type': 'dimension', 'name': dimN[dimN.indexOf(k)], 'label': dimL[dimN.indexOf(k)]}) }
+          if (mesN.includes(k)) { nicedata.set(k, {'keys': [k], 'type': 'measure', 'name': mesN[mesN.indexOf(k)], 'label': mesL[mesN.indexOf(k)]}) }
         } else { 
           if (mesN.includes(k)) { // data includes hidden columns! So don't include these
             var rowS = row0[k]; // the pivot (k2) is nested below each measure (k) in the data. Split these into seperate columns
             for (var k2 of Object.keys(rowS)) {
               if (k2 != '$$$_row_total_$$$') { // data includes row totals. Exclude these for now
-                var kc = colname_format([k2, k]); nicedata[kc] = {}
-                nicedata[kc]['keys'] = [k,k2] // both measure and pivot name
-                nicedata[kc]['type'] = 'pivot + measure'; nicedata[k]['pos'] = i
-                nicedata[kc]['name'] = colname_format( [k2, mesN[mesN.indexOf(k)] ] ); nicedata[kc]['label'] = colname_format( [k2, mesL[mesN.indexOf(k)] ] )
-                i++
-              }
-            } 
+                var kc = colname_format([k2, k]);  // both measure and pivot name
+                nicedata.set(kc, {'keys': [k,k2], 'type': 'pivot + measure', 'name': colname_format([k2, mesN[mesN.indexOf(k)]]), 'label': colname_format([k2, mesL[mesN.indexOf(k)]])})
+              } 
+            }
           }
         }
       }
@@ -329,11 +325,13 @@ looker.plugins.visualizations.add({
         else { result = d.value }
         return result
       }
-      
-      for (var k of Object.keys(nicedata)) {
-        var ks = nicedata[k].keys
-        nicedata[k]['values'] = data.map(row => ks.length == 1 ? row[ks[0]].value : row[ks[0]][ks[1]].value) // if two cols (due to pivot), i.e. length > 1, go into level below
-        nicedata[k]['pretty'] = data.map(row => ks.length == 1 ? get_pretty_data(row[ks[0]]) : get_pretty_data(row[ks[0]][ks[1]]))
+      for (var k of nicedata.keys()) {
+        var ks = nicedata.get(k).keys
+        map1.set(k, {
+          ...map1.get(k),
+          'values': data.map(row => ks.length == 1 ? row[ks[0]].value : row[ks[0]][ks[1]].value), // if two cols (due to pivot), i.e. length > 1, go into level below
+          'pretty': data.map(row => ks.length == 1 ? get_pretty_data(row[ks[0]]) : get_pretty_data(row[ks[0]][ks[1]]))
+        })
       }
       console.log(nicedata)
 
