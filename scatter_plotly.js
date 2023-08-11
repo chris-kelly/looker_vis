@@ -331,8 +331,8 @@ looker.plugins.visualizations.add({
         nicedata[k]['values'] = data.map(row => ks.length == 1 ? row[ks[0]].value : row[ks[0]][ks[1]].value) // if two cols (due to pivot), i.e. length > 1, go into level below
         nicedata[k]['pretty'] = data.map(row => ks.length == 1 ? get_pretty_data(row[ks[0]]) : get_pretty_data(row[ks[0]][ks[1]]))
       }
-      console.log(colmetadata)
-      
+      console.log(nicedata)
+
       
       // Loop over every measure and add as new trace
       plotly_data = []
