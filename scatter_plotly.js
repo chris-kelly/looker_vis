@@ -301,15 +301,15 @@ looker.plugins.visualizations.add({
       for (var k of Object.keys(row0)) {
         if (row0[k].hasOwnProperty('value')) { 
           // simply add keys of column if no pivot. Add name and "Label_short" or "label" data.
-          if (dimN.includes(k)) { nicedata.set(k, {'keys': [k], 'type': 'dimension', 'name': dimN[dimN.indexOf(k)], 'label': dimL[dimN.indexOf(k)]}) }
-          if (mesN.includes(k)) { nicedata.set(k, {'keys': [k], 'type': 'measure', 'name': mesN[mesN.indexOf(k)], 'label': mesL[mesN.indexOf(k)]}) }
+          if (dimN.includes(k)) { nicedata.set(k, {'keys': [k], 'type': 'dimension', 'label': dimL[dimN.indexOf(k)], 'pos': dimN.indexOf(k)}) }
+          if (mesN.includes(k)) { nicedata.set(k, {'keys': [k], 'type': 'measure', 'label': mesL[mesN.indexOf(k)], 'pos': dimN.length + mesN.indexOf(k)}) }
         } else { 
           if (mesN.includes(k)) { // data includes hidden columns! So don't include these
             var rowS = row0[k]; // the pivot (k2) is nested below each measure (k) in the data. Split these into seperate columns
             for (var k2 of Object.keys(rowS)) {
               if (k2 != '$$$_row_total_$$$') { // data includes row totals. Exclude these for now
                 var kc = colname_format([k2, k]);  // both measure and pivot name
-                nicedata.set(kc, {'keys': [k,k2], 'type': 'pivot + measure', 'name': colname_format([k2, mesN[mesN.indexOf(k)]]), 'label': colname_format([k2, mesL[mesN.indexOf(k)]])})
+                nicedata.set(kc, {'keys': [k,k2], 'type': 'pivot + measure', 'label': colname_format([k2, mesL[mesN.indexOf(k)]]), 'pos': dimN.length + pivK.indexOf(k2)*mesN.length + mesN.indexOf(k) })
               } 
             }
           }
