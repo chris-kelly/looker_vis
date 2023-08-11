@@ -298,7 +298,6 @@ looker.plugins.visualizations.add({
       console.log(queryResponse)
       
       const nicedata = new Map(), row0 = data[0] // use first row of data as blueprint. Use Map to preserve order
-      for (var k of Object.keys())
       for (var k of Object.keys(row0)) {
         if (row0[k].hasOwnProperty('value')) { 
           // simply add keys of column if no pivot. Add name and "Label_short" or "label" data.
@@ -310,7 +309,7 @@ looker.plugins.visualizations.add({
             for (var k2 of Object.keys(rowS)) {
               if (k2 != '$$$_row_total_$$$') { // data includes row totals. Exclude these for now
                 var kc = colname_format([k2, k]);  // both measure and pivot name
-                nicedata.set([dimN.length + pivK.indexOf(k2)*mesN.length + mesN.indexOf(k), kc], {'keys': [k,k2], 'type': 'pivot + measure', 'label': colname_format([k2, mesL[mesN.indexOf(k)]]) })
+                nicedata.set([dimN.length + pivK.indexOf(k2)*mesN.length + mesN.indexOf(k),kc], {'keys': [k,k2], 'type': 'pivot + measure', 'label': colname_format([k2, mesL[mesN.indexOf(k)]]) })
               } 
             }
           }
