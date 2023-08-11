@@ -305,7 +305,7 @@ looker.plugins.visualizations.add({
           if (mesN.includes(k)) { // data includes hidden columns! So don't include these
             var rowS = row0[k]; // the pivot (k2) is nested below each measure (k) in the data. Split these into seperate columns
             for (var k2 of Object.keys(rowS)) {
-              if (dimN.includes(k2)) { // data includes row totals. Exclude these for now
+              if (k2 != '$$$_row_total_$$$') { // data includes row totals. Exclude these for now
                 var kc = colname_format([k2, k]); colmetadata[kc] = {}
                 colmetadata[kc]['keys'] = [k,k2] // both measure and pivot name
                 colmetadata[kc]['type'] = 'pivot + measure'
