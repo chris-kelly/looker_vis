@@ -326,7 +326,7 @@ looker.plugins.visualizations.add({
         return result
       }
       let nicedata2 = new Map()
-      for (var k of [ ...nicedata.keys() ].sort()) {
+      for (var k of [ ...nicedata.keys() ].map(x => x[0]).sort()) {
         var ks = nicedata.get(k).keys
         nicedata2.set(k.map(k => k.toString()).join('. '), {
           ...nicedata.get(k),
