@@ -314,7 +314,6 @@ looker.plugins.visualizations.add({
       }
     }
 
-    console.log(colnames)
     console.log(colmetadata)
 
     // make nice dict of values and another of labels/text
