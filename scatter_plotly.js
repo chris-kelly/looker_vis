@@ -291,9 +291,7 @@ looker.plugins.visualizations.add({
     var colnames = []; var colmetadata = {};
     var dim_names = queryResponse.fields.dimension_like.map(d => [d.name, get_pretty_cols(d)]) // retrieve both dimensions and non-pivotable table calcs, with nice labels too
     var dim1 = dim_names.map(d => d[0]), dim2 = dim_names.map(d => d[1]);
-    console.log(dim_names); console.log(dim2)
-    var mes_names = queryResponse.fields.measures_like.map(m => [m.name, get_pretty_cols(m)]) // retrieve both measures and pivotable table calcs, with nice labels too
-    console.log(dim_names)
+    var mes_names = queryResponse.fields.measure_like.map(m => [m.name, get_pretty_cols(m)]) // retrieve both measures and pivotable table calcs, with nice labels too
     var mea1 = mes_names.map(m => m[0]), mea2 = mes_names.map(m => m[1]);
     if (queryResponse.pivots.length > 0) { var piv_keys = queryResponse.pivots.map(p => p.key) } // get pivot column names
     
