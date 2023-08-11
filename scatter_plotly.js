@@ -327,8 +327,8 @@ looker.plugins.visualizations.add({
       }
       for (var k of nicedata.keys()) {
         var ks = nicedata.get(k).keys
-        map1.set(k, {
-          ...map1.get(k),
+        nicedata.set(k, {
+          ...nicedata.get(k),
           'values': data.map(row => ks.length == 1 ? row[ks[0]].value : row[ks[0]][ks[1]].value), // if two cols (due to pivot), i.e. length > 1, go into level below
           'pretty': data.map(row => ks.length == 1 ? get_pretty_data(row[ks[0]]) : get_pretty_data(row[ks[0]][ks[1]]))
         })
