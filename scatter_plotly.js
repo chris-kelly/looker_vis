@@ -303,13 +303,14 @@ looker.plugins.visualizations.add({
         if (dimN.includes(k)) { colmetadata[k]['type'] = 'dimension'; colmetadata[k]['label'] = dimL[dimN.indexOf(k)] }
         if (mesN.includes(k)) { colmetadata[k]['type'] = 'measure'; colmetadata[k]['label'] = mesL[mesN.indexOf(k)] }
       } else { 
+        NEED TO EXCLUDE COLS THAT ARE HIDDEN BUT FEATURE IN DATA
         var rowS = row0[k]; // the pivot (k2) is nested below each measure (k) in the data. Split these into seperate columns
         for (var k2 of Object.keys(rowS)) { 
           var kc = colname_format([k2, k])
           colmetadata[kc] = {}
           colmetadata[kc]['keys'] = [k,k2] // both measure and pivot name
           colmetadata[kc]['type'] = 'pivot + measure'
-          colmetadata[kc]['label'] = colname_format( [k2, mesL[mesN.indexOf(k)]] )
+          colmetadata[kc]['label'] = colname_format( [k2, mesL[mesN.indexOf(k)] ] )
         } 
       }
     }
@@ -318,7 +319,7 @@ looker.plugins.visualizations.add({
 
     // make nice dict of values and another of labels/text
     var values_dict = {}, text_dict = {}
-    for (col of Object.values(object1)) {
+    for (col of Object.values(colmetadata)) {
       var k = col['label']
       var v = data.map(row => col.keys == 1 ? row[col.keys[0]].value : row[col.keys[0]][col.keys[1]].value) // if two cols (due to pivot), i.e. length > 1, go into level below
       values_dict[k] = v
