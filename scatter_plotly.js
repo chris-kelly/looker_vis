@@ -295,26 +295,28 @@ looker.plugins.visualizations.add({
       var mesN = mes_names.map(m => m[0]), mesL = mes_names.map(m => m[1]);
       if (queryResponse.pivots.length > 0) { var pivK = queryResponse.pivots.map(p => p.key) } // get pivot column names
       
-      var colmetadata = {}, row0 = data[0]; // use first row of data as blueprint
+      var nicedata = {}, row0 = data[0]; // use first row of data as blueprint
       for (var k of Object.keys(row0)) {
         if (row0[k].hasOwnProperty('value')) { 
-          // simply add keys of column if no pivot
-          if (dimN.includes(k)) { colmetadata[k] = {}; colmetadata[k]['keys'] = [k]; colmetadata[k]['type'] = 'dimension'; colmetadata[k]['name'] = dimN[dimN.indexOf(k)]; colmetadata[k]['label'] = dimL[dimN.indexOf(k)] }
-          if (mesN.includes(k)) { colmetadata[k] = {}; colmetadata[k]['keys'] = [k]; colmetadata[k]['type'] = 'measure'; colmetadata[k]['name'] = mesN[mesN.indexOf(k)]; colmetadata[k]['label'] = mesL[mesN.indexOf(k)] }
+          // simply add keys of column if no pivot. Add name and "Label_short" or "label" data.
+          if (dimN.includes(k)) { nicedata[k] = {}; nicedata[k]['keys'] = [k]; nicedata[k]['type'] = 'dimension'; nicedata[k]['name'] = dimN[dimN.indexOf(k)]; nicedata[k]['label'] = dimL[dimN.indexOf(k)] }
+          if (mesN.includes(k)) { nicedata[k] = {}; nicedata[k]['keys'] = [k]; nicedata[k]['type'] = 'measure'; nicedata[k]['name'] = mesN[mesN.indexOf(k)]; nicedata[k]['label'] = mesL[mesN.indexOf(k)] }
         } else { 
           if (mesN.includes(k)) { // data includes hidden columns! So don't include these
             var rowS = row0[k]; // the pivot (k2) is nested below each measure (k) in the data. Split these into seperate columns
             for (var k2 of Object.keys(rowS)) {
               if (k2 != '$$$_row_total_$$$') { // data includes row totals. Exclude these for now
-                var kc = colname_format([k2, k]); colmetadata[kc] = {}
-                colmetadata[kc]['keys'] = [k,k2] // both measure and pivot name
-                colmetadata[kc]['type'] = 'pivot + measure'
-                colmetadata[kc]['name'] = colname_format( [k2, mesN[mesN.indexOf(k)] ] ); colmetadata[kc]['label'] = colname_format( [k2, mesL[mesN.indexOf(k)] ] )
+                var kc = colname_format([k2, k]); nicedata[kc] = {}
+                nicedata[kc]['keys'] = [k,k2] // both measure and pivot name
+                nicedata[kc]['type'] = 'pivot + measure'
+                nicedata[kc]['name'] = colname_format( [k2, mesN[mesN.indexOf(k)] ] ); nicedata[kc]['label'] = colname_format( [k2, mesL[mesN.indexOf(k)] ] )
               }
             } 
           }
         }
       }
+
+      console.log(nicedata)
 
       // make nice dict of values and another of labels/text
       function get_pretty_data(d) {
@@ -323,15 +325,14 @@ looker.plugins.visualizations.add({
         else { result = d.value }
         return result
       }
-      var values_dict = {}, text_dict = {}
-      for (col of Object.values(colmetadata)) {
-        var k = col['name']
-        var v = data.map(row => col.keys.length == 1 ? row[col.keys[0]].value : row[col.keys[0]][col.keys[1]].value) // if two cols (due to pivot), i.e. length > 1, go into level below
-        values_dict[k] = v
-        var v2 = data.map(row => col.keys.length == 1 ? get_pretty_data(row[col.keys[0]]) : get_pretty_data(row[col.keys[0]][col.keys[1]]) ) // if two cols (due to pivot), i.e. length > 1, go into level below
-        text_dict[k] = v2
+      
+      for (var k of Object.keys(nicedata)) {
+        var ks = nicedata[k].keys
+        nicedata[k]['values'] = data.map(row => ks.length == 1 ? row[ks[0]].value : row[ks[0]][ks[1]].value) // if two cols (due to pivot), i.e. length > 1, go into level below
+        nicedata[k]['pretty'] = data.map(row => ks.length == 1 ? get_pretty_data(row[ks[0]]) : get_pretty_data(row[ks[0]][ks[1]]))
       }
-      console.log(values_dict)
+      console.log(colmetadata)
+      
       
       // Loop over every measure and add as new trace
       plotly_data = []
