@@ -309,7 +309,7 @@ looker.plugins.visualizations.add({
           colmetadata[kc] = {}
           colmetadata[kc]['keys'] = [k,k2] // both measure and pivot name
           colmetadata[kc]['type'] = 'pivot + measure'
-          colmetadata[kc]['label'] = colname_format( [k2, mea2[mea1.indexOf(k)]] )
+          colmetadata[kc]['label'] = colname_format( [k2, mesL[mesN.indexOf(k)]] )
         } 
       }
     }
