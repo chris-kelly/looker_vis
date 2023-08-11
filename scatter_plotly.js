@@ -275,120 +275,64 @@ looker.plugins.visualizations.add({
 
     // Clear errors from previous updates
     this.clearErrors();
-    console.log(queryResponse) // see everything that is returned by Looker - just for debugging
-
-    // use columns to get nicely formatted data
-    function colname_format(field) {
-      var k = field.join(' ~ ').replace('|FIELD|',' | ').replace('$$$_row_total_$$$', 'ROW TOTAL')
-      return k
-    }
-    function get_pretty_cols(d) {
-      if (d.hasOwnProperty('label_short')) { result = d.label_short } else { result = d.label }
-      return result
-    }
-
-    // Get column names and metadata
-    var colmetadata = {};
-    var dim_names = queryResponse.fields.dimension_like.map(d => [d.name, get_pretty_cols(d)]) // retrieve both dimensions and non-pivotable table calcs, with nice labels too
-    var dimN = dim_names.map(d => d[0]), dimL = dim_names.map(d => d[1]);
-    var mes_names = queryResponse.fields.measure_like.map(m => [m.name, get_pretty_cols(m)]) // retrieve both measures and pivotable table calcs, with nice labels too
-    var mesN = mes_names.map(m => m[0]), mesL = mes_names.map(m => m[1]);
-    if (queryResponse.pivots.length > 0) { var pivK = queryResponse.pivots.map(p => p.key) } // get pivot column names
-    
-    var row0 = data[0]; // use first row of data as blueprint
-    for (var k of Object.keys(row0)) {
-      if (row0[k].hasOwnProperty('value')) { 
-        // simply add keys of column if no pivot
-        if (dimN.includes(k)) { colmetadata[k] = {}; colmetadata[k]['keys'] = [k]; colmetadata[k]['type'] = 'dimension'; colmetadata[k]['label'] = dimL[dimN.indexOf(k)] }
-        if (mesN.includes(k)) { colmetadata[k] = {}; colmetadata[k]['keys'] = [k]; colmetadata[k]['type'] = 'measure'; colmetadata[k]['label'] = mesL[mesN.indexOf(k)] }
-      } else { 
-        if (mesN.includes(k)) { // data includes hidden columns! So don't include these
-          var rowS = row0[k]; // the pivot (k2) is nested below each measure (k) in the data. Split these into seperate columns
-        for (var k2 of Object.keys(rowS)) {
-          var kc = colname_format([k2, k])
-          colmetadata[kc] = {}
-          colmetadata[kc]['keys'] = [k,k2] // both measure and pivot name
-          colmetadata[kc]['type'] = 'pivot + measure'
-          colmetadata[kc]['label'] = colname_format( [k2, mesL[mesN.indexOf(k)] ] )
-        } 
-        }
-      }
-    }
-
-    console.log(colmetadata)
-
-    // make nice dict of values and another of labels/text
-    function get_pretty_data(d) {
-      if (d.hasOwnProperty('html')) { result = d.html } 
-      else if (d.hasOwnProperty('rendered')) { result = d.rendered } 
-      else { result = d.value }
-      return result
-    }
-    var values_dict = {}, text_dict = {}
-    for (col of Object.values(colmetadata)) {
-      var k = col['label']
-      var v = data.map(row => col.keys.length == 1 ? row[col.keys[0]].value : row[col.keys[0]][col.keys[1]].value) // if two cols (due to pivot), i.e. length > 1, go into level below
-      values_dict[k] = v
-      var v2 = data.map(row => col.keys.length == 1 ? get_pretty_data(row[col.keys[0]]) : get_pretty_data(row[col.keys[0]][col.keys[1]]) ) // if two cols (due to pivot), i.e. length > 1, go into level below
-      text_dict[k] = v2
-    }
-    console.log(values_dict)
-    console.log(text_dict)
     
     window.scriptLoad.then(() => { // Do this first to ensure js loads in time
 
-      
-
-      let dim_names = queryResponse.fields.dimensions.map(d => d.name) // dimension names
-      var mes_names = queryResponse.fields.measures.map(m => m.name) // measure names
-      var mes_names = mes_names.concat(queryResponse.fields.table_calculations.map(t => t.name)) // add table calcs to measures
-      var mes_labels = queryResponse.fields.measures.map(m => get_pretty_labels(m)) // get measure labels for nice formatting
-      var mes_labels = mes_labels.concat(queryResponse.fields.table_calculations.map(t => get_pretty_labels(t))) 
-      if (queryResponse.fields.pivots.length > 0) { var piv_keys = queryResponse.pivots.map(p => p.key) } // get pivot names (if any)
-
-      // Throw errors and exit if the shape of the data isn't what this chart requires
-      if (dim_names.length < 1 || mes_names.length < 1) {
-        this.addError({title: "< 1 dimensions or measures.", message: "This chart requires at least two fields!"}); // error
-        return; // exit
+      // adapt column keys to get nicely formatted data in one string
+      function colname_format(field) {
+        var k = field.join(' ~ ').replace('|FIELD|',' | ').replace('$$$_row_total_$$$', 'ROW TOTAL')
+        return k
+      }
+      function get_pretty_cols(d) {
+        if (d.hasOwnProperty('label_short')) { result = d.label_short } else { result = d.label }
+        return result
       }
 
+      // Get column names and metadata
+      var dim_names = queryResponse.fields.dimension_like.map(d => [d.name, get_pretty_cols(d)]) // retrieve both dimensions and non-pivotable table calcs, with nice labels too
+      var dimN = dim_names.map(d => d[0]), dimL = dim_names.map(d => d[1]);
+      var mes_names = queryResponse.fields.measure_like.map(m => [m.name, get_pretty_cols(m)]) // retrieve both measures and pivotable table calcs, with nice labels too
+      var mesN = mes_names.map(m => m[0]), mesL = mes_names.map(m => m[1]);
+      if (queryResponse.pivots.length > 0) { var pivK = queryResponse.pivots.map(p => p.key) } // get pivot column names
       
-
-      // loop through rows of data, create arrays of values and rendered (pretty) data 
-      var x = [], x_r = [], y = [], y_r = [];
-      
-      for (var row of data) {
-        x.push(dim_names.map(d => row[d].value).flat())
-        x_r.push(dim_names.map(d => get_pretty_data(row[d])).flat())
-        if (piv_keys) { // if pivot, json has extra level, specified
-          y.push(piv_keys.map(p => mes_names.map(m => row[m][p].value)).flat())
-          if (config.custom_hover_format) {
-            y_r.push(piv_keys.map(p => mes_names.map(m => get_pretty_data(row[config.custom_hover_format][p]))).flat())
-          } else { 
-            y_r.push(piv_keys.map(p => mes_names.map(m => get_pretty_data(row[m][p]))).flat()) 
+      var colmetadata = {}, row0 = data[0]; // use first row of data as blueprint
+      for (var k of Object.keys(row0)) {
+        if (row0[k].hasOwnProperty('value')) { 
+          // simply add keys of column if no pivot
+          if (dimN.includes(k)) { colmetadata[k] = {}; colmetadata[k]['keys'] = [k]; colmetadata[k]['type'] = 'dimension'; colmetadata[k]['name'] = dimN[dimN.indexOf(k)]; colmetadata[k]['label'] = dimL[dimN.indexOf(k)] }
+          if (mesN.includes(k)) { colmetadata[k] = {}; colmetadata[k]['keys'] = [k]; colmetadata[k]['type'] = 'measure'; colmetadata[k]['name'] = mesN[mesN.indexOf(k)]; colmetadata[k]['label'] = mesL[mesN.indexOf(k)] }
+        } else { 
+          if (mesN.includes(k)) { // data includes hidden columns! So don't include these
+            var rowS = row0[k]; // the pivot (k2) is nested below each measure (k) in the data. Split these into seperate columns
+            for (var k2 of Object.keys(rowS)) {
+              if (dimN.includes(k2)) { // data includes row totals. Exclude these for now
+                var kc = colname_format([k2, k]); colmetadata[kc] = {}
+                colmetadata[kc]['keys'] = [k,k2] // both measure and pivot name
+                colmetadata[kc]['type'] = 'pivot + measure'
+                colmetadata[kc]['name'] = colname_format( [k2, mesN[mesN.indexOf(k)] ] )
+                colmetadata[kc]['label'] = colname_format( [k2, mesL[mesN.indexOf(k)] ] )
+              }
+            } 
           }
-        } else {
-          y.push(mes_names.map(m => row[m].value).flat())
-          if (config.custom_hover_format) {
-            y_r.push(mes_names.map(m => get_pretty_data(row[config.custom_hover_format])).flat())
-          } else { 
-            y_r.push(mes_names.map(m => get_pretty_data(row[m])).flat())
-          }
-          
         }
       }
-      
-      // if there are pivot keys, legend labels should include them
-      legend_labels = [] 
-      if (piv_keys) {
-        for (var p of piv_keys) { for (var m of mes_labels) { legend_labels.push(p.replace('|FIELD|','').concat(' | ', m)) } }
-      } else {
-        for (var m of mes_labels) { legend_labels.push(m) }
+
+      // make nice dict of values and another of labels/text
+      function get_pretty_data(d) {
+        if (d.hasOwnProperty('html')) { result = d.html } 
+        else if (d.hasOwnProperty('rendered')) { result = d.rendered } 
+        else { result = d.value }
+        return result
       }
-      
-      if (config.plot_type == 'scatter') { var mode_type = config.scatter_mode} 
-      else { var mode_type = config.bar_mode }
-      
+      var values_dict = {}, text_dict = {}
+      for (col of Object.values(colmetadata)) {
+        var k = col['label']
+        var v = data.map(row => col.keys.length == 1 ? row[col.keys[0]].value : row[col.keys[0]][col.keys[1]].value) // if two cols (due to pivot), i.e. length > 1, go into level below
+        values_dict[k] = v
+        var v2 = data.map(row => col.keys.length == 1 ? get_pretty_data(row[col.keys[0]]) : get_pretty_data(row[col.keys[0]][col.keys[1]]) ) // if two cols (due to pivot), i.e. length > 1, go into level below
+        text_dict[k] = v2
+      }
+      console.log(values_dict)
       
       // Loop over every measure and add as new trace
       plotly_data = []
