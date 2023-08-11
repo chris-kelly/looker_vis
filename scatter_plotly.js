@@ -297,7 +297,7 @@ looker.plugins.visualizations.add({
 
       console.log(queryResponse)
       
-      const nicedata = new Map(), row0 = data[0] // use first row of data as blueprint. Use Map to preserve order
+      let nicedata = new Map(), row0 = data[0] // use first row of data as blueprint. Use Map to preserve order
       for (var k of Object.keys(row0)) {
         if (row0[k].hasOwnProperty('value')) { 
           // simply add keys of column if no pivot. Add name and "Label_short" or "label" data.
@@ -325,15 +325,16 @@ looker.plugins.visualizations.add({
         else { result = d.value }
         return result
       }
-      for (var k of nicedata.keys()) {
-        var ks = nicedata.get(k).keys
-        nicedata.set(k, {
+      let nicedata2 = new Map()
+      for (var k of [ ...nicedata.keys() ].sort()) {
+        var ks = nicedata2.get(k).keys
+        nicedata2.set(k.map(k => str(k)).join('. '), {
           ...nicedata.get(k),
           'values': data.map(row => ks.length == 1 ? row[ks[0]].value : row[ks[0]][ks[1]].value), // if two cols (due to pivot), i.e. length > 1, go into level below
           'pretty': data.map(row => ks.length == 1 ? get_pretty_data(row[ks[0]]) : get_pretty_data(row[ks[0]][ks[1]]))
         })
       }
-      console.log(nicedata)
+      console.log(nicedata2)
 
       
       // Loop over every measure and add as new trace
