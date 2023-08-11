@@ -288,28 +288,30 @@ looker.plugins.visualizations.add({
     }
 
     // Get column names and metadata
-    var colnames = []; var colmetadata = {};
+    var colmetadata = {};
     var dim_names = queryResponse.fields.dimension_like.map(d => [d.name, get_pretty_cols(d)]) // retrieve both dimensions and non-pivotable table calcs, with nice labels too
-    var dim1 = dim_names.map(d => d[0]), dim2 = dim_names.map(d => d[1]);
+    var dimN = dim_names.map(d => d[0]), dimL = dim_names.map(d => d[1]);
     var mes_names = queryResponse.fields.measure_like.map(m => [m.name, get_pretty_cols(m)]) // retrieve both measures and pivotable table calcs, with nice labels too
-    var mea1 = mes_names.map(m => m[0]), mea2 = mes_names.map(m => m[1]);
-    if (queryResponse.pivots.length > 0) { var piv_keys = queryResponse.pivots.map(p => p.key) } // get pivot column names
+    var mesN = mes_names.map(m => m[0]), mesL = mes_names.map(m => m[1]);
+    if (queryResponse.pivots.length > 0) { var pivK = queryResponse.pivots.map(p => p.key) } // get pivot column names
     
     var row0 = data[0]; // use first row of data as blueprint
-    for (k of Object.keys(row0)) {
+    for (var k of Object.keys(row0)) {
       if (row0[k].hasOwnProperty('value')) { 
-        colnames.push([k]) // add keys of column if no pivot
         colmetadata[k] = {}
-        if (dim1.includes(k)) { colmetadata[k]['type'] = 'dimension'; colmetadata[k]['label'] = dim2[dim1.indexOf(k)] }
-        if (mea1.includes(k)) { colmetadata[k]['type'] = 'measure'; colmetadata[k]['label'] = mea2[mea1.indexOf(k)] }
+        colmetadata[k]['keys'] = [k] // simply add keys of column if no pivot
+        if (dimN.includes(k)) { colmetadata[k]['type'] = 'dimension'; colmetadata[k]['label'] = dimL[dimN.indexOf(k)] }
+        if (mesN.includes(k)) { colmetadata[k]['type'] = 'measure'; colmetadata[k]['label'] = mesL[mesN.indexOf(k)] }
       } else { 
-        var rowS = row0[k]; // format is pivot (k2) nested below each measure (k).
-        for (k2 of Object.keys(rowS)) { 
-          var kc = [k2, k]
-          colnames.push(kc) // return pivot name and measure
-          colmetadata[colname_format(kc)] = {}; colmetadata[colname_format(kc)]['type'] = 'pivot + measure'; colmetadata[colname_format(kc)]['label'] = colname_format([k2]) + mea2[mea1.indexOf(k)];
+        var rowS = row0[k]; // the pivot (k2) is nested below each measure (k) in the data. Split these into seperate columns
+        for (var k2 of Object.keys(rowS)) { 
+          var kc = colname_format([k2, k])
+          colmetadata[kc] = {}
+          colmetadata[kc]['keys'] = [k,k2] // both measure and pivot name
+          colmetadata[kc]['type'] = 'pivot + measure'
+          colmetadata[kc]['label'] = colname_format( [k2, mea2[mea1.indexOf(k)]] )
         } 
-      } 
+      }
     }
 
     console.log(colnames)
@@ -317,9 +319,9 @@ looker.plugins.visualizations.add({
 
     // make nice dict of values
     var values_dict = {}
-    for (field of colnames) {
-      var k = colname_format(field)
-      var v = data.map(row => field.length == 1 ? row[field[0]].value : row[field[0]][field[1]].value) // if two cols (due to pivot), i.e. length > 1, go into level below
+    for (col of Object.values(object1)) {
+      var k = col['label']
+      var v = data.map(row => col.keys == 1 ? row[col.keys[0]].value : row[col.keys[0]][col.keys[1]].value) // if two cols (due to pivot), i.e. length > 1, go into level below
       values_dict[k] = v
     }
     console.log(values_dict)
@@ -334,7 +336,7 @@ looker.plugins.visualizations.add({
     var text_dict = {}
     for (field of colnames) {
       var k = colname_format(field)
-      var v = data.map(row => field.length == 1 ? get_pretty_data(row[field[0]]) : get_pretty_data(row[field[0]][field[1]]) )  // if two cols (due to pivot), i.e. length > 1, go into level below
+      var v = data.map(row => col.keys == 1 ? get_pretty_data(row[col.keys[0]]) : get_pretty_data(row[col.keys[0]][col.keys[1]]) ) // if two cols (due to pivot), i.e. length > 1, go into level below
       text_dict[k] = v
     }
     console.log(text_dict)
