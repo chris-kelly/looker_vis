@@ -339,7 +339,11 @@ looker.plugins.visualizations.add({
       console.log(nicedata2)
 
       // if (config.showTable) {
-      var cells = [...nicedata2.entries()].map( x => [x[0],x[1].values[0],x[1].values[1]] ), header = [['Column'], ['val1'], ['val2']]
+      // var cells = [...nicedata2.entries()].map( x => [x[0],x[1].values[0],x[1].values[1]] ), header = [['Column'], ['val1'], ['val2']]
+      var cells = [];
+      cells.push( [...nicedata2.keys()] )
+      cells.push( [...nicedata2.entries()].map(x => x[1].pretty[0]) )
+      cells.push( [...nicedata2.entries()].map(x => x[1].pretty[1]) )
       console.log(cells)
       // var cells = [], header = [...nicedata2.keys()].map(x => [x])
       // for (var i = 0; i++; i < nicedata2.get(dimN[0]).length) { cells.push([ [...nicedata2.values()].map(x => x[i]) ]) }
