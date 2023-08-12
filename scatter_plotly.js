@@ -340,7 +340,7 @@ looker.plugins.visualizations.add({
 
       // if (config.showTable) {
       // var cells = [...nicedata2.entries()].map( x => [x[0],x[1].values[0],x[1].values[1]] ), header = [['Column'], ['val1'], ['val2']]
-      var cells = [];
+      var cells = [], header = [['Column'], ['val1'], ['val2']]
       cells.push( [...nicedata2.keys()] )
       cells.push( [...nicedata2.entries()].map(x => x[1].pretty[0]) )
       cells.push( [...nicedata2.entries()].map(x => x[1].pretty[1]) )
