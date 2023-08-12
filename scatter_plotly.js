@@ -307,10 +307,12 @@ looker.plugins.visualizations.add({
           if (mesN.includes(k)) { // data includes hidden columns! So don't include these
             var rowS = row0[k]; // the pivot (k2) is nested below each measure (k) in the data. Split these into seperate columns
             for (var k2 of Object.keys(rowS)) {
-              if (k2 != '$$$_row_total_$$$') { // data includes row totals. Exclude these for now
-                var kc = colname_format([k2, k]);  // both measure and pivot name
+              var kc = colname_format([k2, k]);  // both measure and pivot name
+              if (k2 != '$$$_row_total_$$$') { // data includes row totals. Move these to end
                 nicedata.set([dimN.length + pivK.indexOf(k2)*mesN.length + mesN.indexOf(k),kc], {'keys': [k,k2], 'type': 'pivot + measure', 'label': colname_format([k2, mesL[mesN.indexOf(k)]]) })
-              } 
+              } else {
+                nicedata.set([dimN.length + pivK.length*mesN.length + mesN.indexOf(k) + 1,kc], {'keys': [k,k2], 'type': 'pivot + measure', 'label': colname_format([k2, mesL[mesN.indexOf(k)]]) })
+              }
             }
           }
         }
@@ -326,7 +328,7 @@ looker.plugins.visualizations.add({
         return result
       }
       let nicedata2 = new Map()
-      for (var k of [ ...nicedata.keys() ].sort(function(x,y){return x[0] - y[0]})) {
+      for (var k of [ ...nicedata.keys() ].sort(function(x,y){return x[0] - y[0]})) { // sort by 
         var ks = nicedata.get(k).keys
         nicedata2.set(k.map(k => k.toString()).join('. '), {
           ...nicedata.get(k),
@@ -336,143 +338,157 @@ looker.plugins.visualizations.add({
       }
       console.log(nicedata2)
 
+      // if (config.showTable) {
+      var cells = [], header = [...map.keys()].map(x => [x])
+      for (var i = 0; i++; i < nicedata2.get(dimN[0]).length) { cells.push([ [...nicedata2.values()].map(x => [x[i]]) ]) }
+      plotly_data = [{
+        type: 'table',
+        header: {values: header},
+        cells: {values: values},
+      }]
+        Plotly.newPlot(
+          this.plotly_bit, // graphDiv
+          plotly_data,
+        )
+      // }
+
       
-      // Loop over every measure and add as new trace
-      plotly_data = []
+      // // Loop over every measure and add as new trace
+      // plotly_data = []
       
-      for (var i = 0; i < y[0].length; i++) {
+      // for (var i = 0; i < y[0].length; i++) {
         
-        var hovertemplate = "<b>%{xaxis.title.text}: </b> <br>%{x} <br>" + "<br>" + "<b>%{fullData.name}: </b> <br>%{text} <extra></extra>"
-        if (config.xaxis_hover_format) { hovertemplate = hovertemplate.replace("%{x}", "%{x:" + config.xaxis_hover_format + "}") }
-        if (config.yaxis_hover_format) { hovertemplate = hovertemplate.replace("%{text}", "%{y:" + config.yaxis_hover_format + "}") }
-        if (config.custom_hover_format) { hovertemplate = "%{text} <extra></extra>" }
+      //   var hovertemplate = "<b>%{xaxis.title.text}: </b> <br>%{x} <br>" + "<br>" + "<b>%{fullData.name}: </b> <br>%{text} <extra></extra>"
+      //   if (config.xaxis_hover_format) { hovertemplate = hovertemplate.replace("%{x}", "%{x:" + config.xaxis_hover_format + "}") }
+      //   if (config.yaxis_hover_format) { hovertemplate = hovertemplate.replace("%{text}", "%{y:" + config.yaxis_hover_format + "}") }
+      //   if (config.custom_hover_format) { hovertemplate = "%{text} <extra></extra>" }
 
-        var new_trace = {
-          x: x.map(row => row[0]),
-          y: y.map(row => row[i]),
-          type: config.plot_type,
-          mode: mode_type,
-          name: legend_labels[i],
-          text: y_r.map(row => row[i]),
-          textposition: "none",
-          hovertemplate: hovertemplate,
-        }
-        if (config.value_labels) {
-          if (config.plot_type == 'scatter') {
-            new_trace['mode'] = new_trace.mode + "+text"; new_trace['textposition'] = config.value_labels_pos_v + " " + config.value_labels_pos_h 
-          } else {
-            new_trace['textposition'] = config.value_labels_pos_b
-          }
-        } // Show values
-        if (config.value_labels_format) { new_trace['texttemplate'] = "%{y:" + config.value_labels_format + "}" }
-        if (config.error_bands == true) { // if error bands, make every 2nd and 3rd column an error bar
-            new_trace['error_y'] = {
-                type: 'data',
-                symmetric: false,
-                array: y.map(row => row[i+2]),
-                arrayminus: y.map(row => row[i+1]),
-            }
-            i = i + 2
-        }
-        plotly_data.push(new_trace)
-      }
+      //   var new_trace = {
+      //     x: x.map(row => row[0]),
+      //     y: y.map(row => row[i]),
+      //     type: config.plot_type,
+      //     mode: mode_type,
+      //     name: legend_labels[i],
+      //     text: y_r.map(row => row[i]),
+      //     textposition: "none",
+      //     hovertemplate: hovertemplate,
+      //   }
+      //   if (config.value_labels) {
+      //     if (config.plot_type == 'scatter') {
+      //       new_trace['mode'] = new_trace.mode + "+text"; new_trace['textposition'] = config.value_labels_pos_v + " " + config.value_labels_pos_h 
+      //     } else {
+      //       new_trace['textposition'] = config.value_labels_pos_b
+      //     }
+      //   } // Show values
+      //   if (config.value_labels_format) { new_trace['texttemplate'] = "%{y:" + config.value_labels_format + "}" }
+      //   if (config.error_bands == true) { // if error bands, make every 2nd and 3rd column an error bar
+      //       new_trace['error_y'] = {
+      //           type: 'data',
+      //           symmetric: false,
+      //           array: y.map(row => row[i+2]),
+      //           arrayminus: y.map(row => row[i+1]),
+      //       }
+      //       i = i + 2
+      //   }
+      //   plotly_data.push(new_trace)
+      // }
 
-      console.log(plotly_data) // for debugging
+      // console.log(plotly_data) // for debugging
 
-      // set layout
-      if (config.xaxis_label) { xaxis_label = config.xaxis_label} // label axes
-      else { xaxis_label = get_pretty_labels(queryResponse.fields.dimensions[0]) } 
-      if (config.yaxis_label) { yaxis_label = config.yaxis_label} 
-      else { yaxis_label = get_pretty_labels(queryResponse.fields.measures[0]) } // label axes
+      // // set layout
+      // if (config.xaxis_label) { xaxis_label = config.xaxis_label} // label axes
+      // else { xaxis_label = get_pretty_labels(queryResponse.fields.dimensions[0]) } 
+      // if (config.yaxis_label) { yaxis_label = config.yaxis_label} 
+      // else { yaxis_label = get_pretty_labels(queryResponse.fields.measures[0]) } // label axes
 
-      // set colours
-      if (config.colorPreSet  == 'c') { var colorSettings =  config.colorRange || ['#f3cec9', '#e7a4b6', '#cd7eaf', '#a262a9', '#6f4d96', '#3d3b72', '#182844'] }// put a default in
-      else { var colorSettings =  config.colorPreSet.split(",");}
+      // // set colours
+      // if (config.colorPreSet  == 'c') { var colorSettings =  config.colorRange || ['#f3cec9', '#e7a4b6', '#cd7eaf', '#a262a9', '#6f4d96', '#3d3b72', '#182844'] }// put a default in
+      // else { var colorSettings =  config.colorPreSet.split(",");}
 
-      layout = {
-        margin: { 
-          l: parseInt(config.margins.split(',')[0]),
-          r: parseInt(config.margins.split(',')[1]),
-          b: parseInt(config.margins.split(',')[2]),
-          t: parseInt(config.margins.split(',')[3]),
-          pad: parseInt(config.margins.split(',')[4]),
-        },
-        title: config.graph_title,
-        xaxis : {title: {text: xaxis_label}, automargin: true},
-        yaxis : {title: {text: yaxis_label}, automargin: true},
-        showlegend: false,
-        colorway : colorSettings
-      }
+      // layout = {
+      //   margin: { 
+      //     l: parseInt(config.margins.split(',')[0]),
+      //     r: parseInt(config.margins.split(',')[1]),
+      //     b: parseInt(config.margins.split(',')[2]),
+      //     t: parseInt(config.margins.split(',')[3]),
+      //     pad: parseInt(config.margins.split(',')[4]),
+      //   },
+      //   title: config.graph_title,
+      //   xaxis : {title: {text: xaxis_label}, automargin: true},
+      //   yaxis : {title: {text: yaxis_label}, automargin: true},
+      //   showlegend: false,
+      //   colorway : colorSettings
+      // }
 
-      // Show legend and set orientation
-      if (config.show_legend != "z") { layout['showlegend'] = true; layout['legend'] = {"orientation": config.show_legend} }
+      // // Show legend and set orientation
+      // if (config.show_legend != "z") { layout['showlegend'] = true; layout['legend'] = {"orientation": config.show_legend} }
 
-      // set barmode is bar selected
-      if (config.plot_type == 'bar') { layout['barmode'] = mode_type}
+      // // set barmode is bar selected
+      // if (config.plot_type == 'bar') { layout['barmode'] = mode_type}
 
-      // set limits for y and x axis
-      if (config.xaxis_lim) {var xlim = config.xaxis_lim.split(","); layout['xaxis']['range'] = [Number(xlim[0]), Number(xlim[1])]}
-      if (config.yaxis_lim) {var ylim = config.yaxis_lim.split(","); layout['yaxis']['range'] = [Number(ylim[0]), Number(ylim[1])]}
+      // // set limits for y and x axis
+      // if (config.xaxis_lim) {var xlim = config.xaxis_lim.split(","); layout['xaxis']['range'] = [Number(xlim[0]), Number(xlim[1])]}
+      // if (config.yaxis_lim) {var ylim = config.yaxis_lim.split(","); layout['yaxis']['range'] = [Number(ylim[0]), Number(ylim[1])]}
       
-      if (config.swap_axes) {
-        for (var i = 0; i < plotly_data.length; i++) {
-          x = structuredClone(plotly_data[i]['x'])
-          y = structuredClone(plotly_data[i]['y'])
-          plotly_data[i]['x'] = y
-          plotly_data[i]['y'] = x
-          plotly_data[i]['error_x'] = structuredClone(plotly_data[i]['error_y'])
-          delete plotly_data[i].error_y
-        }
-        xaxis = structuredClone(layout['xaxis'])
-        yaxis = structuredClone(layout['yaxis'])
-        layout['yaxis'] = xaxis
-        layout['xaxis'] = yaxis
-      }
+      // if (config.swap_axes) {
+      //   for (var i = 0; i < plotly_data.length; i++) {
+      //     x = structuredClone(plotly_data[i]['x'])
+      //     y = structuredClone(plotly_data[i]['y'])
+      //     plotly_data[i]['x'] = y
+      //     plotly_data[i]['y'] = x
+      //     plotly_data[i]['error_x'] = structuredClone(plotly_data[i]['error_y'])
+      //     delete plotly_data[i].error_y
+      //   }
+      //   xaxis = structuredClone(layout['xaxis'])
+      //   yaxis = structuredClone(layout['yaxis'])
+      //   layout['yaxis'] = xaxis
+      //   layout['xaxis'] = yaxis
+      // }
 
-      // Function to do inverse log
-      if (config.inverse_log == true) {
+      // // Function to do inverse log
+      // if (config.inverse_log == true) {
 
-        yn = y.map(row => row[0])
-        // create scaled version of y
-        y_m = math.multiply( math.log10( 
-          math.add( // equivalent to 1-y
-              1,
-              math.multiply( 
-                math.matrix(yn), // convert y to mathjs vector
-                -1
-                )
-              )
-            ),
-          -1)
+      //   yn = y.map(row => row[0])
+      //   // create scaled version of y
+      //   y_m = math.multiply( math.log10( 
+      //     math.add( // equivalent to 1-y
+      //         1,
+      //         math.multiply( 
+      //           math.matrix(yn), // convert y to mathjs vector
+      //           -1
+      //           )
+      //         )
+      //       ),
+      //     -1)
         
-        // Set hover-text with original value of y
-        plotly_data = plotly_data[0]
-        plotly_data['text'] = y
-        plotly_data['hovertemplate'] = '<b>%{text}</b>'
-        plotly_data['y'] = y_m._data // Overwrite y with scaled y
-        plotly_data = [plotly_data]
+      //   // Set hover-text with original value of y
+      //   plotly_data = plotly_data[0]
+      //   plotly_data['text'] = y
+      //   plotly_data['hovertemplate'] = '<b>%{text}</b>'
+      //   plotly_data['y'] = y_m._data // Overwrite y with scaled y
+      //   plotly_data = [plotly_data]
         
-        // Overide yaxis labels
-        layout['yaxis'] = {
-          title: {text: yaxis_label},
-          tickmode: 'array',
-          tickvals: [0,1,2,3],
-          ticktext: [0,0.9,0.99,0.999],
-          range: [0,3.1]
-        }
+      //   // Overide yaxis labels
+      //   layout['yaxis'] = {
+      //     title: {text: yaxis_label},
+      //     tickmode: 'array',
+      //     tickvals: [0,1,2,3],
+      //     ticktext: [0,0.9,0.99,0.999],
+      //     range: [0,3.1]
+      //   }
 
-      }
+      // }
 
-      config = {
-        responsive: true // editable: true, // allow user to edit axes by clicking on them
-      }
+      // config = {
+      //   responsive: true // editable: true, // allow user to edit axes by clicking on them
+      // }
       
-      Plotly.newPlot( // use plotly library
-        this.plotly_bit, // graphDiv
-        plotly_data,
-        layout,
-        config
-      )
+      // Plotly.newPlot( // use plotly library
+      //   this.plotly_bit, // graphDiv
+      //   plotly_data,
+      //   layout,
+      //   config
+      // )
       
     })
 
