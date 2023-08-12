@@ -339,7 +339,7 @@ looker.plugins.visualizations.add({
       console.log(nicedata2)
 
       // if (config.showTable) {
-      var cells = [], header = [...map.keys()].map(x => [x])
+      var cells = [], header = [...nicedata2.keys()].map(x => [x])
       for (var i = 0; i++; i < nicedata2.get(dimN[0]).length) { cells.push([ [...nicedata2.values()].map(x => [x[i]]) ]) }
       plotly_data = [{
         type: 'table',
