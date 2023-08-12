@@ -342,9 +342,9 @@ looker.plugins.visualizations.add({
       // var cells = [...nicedata2.entries()].map( x => [x[0],x[1].values[0],x[1].values[1]] ), header = [['Column'], ['val1'], ['val2']]
       var cells = [], header = [['Column'], ['val1'], ['val2']]
       cells.push( [...nicedata2.keys()] )
-      cells.push( [...nicedata2.entries()].map(x => x[1].pretty[0]) )
-      cells.push( [...nicedata2.entries()].map(x => x[1].pretty[1]) )
-      console.log(cells)
+      for (let i = 0; i++; i < 5) {
+        cells.push( [...nicedata2.entries()].map(x => x[1].pretty[i]) )
+      }      
       // var cells = [], header = [...nicedata2.keys()].map(x => [x])
       // for (var i = 0; i++; i < nicedata2.get(dimN[0]).length) { cells.push([ [...nicedata2.values()].map(x => x[i]) ]) }
       plotly_data = [{
