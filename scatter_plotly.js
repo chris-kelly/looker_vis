@@ -338,7 +338,7 @@ looker.plugins.visualizations.add({
 
       // if (config.showTable) {
       // var cells = [...nicedata2.entries()].map( x => [x[0],x[1].values[0],x[1].values[1]] ), header = [['Column'], ['val1'], ['val2']]
-      var cells = [ [...nicedata2.keys()] ], header = [['Column'], ['val1'], ['val2'], ['val3'], ['val4']]
+      var cells = [ [...nicedata2.keys()] ], header = [['Column'], ['val1'], ['val2'], ['val3'], ['val4'], ['val5']]
       for (let i = 0; i < 5; i++) { cells.push( [...nicedata2.entries()].map(x => x[1].pretty[i]) ) }
       console.log(cells)      
       // var cells = [], header = [...nicedata2.keys()].map(x => [x])
@@ -347,7 +347,7 @@ looker.plugins.visualizations.add({
         type: 'table',
         columnwidth: [200,20,20,20,20],
         header: {values: header},
-        cells: {values: cells},
+        cells: {values: cells, align: 'left', font: {size: 8}},
       }]
         Plotly.newPlot(
           this.plotly_bit, // graphDiv
