@@ -343,7 +343,7 @@ looker.plugins.visualizations.add({
       for (var i = 0; i++; i < nicedata2.get(dimN[0]).length) { cells.push([ [...nicedata2.values()].map(x => x[i]) ]) }
       plotly_data = [{
         type: 'table',
-        header: {values: header},
+        // header: {values: header},
         cells: {values: cells},
       }]
         Plotly.newPlot(
