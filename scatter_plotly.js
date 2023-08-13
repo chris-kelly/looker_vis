@@ -289,12 +289,12 @@ looker.plugins.visualizations.add({
 
     for (i = 0; i < queryResponse.fields.measure_like.length; i++) {
       var iN = (i+1).toString()
-      options['x_'+iN] = { order: 2*i+1, label: "Base trace " + iN + ": x axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.dimension_like[0].name }
-      options['y_'+iN] = { order: 2*i+2, label: "Base trace " + iN + ": y axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.measure_like[i].name }
+      options['x'+iN] = { order: 2*i+1, label: "Base trace " + iN + ": x axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.dimension_like[0].name }
+      options['y'+iN] = { order: 2*i+2, label: "Base trace " + iN + ": y axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.measure_like[i].name }
     }
 
     let j = 1 ;
-    for (i = 0; i < queryResponse.fields.measure_like.length; i ++) { if (config['y_'+(i+1).toString()] != "-") { 
+    for (i = 0; i < queryResponse.fields.measure_like.length; i ++) { console.log(config['y'+(i+1).toString()]); if (config['y'+(i+1).toString()] != "-") { 
       var iN = j.toString()
         options['values' + iN]  = {order: 1, label: "Custom values",     display_size: "half", type: 'string', display: 'select', values: cols, section: "Trace " + iN, default: null}
         options['hover' + iN]   = {order: 2, label: "Custom hovertext",  display_size: "half", type: 'string', display: 'select', values: cols, section: "Trace " + iN, default: null}
