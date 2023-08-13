@@ -302,15 +302,17 @@ looker.plugins.visualizations.add({
     }
 
     let cols = queryResponse.fields.dimension_like.map(x => [get_pretty_cols(x),x.name])
-    cols.concat(queryResponse.fields.measure_like.map(x => [get_pretty_cols(x),x.name]))
+    cols = cols.concat(queryResponse.fields.measure_like.map(x => [get_pretty_cols(x),x.name]))
 
     // queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
     // queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
     
     const options = { ...this.options }
     for (i = 0; i < cols.length; i++) {
-      options['div_' + i.toString()] = {type: "string", label: "------------ " + cols[i][0] + " -----------", display: "divider", order: i}
-      options['trace_' + i.toString()] = {type: "number", label: "Trace #", default: i+1, order: i}
+      options['div_' + i.toString()] = {type: "string", label: "---------- " + cols[i][0] + "----------", display: "divider", order: i}
+      options['trace_' + i.toString()] = {type: "number", label: "Trace #", order: i, display_size: "third"}
+      options['axis_' + i.toString()] = {type: "string", label: "Axis", order: i, display_size: "third", values: [{"x1":'x1',"x2":'x2',"y1":'y1',"y2":'y2'}]}
+      options['type_' + i.toString()] = {type: "string", label: "Type", order: i, display_size: "third", values: [{"values":'values', "labels":'labels', "y lower bound": 'y_lb', "y upper bound": 'y_ub', "x lower bound": 'x_lb', "x upper bound": 'x_ub', "hovertext": 'hovertext'}]}
     }
     
     this.trigger('registerOptions', options)
