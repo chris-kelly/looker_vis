@@ -304,19 +304,24 @@ looker.plugins.visualizations.add({
     queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
     queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
 
+    
     const options = { ...this.options }
-    options['x1'].default = queryResponse.fields.dimension_like[0]
-    options['x1'].values = cols
-    options['y1'].default = queryResponse.fields.measure_like[0]
-    options['y1'].values = cols
-
-    for (i = 0; i < 9; i ++) {
-      iN = (i+1).toString()
-      if (config['x'+iN] || config['y'+iN]) {
-        options['x'+iN].hidden = false
-        options['y'+iN].hidden = false
-      }
+    if (!config.x1) {
+      options['x1'].default = queryResponse.fields.dimension_like[0]
+      options['x1'].values = cols
+      options['y1'].default = queryResponse.fields.measure_like[0]
+      options['y1'].values = cols
     }
+
+
+    
+    // for (i = 0; i < 9; i ++) {
+    //   iN = (i+1).toString()
+    //   if (config['x'+iN] || config['y'+iN]) {
+    //     options['x'+iN].hidden = false
+    //     options['y'+iN].hidden = false
+    //   }
+    // }
   
 
     // for (i = 0; i < config.nt; i++) {
