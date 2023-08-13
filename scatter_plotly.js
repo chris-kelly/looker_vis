@@ -299,7 +299,7 @@ looker.plugins.visualizations.add({
       options['y_UB' + iN]    = {order: i*7+6, label: iN + ". y error upper bound", display_size: "half"}
       options['values' + iN]  = {order: i*7+7, label: iN + ". y error upper bound", display_size: "half"}
     }
-    for (k of Object.keys(trace1)) {
+    for (k of Object.keys(options)) {
       options[k]['type'] = 'string'
       options[k]['display'] = 'select'
       options[k]['values'] = cols
