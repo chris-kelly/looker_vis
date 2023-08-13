@@ -280,92 +280,28 @@ looker.plugins.visualizations.add({
       if (d.hasOwnProperty('label_short')) { result = d.label_short } else { result = d.label }
       return result
     }
-    
-    let cols = [{"none": null}];
+
+    let cols = [{"None": null}]
     queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
     queryResponse.fields.measure_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
-    
-    // options = {}
 
-    trace1 = {}
-    trace1['x'] = {
-      label: "x axis",
-      type: "string",
-      display: "select",
-      values: cols,
-      default: queryResponse.fields.dimension_like[0].name,
-      section: "Data",
-      order: 0,
+    var trace1 = {
+      'x':        {order: 0, label: "x axis", default: queryResponse.fields.dimension_like[0].name},
+      'x_LB':     {order: 1, label: "x error bar lower bound", default: "None", display_size: "half"},
+      'x_UB':     {order: 2, label: "x error bar upper bound", default: "None", display_size: "half"},
+      'y':        {order: 3, label: "x error bar lower bound", default: queryResponse.fields.measure_like[0].name},
+      'y_LB':     {order: 4, label: "y error bar lower bound", default: "None", display_size: "half"},
+      'x_UB':     {order: 5, label: "y error bar upper bound", default: "None", display_size: "half"},
+      'values':   {order: 6, label: "Custom Values", default: "None", display_size: "half"},
+      'hovertext':{order: 7, label: "y error bar upper bound", default: "None", display_size: "half"},
     }
-    trace1['x_LB'] = {
-      label: "x error bar lower bound",
-      type: "string",
-      display: "select",
-      values: cols,
-      default: "none",
-      section: "Data",
-      order: 1,
-      display_size: "half"
+    for (k of Object.keys(trace1)) {
+      trace1[k]['type'] = 'string'
+      trace1[k]['display'] = 'select'
+      trace1[k]['values'] = cols
+      trace1[k]['section'] = "Data"
     }
-    trace1['x_UB'] = {
-      label: "x error bar upper bound",
-      type: "string",
-      display: "select",
-      values: cols,
-      default: "none",
-      section: "Data",
-      order: 1,
-      display_size: "half"
-    }
-    trace1['y'] = {
-      label: "y axis",
-      type: "string",
-      display: "select",
-      values: cols,
-      default: queryResponse.fields.measure_like[0].name,
-      section: "Data",
-      order: 2,
-    }
-    trace1['y_LB'] = {
-      label: "y error bar lower bound",
-      type: "string",
-      display: "select",
-      values: cols,
-      default: "none",
-      section: "Data",
-      order: 1,
-      display_size: "half"
-    }
-    trace1['y_UB'] = {
-      label: "y error bar upper bound",
-      type: "string",
-      display: "select",
-      values: cols,
-      default: "none",
-      section: "Data",
-      order: 1,
-      display_size: "half"
-    }
-    trace1['values'] = {
-      label: "Custom value labels",
-      type: "string",
-      display: "select",
-      values: cols,
-      default: "none",
-      section: "Data",
-      order: 2,
-      display_size: "half"
-    }
-    trace1['custom_hovertext'] = {
-      label: "Custom hover labels",
-      type: "string",
-      display: "select",
-      values: cols,
-      default: "none",
-      section: "Data",
-      order: 2,
-      display_size: "half"
-    }
+    
     console.log(trace1)
     this.trigger('registerOptions', trace1) // register options with parent page to update visConfig
 
