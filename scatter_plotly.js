@@ -307,12 +307,11 @@ looker.plugins.visualizations.add({
 
     const options = { ...this.options }
     for (i = 0; i < config.nt; i++) {
-      console.log(i)
-      console.log(options)
-      options['x'+i.toString()].values = cols
-      options['x'+i.toString()].hidden = true
-      options['y'+i.toString()].values = cols
-      options['y'+i.toString()].hidden = true
+      iN = (i+1).toString()
+      options['x'+iN].values = cols
+      options['x'+iN].hidden = true
+      options['y'+iN].values = cols
+      options['y'+iN].hidden = true
     }
 
     // options.add_2.hidden = !config.add_2
