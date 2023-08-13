@@ -281,21 +281,31 @@ looker.plugins.visualizations.add({
       return result
     }
 
-    let cols = [{"None": null}]
+    let cols = [{"-": null}], options = {}
     queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
-    queryResponse.fields.measure_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
+    queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
 
-    options = {}
+    var options = config
+
+    for (i = 0; i < queryResponse.fields.measure_like.length; i++) {
+      iN = (i+1).toString()
+      options['x_'+iN] = { order: i, label: "Trace " + iN + ": x axis", display_size: "third", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.dimension_like[0].name }
+      options['y_'+iN] = { order: i, label: "Trace " + iN + ": y axis", display_size: "third", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.measure_like[i].name }
+      options['z_'+iN] = { order: i, label: "More?", display_size: "third", type: 'boolean', section: "Raw data", default: true }
+    }
+    options['z_'+iN]['default'] = false
+
+    
     for (i = 0; i < 2; i++) {
       let iN = (i+1).toString()
-      options['x' + iN]      = {order: i*7+1, label: "(" + iN + ") x axis", display_size: "one"}
-      options['x_LB' + iN]    = {order: i*7+2, label: "(" + iN + ") x err lower bound", display_size: "half"}
-      options['x_UB' + iN]    = {order: i*7+3, label: "(" + iN + ") x err upper bound", display_size: "half"}
-      options['y' + iN]       = {order: i*7+4, label: "(" + iN + ") y axis", display_size: "one"}
-      options['y_LB' + iN]    = {order: i*7+5, label: "(" + iN + ") y err lower bound", display_size: "half"}
-      options['y_UB' + iN]    = {order: i*7+6, label: "(" + iN + ") y err upper bound", display_size: "half"}
-      options['values' + iN]  = {order: i*7+7, label: "(" + iN + ") custom values", display_size: "half"}
-      options['hover' + iN]   = {order: i*7+8, label: "(" + iN + ") custom hovertext", display_size: "half"}
+      options['x' + iN]       = {order: i*8+1, label: "(" + iN + ") x axis", display_size: "one"}
+      options['y' + iN]       = {order: i*8+2, label: "(" + iN + ") y axis", display_size: "one"}
+      options['values' + iN]  = {order: i*8+3, label: "(" + iN + ") custom values", display_size: "half"}
+      options['hover' + iN]   = {order: i*8+4, label: "(" + iN + ") custom hovertext", display_size: "half"}
+      options['y_LB' + iN]    = {order: i*8+5, label: "(" + iN + ") y err lower bound", display_size: "half"}
+      options['y_UB' + iN]    = {order: i*8+6, label: "(" + iN + ") y err upper bound", display_size: "half"}
+      options['x_LB' + iN]    = {order: i*8+7, label: "(" + iN + ") x err lower bound", display_size: "half"}
+      options['x_UB' + iN]    = {order: i*8+8, label: "(" + iN + ") x err upper bound", display_size: "half"}
     }
     for (k of Object.keys(options)) {
       options[k]['type'] = 'string'
