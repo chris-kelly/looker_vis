@@ -281,7 +281,7 @@ looker.plugins.visualizations.add({
       return result
     }
 
-    let cols = [{"-": null}], options = {}
+    let cols = [{"-": null}]
     queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
     queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
 
