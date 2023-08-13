@@ -276,6 +276,20 @@ looker.plugins.visualizations.add({
     // Clear errors from previous updates
     this.clearErrors();
     
+    options = {}
+     // Create an option for each measure in your query
+     queryResponse.fields.measure_like.forEach(function(field) {
+       id = "color_" + field.name
+       options[id] = {
+        label: field.label_short + " Color",
+        default: "#8B7DA8",
+        section: "Style",
+        type: "string",
+        display: "color"
+      }
+    })
+    this.trigger('registerOptions', options) // register options with parent page to update visConfig
+    
     window.scriptLoad.then(() => { // Do this first to ensure js loads in time
 
       // adapt column keys to get nicely formatted data in one string
@@ -311,7 +325,7 @@ looker.plugins.visualizations.add({
               if (k2 != '$$$_row_total_$$$') { // data includes row totals. Move these to end
                 nicedata.set([dimN.length + pivK.indexOf(k2)*mesN.length + mesN.indexOf(k),kc], {'keys': [k,k2], 'type': 'pivot + measure', 'label': colname_format([k2, mesL[mesN.indexOf(k)]]) })
               } else {
-                nicedata.set([dimN.length + (pivK.length-1)*mesN.length + mesN.indexOf(k) + 1,kc], {'keys': [k,k2], 'type': 'pivot + measure', 'label': colname_format([k2, mesL[mesN.indexOf(k)]]) })
+                nicedata.set([dimN.length + (pivK.length-1)*mesN.length + mesN.indexOf(k),kc], {'keys': [k,k2], 'type': 'pivot + measure', 'label': colname_format([k2, mesL[mesN.indexOf(k)]]) })
               }
             }
           }
