@@ -295,7 +295,7 @@ looker.plugins.visualizations.add({
     options.y1.values = cols
     options.x2.hidden = !config.add_2
     options.y2.hidden = !config.add_2
-    options.add_2.hidden = !config.add_2
+    // options.add_2.hidden = !config.add_2
     this.trigger('registerOptions', options)
 
     // const options = { ...this.options }
