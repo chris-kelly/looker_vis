@@ -6,6 +6,7 @@ looker.plugins.visualizations.add({
   // Options for user to choose in the "edit" part of looker vis
   // In this example, whether the plot is bar or scatter
   options: { 
+    nt: { order: 0, label: "# traces", type: 'number', section: 'Raw data', display: 'range', min: 1, max: 9, step: 1},
     x1: { order: 0, label: "Base trace 1: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false},
     y1: { order: 0, label: "Base trace 1: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false},
     x2: { order: 0, label: "Base trace 2: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false},
@@ -14,16 +15,16 @@ looker.plugins.visualizations.add({
     y3: { order: 0, label: "Base trace 3: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
     x4: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
     y4: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
-    x5: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true, values: [{"-": null}]},
-    y5: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true, values: [{"-": null}]},
-    x6: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true, values: [{"-": null}]},
-    y6: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true, values: [{"-": null}]},
-    x7: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true, values: [{"-": null}]},
-    y7: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true, values: [{"-": null}]},
-    x8: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true, values: [{"-": null}]},
-    y8: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true, values: [{"-": null}]},
-    x9: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true, values: [{"-": null}]},
-    y9: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true, values: [{"-": null}]},
+    x5: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
+    y5: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
+    x6: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
+    y6: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
+    x7: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
+    y7: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
+    x8: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
+    y8: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
+    x9: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
+    y9: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
        
     // title: {
     //   type: "string",
@@ -306,12 +307,22 @@ looker.plugins.visualizations.add({
 
     
     const options = { ...this.options }
-    if (!config.x1) {
-      options['x1'].default = queryResponse.fields.dimension_like[0]
-      options['x1'].values = cols
-      options['y1'].default = queryResponse.fields.measure_like[0]
-      options['y1'].values = cols
+    for (i = 0; i < config.nt; i++) {
+      iN = (i+1).toString()
+      options['x'+iN]['values'] = cols
+      options['x'+iN]['hidden'] = true
+      options['y'+iN]['values'] = cols
+      options['y'+iN]['hidden'] = true
     }
+    this.trigger('registerOptions', options)
+    
+
+    // if (!config.x1) {
+    //   options['x1'].default = queryResponse.fields.dimension_like[0]
+    //   options['x1'].values = cols
+    //   options['y1'].default = queryResponse.fields.measure_like[0]
+    //   options['y1'].values = cols
+    // }
 
 
     
@@ -333,7 +344,7 @@ looker.plugins.visualizations.add({
     // }
 
     // options.add_2.hidden = !config.add_2
-    this.trigger('registerOptions', options)
+    // this.trigger('registerOptions', options)
 
     // const options = { ...this.options }
     // options['x1'] = { order: 1, label: "Base trace " + iN + ": x axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "0. Raw data", default: queryResponse.fields.dimension_like[0].name }
