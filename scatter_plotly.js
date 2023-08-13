@@ -285,15 +285,20 @@ looker.plugins.visualizations.add({
     queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
     queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
 
-    var options = config
+    var options = {}
 
     for (i = 0; i < queryResponse.fields.measure_like.length; i++) {
       var iN = (i+1).toString()
-      options['x_'+iN] = { order: 3*i+1, label: "Base trace " + iN + ": x axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.dimension_like[0].name }
-      options['y_'+iN] = { order: 3*i+2, label: "Base trace " + iN + ": y axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.measure_like[i].name }
+      options['x_'+iN] = { order: 2*i+1, label: "Base trace " + iN + ": x axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.dimension_like[0].name }
+      options['y_'+iN] = { order: 2*i+2, label: "Base trace " + iN + ": y axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.measure_like[i].name }
     }
     options['more'] = { order: 0, label: "More traces?", type: "boolean", default: false, section: 'Raw data'}
     options['less'] = { order: 0, label: "Less traces?", type: "boolean", default: false, section: 'Raw data'}
+
+    if (config.more) {
+      options['x_9'] = { order: 2*i+1, label: "Base trace " + iN + ": x axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.dimension_like[0].name }
+      options['y_9'] = { order: 2*i+2, label: "Base trace " + iN + ": y axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.measure_like[i].name }
+    }
 
     // let j = 1 ;
     // for (k of Object.keys(options)) {if (k.substring(0,1) == "y") { if (config[k] != "-") { 
