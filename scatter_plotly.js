@@ -292,18 +292,20 @@ looker.plugins.visualizations.add({
       options['x_'+iN] = { order: 3*i+1, label: "Base trace " + iN + ": x axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.dimension_like[0].name }
       options['y_'+iN] = { order: 3*i+2, label: "Base trace " + iN + ": y axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.measure_like[i].name }
     }
+    options['more'] = { order: 0, label: "More traces?", type: "boolean", default: false, section: 'Raw data'}
+    options['less'] = { order: 0, label: "Less traces?", type: "boolean", default: false, section: 'Raw data'}
 
-    let j = 1 ;
-    for (k of Object.keys(options)) {if (k.substring(0,1) == "y") { if (config[k] != "-") { 
-      var iN = j.toString()
-        options['values' + iN]  = {order: 1, label: "Custom values",     display_size: "half", type: 'string', display: 'select', values: cols, section: "Trace " + iN, default: null}
-        options['hover' + iN]   = {order: 2, label: "Custom hovertext",  display_size: "half", type: 'string', display: 'select', values: cols, section: "Trace " + iN, default: null}
-        options['y_LB' + iN]    = {order: 3, label: "y err lower bound", display_size: "half", type: 'string', display: 'select', values: cols, section: "Trace " + iN, default: null}
-        options['y_UB' + iN]    = {order: 4, label: "y err upper bound", display_size: "half", type: 'string', display: 'select', values: cols, section: "Trace " + iN, default: null}
-        options['x_LB' + iN]    = {order: 5, label: "x err lower bound", display_size: "half", type: 'string', display: 'select', values: cols, section: "Trace " + iN, default: null}
-        options['x_UB' + iN]    = {order: 6, label: "x err upper bound", display_size: "half", type: 'string', display: 'select', values: cols, section: "Trace " + iN, default: null}
-        j++;
-    } } }
+    // let j = 1 ;
+    // for (k of Object.keys(options)) {if (k.substring(0,1) == "y") { if (config[k] != "-") { 
+    //   var iN = j.toString()
+    //     options['values' + iN]  = {order: 1, label: "Custom values",     display_size: "half", type: 'string', display: 'select', values: cols, section: "Trace " + iN, default: null}
+    //     options['hover' + iN]   = {order: 2, label: "Custom hovertext",  display_size: "half", type: 'string', display: 'select', values: cols, section: "Trace " + iN, default: null}
+    //     options['y_LB' + iN]    = {order: 3, label: "y err lower bound", display_size: "half", type: 'string', display: 'select', values: cols, section: "Trace " + iN, default: null}
+    //     options['y_UB' + iN]    = {order: 4, label: "y err upper bound", display_size: "half", type: 'string', display: 'select', values: cols, section: "Trace " + iN, default: null}
+    //     options['x_LB' + iN]    = {order: 5, label: "x err lower bound", display_size: "half", type: 'string', display: 'select', values: cols, section: "Trace " + iN, default: null}
+    //     options['x_UB' + iN]    = {order: 6, label: "x err upper bound", display_size: "half", type: 'string', display: 'select', values: cols, section: "Trace " + iN, default: null}
+    //     j++;
+    // } } }
     
     // for (i = 0; i < 2; i++) {
     //   let iN = (i+1).toString()
