@@ -244,6 +244,11 @@ looker.plugins.visualizations.add({
     document.head.appendChild(mathjs_script)
     document.head.appendChild(plotly_script)
 
+    function get_pretty_cols(d) {
+      if (d.hasOwnProperty('label_short')) { result = d.label_short } else { result = d.label }
+      return result
+    }
+
     // Insert a <style> tag with class to keep stuff centered.
     element.innerHTML = `
       <style>
@@ -275,6 +280,28 @@ looker.plugins.visualizations.add({
 
     // Clear errors from previous updates
     this.clearErrors();
+    options = {}
+    options['dimX1'] = {
+      label: "X axis",
+      default: queryResponse.fields.dimension_like[0].name,
+      section: '0. Data',
+      values: queryResponse.fields.dimension_like.map(d => {get_pretty_cols(d): d.name} ) // retrieve both dimensions and non-pivotable table calcs, with nice labels too 
+    }
+
+    value_labels_pos_b: {
+      type: "string",
+      label: "Position in/out of bar",
+      values: [
+        {"Inside": "inside"},
+        {"Outside": "outside"},
+      ],
+      display: "select",
+      default: "inside",
+      section: '2. Values',
+      display_size: 'third',
+      order: 4,
+    }
+    this.trigger('registerOptions', options) // register options with parent page to update visConfig
     
     options = {}
      // Create an option for each measure in your query
@@ -297,10 +324,7 @@ looker.plugins.visualizations.add({
         var k = field.join(' ~ ').replace('|FIELD|',' | ').replace('$$$_row_total_$$$', 'ROW TOTAL')
         return k
       }
-      function get_pretty_cols(d) {
-        if (d.hasOwnProperty('label_short')) { result = d.label_short } else { result = d.label }
-        return result
-      }
+      
 
       // Get column names and metadata
       var dim_names = queryResponse.fields.dimension_like.map(d => [d.name, get_pretty_cols(d)]) // retrieve both dimensions and non-pivotable table calcs, with nice labels too
