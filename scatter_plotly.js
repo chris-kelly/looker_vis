@@ -301,22 +301,38 @@ looker.plugins.visualizations.add({
       return result
     }
 
-    let cols = queryResponse.fields.dimension_like.map(x => [get_pretty_cols(x),x.name])
-    cols = cols.concat(queryResponse.fields.measure_like.map(x => [get_pretty_cols(x),x.name]))
-
-    // queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
-    // queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
+    let cols = [{"-":null}]
+    queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
+    queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
     
     const options = { ...this.options }
     for (i = 0; i < cols.length; i++) {
       options['div_' + i.toString()] = {type: "string", label: "<--- " + cols[i][0] + " --->", display: "divider", order: i*4}
-      options['trace_' + i.toString()] = {type: "number", label: "Trace #", order: i*4+1, display_size: "third"}
-      options['axis_' + i.toString()] = {type: "string", label: "Axis", order: i*4+2, display_size: "third", display: 'select', values: [{"x1":'x1'},{"x2":'x2'},{"y1":'y1'},{"y2":'y2'}]}
-      options['type_' + i.toString()] = {type: "string", label: "Type", order: i*4+3, display_size: "third", display: 'select', values: [{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}]}
+      options['x_' + i.toString()] = {type: "string", label: "Axis", order: i*4+1, display_size: "third", display: 'select', values: cols}
+      // options['trace_' + i.toString()] = {type: "number", label: "Trace #", order: i*4+1, display_size: "third"}
+      options['axis_' + i.toString()] = {type: "string", label: "Axis", order: i*4+2, display_size: "third", display: 'select', values: [{"-":null},{"x1":'x1'},{"x2":'x2'},{"y1":'y1'},{"y2":'y2'}]}
+      options['type_' + i.toString()] = {type: "string", label: "Type", order: i*4+3, display_size: "third", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}]}
       if (cols[i][1] == queryResponse.fields.dimension_like[0].name) { options['trace_' + i.toString()]['default'] = 1; options['axis_' + i.toString()]['default'] = "x1"; options['type_' + i.toString()]['default'] = "values" }
       if (cols[i][1] == queryResponse.fields.measure_like[0].name) { options['trace_' + i.toString()]['default'] = 1; options['axis_' + i.toString()]['default'] = "y1"; options['type_' + i.toString()]['default'] = "values" }
     }
     this.trigger('registerOptions', options)
+    
+    // let cols = queryResponse.fields.dimension_like.map(x => [get_pretty_cols(x),x.name])
+    // cols = cols.concat(queryResponse.fields.measure_like.map(x => [get_pretty_cols(x),x.name]))
+
+    // // queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
+    // // queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
+    
+    // const options = { ...this.options }
+    // for (i = 0; i < cols.length; i++) {
+    //   options['div_' + i.toString()] = {type: "string", label: "<--- " + cols[i][0] + " --->", display: "divider", order: i*4}
+    //   options['trace_' + i.toString()] = {type: "number", label: "Trace #", order: i*4+1, display_size: "third"}
+    //   options['axis_' + i.toString()] = {type: "string", label: "Axis", order: i*4+2, display_size: "third", display: 'select', values: [{"-":null},{"x1":'x1'},{"x2":'x2'},{"y1":'y1'},{"y2":'y2'}]}
+    //   options['type_' + i.toString()] = {type: "string", label: "Type", order: i*4+3, display_size: "third", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}]}
+    //   if (cols[i][1] == queryResponse.fields.dimension_like[0].name) { options['trace_' + i.toString()]['default'] = 1; options['axis_' + i.toString()]['default'] = "x1"; options['type_' + i.toString()]['default'] = "values" }
+    //   if (cols[i][1] == queryResponse.fields.measure_like[0].name) { options['trace_' + i.toString()]['default'] = 1; options['axis_' + i.toString()]['default'] = "y1"; options['type_' + i.toString()]['default'] = "values" }
+    // }
+    // this.trigger('registerOptions', options)
     
     // for (i = 0; i < config.nt; i++) {
     //   iN = (i+1).toString()
