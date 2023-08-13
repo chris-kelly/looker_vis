@@ -273,25 +273,123 @@ looker.plugins.visualizations.add({
   // Update everytime data/settings change
   updateAsync: function(data, element, config, queryResponse, details, done) { 
 
+    // Clear errors from previous updates
+    this.clearErrors();
+
     function get_pretty_cols(d) {
       if (d.hasOwnProperty('label_short')) { result = d.label_short } else { result = d.label }
       return result
     }
     
-    let dvalues = []; queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; dvalues.push(d)});
+    let cols = [{"none": null}];
+    queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
+    queryResponse.fields.measure_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
+    
+    // options = {}
 
-    // Clear errors from previous updates
-    this.clearErrors();
-    options = {}
-    options['dimX1'] = {
-      label: "X axis",
-      type: "array",
-      display: 'text',
-      values: dvalues, // retrieve both dimensions and non-pivotable table calcs, with nice labels too 
+    trace1 = {}
+    trace1['x'] = {
+      label: "x axis",
+      type: "string",
+      display: "select",
+      values: cols,
       default: queryResponse.fields.dimension_like[0].name,
-      section: "Style",
+      section: "Data",
+      order: 0,
+    }
+    trace1['x_LB'] = {
+      label: "x error bar lower bound",
+      type: "string",
+      display: "select",
+      values: cols,
+      default: "none",
+      section: "Data",
+      order: 1,
+      display_size: "half"
+    }
+    trace1['x_UB'] = {
+      label: "x error bar upper bound",
+      type: "string",
+      display: "select",
+      values: cols,
+      default: "none",
+      section: "Data",
+      order: 1,
+      display_size: "half"
+    }
+    trace1['y'] = {
+      label: "y axis",
+      type: "string",
+      display: "select",
+      values: cols,
+      default: queryResponse.fields.measure_like[0].name,
+      section: "Data",
+      order: 2,
+    }
+    trace1['y_LB'] = {
+      label: "y error bar lower bound",
+      type: "string",
+      display: "select",
+      values: cols,
+      default: "none",
+      section: "Data",
+      order: 1,
+      display_size: "half"
+    }
+    trace1['y_UB'] = {
+      label: "y error bar upper bound",
+      type: "string",
+      display: "select",
+      values: cols,
+      default: "none",
+      section: "Data",
+      order: 1,
+      display_size: "half"
+    }
+    trace1['values'] = {
+      label: "Custom value labels",
+      type: "string",
+      display: "select",
+      values: cols,
+      default: "none",
+      section: "Data",
+      order: 2,
+      display_size: "half"
+    }
+    trace1['custom_hovertext'] = {
+      label: "Custom hover labels",
+      type: "string",
+      display: "select",
+      values: cols,
+      default: "none",
+      section: "Data",
+      order: 2,
+      display_size: "half"
     }
     console.log(options)
+    this.trigger('registerOptions', options) // register options with parent page to update visConfig
+
+    // queryResponse.fields.dimension_like.forEach(function(field) {
+    //     id = "xaxis_" + field.name
+    //     options[id] = {
+    //     label: field.label_short + " Color",
+    //     default: "#8B7DA8",
+    //     section: "Style",
+    //     type: "string",
+    //     display: "color"
+    //   }
+    // })
+
+    // options['dimX1'] = {
+    //   label: "X axis",
+    //   type: "array",
+    //   display: 'text',
+    //   values: dvalues, // retrieve both dimensions and non-pivotable table calcs, with nice labels too 
+    //   default: queryResponse.fields.dimension_like[0].name,
+    //   section: "Style",
+    //   display_size: "third"
+    // }
+    
     //  // Create an option for each measure in your query
     //  queryResponse.fields.measure_like.forEach(function(field) {
     //    id = "color_" + field.name
@@ -304,7 +402,7 @@ looker.plugins.visualizations.add({
     //   }
     // })
     // console.log(options)
-    this.trigger('registerOptions', options) // register options with parent page to update visConfig
+    
     
     window.scriptLoad.then(() => { // Do this first to ensure js loads in time
 
