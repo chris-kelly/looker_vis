@@ -289,33 +289,33 @@ looker.plugins.visualizations.add({
 
     for (i = 0; i < queryResponse.fields.measure_like.length; i++) {
       iN = (i+1).toString()
-      options['x_'+iN] = { order: i, label: "Trace " + iN + ": x axis", display_size: "third", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.dimension_like[0].name }
-      options['y_'+iN] = { order: i, label: "Trace " + iN + ": y axis", display_size: "third", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.measure_like[i].name }
-      options['z_'+iN] = { order: i, label: "More?", display_size: "third", type: 'boolean', section: "Raw data", default: true }
+      options['x_'+iN] = { order: 3*i+1, label: "Trace " + iN + ": x axis", display_size: "third", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.dimension_like[0].name }
+      options['y_'+iN] = { order: 3*i+2, label: "Trace " + iN + ": y axis", display_size: "third", type: 'string', display: 'select', values: cols, section: "Raw data", default: queryResponse.fields.measure_like[i].name }
+      options['z_'+iN] = { order: 3*i+3, label: "More?", display_size: "third", type: 'boolean', section: "Raw data", default: true }
     }
     options['z_'+iN]['default'] = false
 
     
-    for (i = 0; i < 2; i++) {
-      let iN = (i+1).toString()
-      options['x' + iN]       = {order: i*8+1, label: "(" + iN + ") x axis", display_size: "one"}
-      options['y' + iN]       = {order: i*8+2, label: "(" + iN + ") y axis", display_size: "one"}
-      options['values' + iN]  = {order: i*8+3, label: "(" + iN + ") custom values", display_size: "half"}
-      options['hover' + iN]   = {order: i*8+4, label: "(" + iN + ") custom hovertext", display_size: "half"}
-      options['y_LB' + iN]    = {order: i*8+5, label: "(" + iN + ") y err lower bound", display_size: "half"}
-      options['y_UB' + iN]    = {order: i*8+6, label: "(" + iN + ") y err upper bound", display_size: "half"}
-      options['x_LB' + iN]    = {order: i*8+7, label: "(" + iN + ") x err lower bound", display_size: "half"}
-      options['x_UB' + iN]    = {order: i*8+8, label: "(" + iN + ") x err upper bound", display_size: "half"}
-    }
-    for (k of Object.keys(options)) {
-      options[k]['type'] = 'string'
-      options[k]['display'] = 'select'
-      options[k]['values'] = cols
-      options[k]['section'] = "Data"
-      options[k]['default'] = null
-    }
-    options['x1']['default'] = queryResponse.fields.dimension_like[0].name
-    options['y1']['default'] = queryResponse.fields.measure_like[0].name
+    // for (i = 0; i < 2; i++) {
+    //   let iN = (i+1).toString()
+    //   options['x' + iN]       = {order: i*8+1, label: "(" + iN + ") x axis", display_size: "one"}
+    //   options['y' + iN]       = {order: i*8+2, label: "(" + iN + ") y axis", display_size: "one"}
+    //   options['values' + iN]  = {order: i*8+3, label: "(" + iN + ") custom values", display_size: "half"}
+    //   options['hover' + iN]   = {order: i*8+4, label: "(" + iN + ") custom hovertext", display_size: "half"}
+    //   options['y_LB' + iN]    = {order: i*8+5, label: "(" + iN + ") y err lower bound", display_size: "half"}
+    //   options['y_UB' + iN]    = {order: i*8+6, label: "(" + iN + ") y err upper bound", display_size: "half"}
+    //   options['x_LB' + iN]    = {order: i*8+7, label: "(" + iN + ") x err lower bound", display_size: "half"}
+    //   options['x_UB' + iN]    = {order: i*8+8, label: "(" + iN + ") x err upper bound", display_size: "half"}
+    // }
+    // for (k of Object.keys(options)) {
+    //   options[k]['type'] = 'string'
+    //   options[k]['display'] = 'select'
+    //   options[k]['values'] = cols
+    //   options[k]['section'] = "Data"
+    //   options[k]['default'] = null
+    // }
+    // options['x1']['default'] = queryResponse.fields.dimension_like[0].name
+    // options['y1']['default'] = queryResponse.fields.measure_like[0].name
     console.log(options)
     this.trigger('registerOptions', options) // register options with parent page to update visConfig
 
