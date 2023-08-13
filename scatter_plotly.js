@@ -366,8 +366,8 @@ looker.plugins.visualizations.add({
       order: 2,
       display_size: "half"
     }
-    console.log(options)
-    this.trigger('registerOptions', options) // register options with parent page to update visConfig
+    console.log(trace1)
+    this.trigger('registerOptions', trace1) // register options with parent page to update visConfig
 
     // queryResponse.fields.dimension_like.forEach(function(field) {
     //     id = "xaxis_" + field.name
