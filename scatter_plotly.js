@@ -288,10 +288,10 @@ looker.plugins.visualizations.add({
     options = {}
     for (i = 0; i < 2; i++) {
       let iN = (i+1).toString()
-      options['x_' + iN]      = {order: i*7+1, label: "(" + iN + ") x axis", default: queryResponse.fields.dimension_like[0].name }
+      options['x' + iN]      = {order: i*7+1, label: "(" + iN + ") x axis", display_size: "one"}
       options['x_LB' + iN]    = {order: i*7+2, label: "(" + iN + ") x err lower bound", display_size: "half"}
       options['x_UB' + iN]    = {order: i*7+3, label: "(" + iN + ") x err upper bound", display_size: "half"}
-      options['y' + iN]       = {order: i*7+4, label: "(" + iN + ") y axis", default: queryResponse.fields.measure_like[0].name }
+      options['y' + iN]       = {order: i*7+4, label: "(" + iN + ") y axis", display_size: "one"}
       options['y_LB' + iN]    = {order: i*7+5, label: "(" + iN + ") y err lower bound", display_size: "half"}
       options['y_UB' + iN]    = {order: i*7+6, label: "(" + iN + ") y err upper bound", display_size: "half"}
       options['values' + iN]  = {order: i*7+7, label: "(" + iN + ") custom values", display_size: "half"}
@@ -302,7 +302,10 @@ looker.plugins.visualizations.add({
       options[k]['display'] = 'select'
       options[k]['values'] = cols
       options[k]['section'] = "Data"
+      options[k]['default'] = null
     }
+    options['x1']['default'] = queryResponse.fields.dimension_like[0].name
+    options['y1']['default'] = queryResponse.fields.measure_like[0].name
     console.log(options)
     this.trigger('registerOptions', options) // register options with parent page to update visConfig
 
