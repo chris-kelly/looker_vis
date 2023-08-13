@@ -309,7 +309,7 @@ looker.plugins.visualizations.add({
     
     const options = { ...this.options }
     for (i = 0; i < cols.length; i++) {
-      options['div_' + i.toString()] = {type: "string", label: "---------- " + cols[i][0] + "----------", display: "divider", order: i*4}
+      options['div_' + i.toString()] = {type: "string", label: "<--- " + cols[i][0] + " --->", display: "divider", order: i*4}
       options['trace_' + i.toString()] = {type: "number", label: "Trace #", order: i*4+1, display_size: "third"}
       options['axis_' + i.toString()] = {type: "string", label: "Axis", order: i*4+2, display_size: "third", display: 'select', values: [{"x1":'x1',"x2":'x2',"y1":'y1',"y2":'y2'}]}
       options['type_' + i.toString()] = {type: "string", label: "Type", order: i*4+3, display_size: "third", display: 'select',values: [{"values":'values', "labels":'labels', "y lower bound": 'y_lb', "y upper bound": 'y_ub', "x lower bound": 'x_lb', "x upper bound": 'x_ub', "hovertext": 'hovertext'}]}
