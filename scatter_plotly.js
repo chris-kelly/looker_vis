@@ -289,7 +289,7 @@ looker.plugins.visualizations.add({
       section: "Style",
       values: dvalues // retrieve both dimensions and non-pivotable table calcs, with nice labels too 
     }
-    console..log(options)
+    console.log(options)
      // Create an option for each measure in your query
      queryResponse.fields.measure_like.forEach(function(field) {
        id = "color_" + field.name
@@ -301,7 +301,7 @@ looker.plugins.visualizations.add({
         display: "color"
       }
     })
-    console..log(options)
+    console.log(options)
     this.trigger('registerOptions', options) // register options with parent page to update visConfig
     
     window.scriptLoad.then(() => { // Do this first to ensure js loads in time
