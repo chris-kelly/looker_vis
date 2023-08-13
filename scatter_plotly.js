@@ -6,11 +6,10 @@ looker.plugins.visualizations.add({
   // Options for user to choose in the "edit" part of looker vis
   // In this example, whether the plot is bar or scatter
   options: { 
-    nt: { order: 0, label: "Add more traces?", type: 'number', default: 1, section: "Trace 1", display: "range", min: 1, max: 9, step: 1},
     x1: { order: 0, label: "Base trace 1: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false, values: [{"-": null}]},
     y1: { order: 0, label: "Base trace 1: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false, values: [{"-": null}]},
-    x2: { order: 0, label: "Base trace 2: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true, values: [{"-": null}]},
-    y2: { order: 0, label: "Base trace 2: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true, values: [{"-": null}]},
+    x2: { order: 0, label: "Base trace 2: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false, values: [{"-": null}]},
+    y2: { order: 0, label: "Base trace 2: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false, values: [{"-": null}]},
     x3: { order: 0, label: "Base trace 3: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true, values: [{"-": null}]},
     y3: { order: 0, label: "Base trace 3: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true, values: [{"-": null}]},
     x4: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true, values: [{"-": null}]},
@@ -306,13 +305,27 @@ looker.plugins.visualizations.add({
     queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
 
     const options = { ...this.options }
-    for (i = 0; i < config.nt; i++) {
+    options['x1'].default = queryResponse.fields.dimension_like[0]
+    options['x1'].values = cols
+    options['y1'].default = queryResponse.fields.measure_like[0]
+    options['y1'].values = cols
+
+    for (i = 0; i < 9; i ++) {
       iN = (i+1).toString()
-      options['x'+iN].values = cols
-      options['x'+iN].hidden = true
-      options['y'+iN].values = cols
-      options['y'+iN].hidden = true
+      if (config['x'+iN] || config['y'+iN]) {
+        options['x'+iN].hidden = false
+        options['y'+iN].hidden = false
+      }
     }
+  
+
+    // for (i = 0; i < config.nt; i++) {
+    //   iN = (i+1).toString()
+    //   options['x'+iN].values = cols
+    //   options['x'+iN].hidden = true
+    //   options['y'+iN].values = cols
+    //   options['y'+iN].hidden = true
+    // }
 
     // options.add_2.hidden = !config.add_2
     this.trigger('registerOptions', options)
