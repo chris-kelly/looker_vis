@@ -345,7 +345,7 @@ looker.plugins.visualizations.add({
       
       plotly_data = [
         { type: 'table', header: {values: summaryHeader}, cells: {values: summaryCells, align: 'left', font: {size: 8}} },
-        { type: 'table', header: {values: detailedHeader}, cells: {values: detailedCells, align: 'left', font: {size: 8}}, columnwidth: [200,20,20,20,20] },
+        // { type: 'table', header: {values: detailedHeader}, cells: {values: detailedCells, align: 'left', font: {size: 8}}, columnwidth: [200,20,20,20,20] },
       ]
       Plotly.newPlot(
         this.plotly_bit, // graphDiv
