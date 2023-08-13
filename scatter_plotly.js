@@ -10,6 +10,9 @@ looker.plugins.visualizations.add({
     //   type: "string",
     //   label: "1. Chart title",
     // },
+    num_unique_data: {
+      type: "number",
+    },
     plot_type: {
       type: "string",
       label: "Plot",
@@ -285,25 +288,25 @@ looker.plugins.visualizations.add({
     queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
     queryResponse.fields.measure_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
 
-    var trace1 = {
-      'x':        {order: 0, label: "x axis", default: queryResponse.fields.dimension_like[0].name },
-      'x_LB':     {order: 1, label: "x error lower bound", display_size: "half"},
-      'x_UB':     {order: 2, label: "x error upper bound", display_size: "half"},
-      'y':        {order: 3, label: "y axis", default: queryResponse.fields.measure_like[0].name },
-      'y_LB':     {order: 4, label: "y error lower bound", display_size: "half"},
-      'y_UB':     {order: 5, label: "y error upper bound", display_size: "half"},
-      'values':   {order: 6, label: "custom Values", display_size: "half"},
-      'hovertext':{order: 7, label: "hover text", display_size: "half"},
+    var options = { num_unique_data: {type: "number"} }
+    for (i = 0; i < config.num_unique_data; i++) {
+      let iN = i.toString()
+      options['x_' + iN]      = {order: i*7+0, label: iN + ". x axis", default: queryResponse.fields.dimension_like[0].name }
+      options['x_LB' + iN]    = {order: i*7+1, label: iN + ". x error lower bound", display_size: "half"}
+      options['x_UB' + iN]    = {order: i*7+2, label: iN + ". x error upper bound", display_size: "half"}
+      options['y' + iN]       = {order: i*7+3, label: iN + ". y axis", default: queryResponse.fields.measure_like[0].name }
+      options['y_LB' + iN]    = {order: i*7+4, label: iN + ". y error lower bound", display_size: "half"}
+      options['y_UB' + iN]    = {order: i*7+6, label: iN + ". y error upper bound", display_size: "half"}
+      options['values' + iN]  = {order: i*7+7, label: iN + ". y error upper bound", display_size: "half"}
     }
     for (k of Object.keys(trace1)) {
-      trace1[k]['type'] = 'string'
-      trace1[k]['display'] = 'select'
-      trace1[k]['values'] = cols
-      trace1[k]['section'] = "Data"
+      options[k]['type'] = 'string'
+      options[k]['display'] = 'select'
+      options[k]['values'] = cols
+      options[k]['section'] = "Data"
     }
-    
-    console.log(trace1)
-    this.trigger('registerOptions', trace1) // register options with parent page to update visConfig
+    console.log(options)
+    this.trigger('registerOptions', options) // register options with parent page to update visConfig
 
     // queryResponse.fields.dimension_like.forEach(function(field) {
     //     id = "xaxis_" + field.name
