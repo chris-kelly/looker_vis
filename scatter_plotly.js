@@ -285,7 +285,7 @@ looker.plugins.visualizations.add({
     queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
     queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
 
-    var options = Object.assign(config)
+    var options = structuredClone(config)
     // var options = {}
 
     // for (i = 0; i < queryResponse.fields.measure_like.length; i++) {
