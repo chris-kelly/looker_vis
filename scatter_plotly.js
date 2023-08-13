@@ -278,31 +278,18 @@ looker.plugins.visualizations.add({
   // Update everytime data/settings change
   updateAsync: function(data, element, config, queryResponse, details, done) { 
 
+    
+    let dvalues = []; queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; dvalues.push(d)});
+
     // Clear errors from previous updates
     this.clearErrors();
     options = {}
     options['dimX1'] = {
       label: "X axis",
       default: queryResponse.fields.dimension_like[0].name,
-      section: '0. Data',
-      values: queryResponse.fields.dimension_like.map(d => {get_pretty_cols(d): d.name} ) // retrieve both dimensions and non-pivotable table calcs, with nice labels too 
-    }
-
-    value_labels_pos_b: {
-      type: "string",
-      label: "Position in/out of bar",
-      values: [
-        {"Inside": "inside"},
-        {"Outside": "outside"},
-      ],
-      display: "select",
-      default: "inside",
-      section: '2. Values',
-      display_size: 'third',
-      order: 4,
-    }
-    this.trigger('registerOptions', options) // register options with parent page to update visConfig
-    
+      section: "Style",
+      values: dvalues // retrieve both dimensions and non-pivotable table calcs, with nice labels too 
+    }    
     options = {}
      // Create an option for each measure in your query
      queryResponse.fields.measure_like.forEach(function(field) {
