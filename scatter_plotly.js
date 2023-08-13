@@ -289,8 +289,7 @@ looker.plugins.visualizations.add({
       default: queryResponse.fields.dimension_like[0].name,
       section: "Style",
       values: dvalues // retrieve both dimensions and non-pivotable table calcs, with nice labels too 
-    }    
-    options = {}
+    }
      // Create an option for each measure in your query
      queryResponse.fields.measure_like.forEach(function(field) {
        id = "color_" + field.name
