@@ -285,6 +285,7 @@ looker.plugins.visualizations.add({
     queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
     queryResponse.fields.measure_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
 
+    options = {}
     for (i = 0; i < 2; i++) {
       let iN = i.toString()
       options['x_' + iN]      = {order: i*7+0, label: iN + ". x axis", default: queryResponse.fields.dimension_like[0].name }
