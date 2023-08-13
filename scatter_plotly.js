@@ -307,6 +307,7 @@ looker.plugins.visualizations.add({
 
     
     const options = { ...this.options }
+    console.log(options)
     if (!config.x1) {
       options.x1 = { order: 0, label: "Base trace 1: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', values: cols, default: queryResponse.fields.dimension_like[0].name}
       options.y1 = { order: 0, label: "Base trace 1: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', values: cols, default: queryResponse.fields.measure_like[0].name}
@@ -319,6 +320,7 @@ looker.plugins.visualizations.add({
       options.x3 = { order: 2, label: "Base trace 1: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', values: cols, default: null}
       options.y3 = { order: 2, label: "Base trace 1: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', values: cols, default: null}
     }
+    console.log(options)
     
     // for (i = 0; i < config.nt; i++) {
     //   iN = (i+1).toString()
