@@ -6,11 +6,26 @@ looker.plugins.visualizations.add({
   // Options for user to choose in the "edit" part of looker vis
   // In this example, whether the plot is bar or scatter
   options: { 
-    x1: { order: 0, label: "Base trace 1: x axis", display_size: "half", type: 'string', display: 'select', section: "0. Raw data", hidden: false},
-    y1: { order: 1, label: "Base trace 1: y axis", display_size: "half", type: 'string', display: 'select', section: "0. Raw data", hidden: false},
-    add_2: { order: 2, label: "Add another trace?", type: 'boolean', default: false, section: "0. Raw data"},
-    x2: { order: 0, label: "Base trace 2: x axis", display_size: "half", type: 'string', display: 'select', section: "0. Raw data", hidden: true},
-    y2: { order: 1, label: "Base trace 2: y axis", display_size: "half", type: 'string', display: 'select', section: "0. Raw data", hidden: true},    
+    nt: { order: 0, label: "Add more traces?", type: 'number', default: 1, section: "Trace 1", display: "range", min: 1, max: 9, step: 1},
+    x1: { order: 0, label: "Base trace 1: x axis", display_size: "half", type: 'string', section: 'Trace 1', display: 'select', hidden: false},
+    y1: { order: 0, label: "Base trace 1: y axis", display_size: "half", type: 'string', section: 'Trace 1', display: 'select', hidden: false},
+    x2: { order: 0, label: "Base trace 2: x axis", display_size: "half", type: 'string', section: 'Trace 2', display: 'select', hidden: true},
+    y2: { order: 0, label: "Base trace 2: y axis", display_size: "half", type: 'string', section: 'Trace 2', display: 'select', hidden: true},
+    x3: { order: 0, label: "Base trace 3: x axis", display_size: "half", type: 'string', section: 'Trace 3', display: 'select', hidden: true},
+    y3: { order: 0, label: "Base trace 3: y axis", display_size: "half", type: 'string', section: 'Trace 3', display: 'select', hidden: true},
+    x4: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Trace 4', display: 'select', hidden: true},
+    y4: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Trace 4', display: 'select', hidden: true},
+    x5: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Trace 5', display: 'select', hidden: true},
+    y5: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Trace 5', display: 'select', hidden: true},
+    x6: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Trace 6', display: 'select', hidden: true},
+    y6: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Trace 6', display: 'select', hidden: true},
+    x7: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Trace 7', display: 'select', hidden: true},
+    y7: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Trace 7', display: 'select', hidden: true},
+    x8: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Trace 8', display: 'select', hidden: true},
+    y8: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Trace 8', display: 'select', hidden: true},
+    x9: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Trace 9', display: 'select', hidden: true},
+    y9: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Trace 9', display: 'select', hidden: true},
+       
     // title: {
     //   type: "string",
     //   label: "1. Chart title",
@@ -291,10 +306,13 @@ looker.plugins.visualizations.add({
     queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
 
     const options = { ...this.options }
-    options.x1.values = cols
-    options.y1.values = cols
-    options.x2.hidden = !config.add_2
-    options.y2.hidden = !config.add_2
+    for (i = 0; i < config.nt; i++) {
+      options['x'+i.toString()].values = cols
+      options['x'+i.toString()].hidden = true
+      options['y'+i.toString()].values = cols
+      options['y'+i.toString()].hidden = true
+    }
+
     // options.add_2.hidden = !config.add_2
     this.trigger('registerOptions', options)
 
