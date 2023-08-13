@@ -244,11 +244,6 @@ looker.plugins.visualizations.add({
     document.head.appendChild(mathjs_script)
     document.head.appendChild(plotly_script)
 
-    function get_pretty_cols(d) {
-      if (d.hasOwnProperty('label_short')) { result = d.label_short } else { result = d.label }
-      return result
-    }
-
     // Insert a <style> tag with class to keep stuff centered.
     element.innerHTML = `
       <style>
@@ -278,6 +273,10 @@ looker.plugins.visualizations.add({
   // Update everytime data/settings change
   updateAsync: function(data, element, config, queryResponse, details, done) { 
 
+    function get_pretty_cols(d) {
+      if (d.hasOwnProperty('label_short')) { result = d.label_short } else { result = d.label }
+      return result
+    }
     
     let dvalues = []; queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; dvalues.push(d)});
 
