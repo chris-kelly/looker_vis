@@ -285,9 +285,10 @@ looker.plugins.visualizations.add({
     options = {}
     options['dimX1'] = {
       label: "X axis",
+      type: "string",
+      values: dvalues, // retrieve both dimensions and non-pivotable table calcs, with nice labels too 
       default: queryResponse.fields.dimension_like[0].name,
       section: "Style",
-      values: dvalues // retrieve both dimensions and non-pivotable table calcs, with nice labels too 
     }
     console.log(options)
      // Create an option for each measure in your query
