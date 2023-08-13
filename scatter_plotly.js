@@ -287,7 +287,7 @@ looker.plugins.visualizations.add({
 
     options = {}
     for (i = 1; i <= 2; i++) {
-      let iN = (i.toString()
+      let iN = i.toString()
       options['x_' + iN]      = {order: i*7+0, label: "(" + iN + ") x axis", default: queryResponse.fields.dimension_like[0].name }
       options['x_LB' + iN]    = {order: i*7+1, label: "(" + iN + ") x err lower bound", display_size: "half"}
       options['x_UB' + iN]    = {order: i*7+2, label: "(" + iN + ") x err upper bound", display_size: "half"}
