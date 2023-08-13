@@ -10,9 +10,6 @@ looker.plugins.visualizations.add({
     //   type: "string",
     //   label: "1. Chart title",
     // },
-    num_unique_data: {
-      type: "number",
-    },
     plot_type: {
       type: "string",
       label: "Plot",
@@ -288,8 +285,7 @@ looker.plugins.visualizations.add({
     queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
     queryResponse.fields.measure_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
 
-    var options = { num_unique_data: {type: "number"} }
-    for (i = 0; i < config.num_unique_data; i++) {
+    for (i = 0; i < 2; i++) {
       let iN = i.toString()
       options['x_' + iN]      = {order: i*7+0, label: iN + ". x axis", default: queryResponse.fields.dimension_like[0].name }
       options['x_LB' + iN]    = {order: i*7+1, label: iN + ". x error lower bound", display_size: "half"}
