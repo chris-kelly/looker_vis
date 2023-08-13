@@ -311,7 +311,7 @@ looker.plugins.visualizations.add({
               if (k2 != '$$$_row_total_$$$') { // data includes row totals. Move these to end
                 nicedata.set([dimN.length + pivK.indexOf(k2)*mesN.length + mesN.indexOf(k),kc], {'keys': [k,k2], 'type': 'pivot + measure', 'label': colname_format([k2, mesL[mesN.indexOf(k)]]) })
               } else {
-                nicedata.set([dimN.length + pivK.length*mesN.length + mesN.indexOf(k) + 1,kc], {'keys': [k,k2], 'type': 'pivot + measure', 'label': colname_format([k2, mesL[mesN.indexOf(k)]]) })
+                nicedata.set([dimN.length + (pivK.length-1)*mesN.length + mesN.indexOf(k) + 1,kc], {'keys': [k,k2], 'type': 'pivot + measure', 'label': colname_format([k2, mesL[mesN.indexOf(k)]]) })
               }
             }
           }
@@ -337,22 +337,21 @@ looker.plugins.visualizations.add({
       console.log(nicedata2)
 
       // if (config.showTable) {
-      // var cells = [...nicedata2.entries()].map( x => [x[0],x[1].values[0],x[1].values[1]] ), header = [['Column'], ['val1'], ['val2']]
-      var cells = [ [...nicedata2.keys()] ], header = [['Column'], ['val1'], ['val2'], ['val3'], ['val4'], ['val5']]
-      for (let i = 0; i < 5; i++) { cells.push( [...nicedata2.entries()].map(x => x[1].pretty[i]) ) }
-      console.log(cells)      
-      // var cells = [], header = [...nicedata2.keys()].map(x => [x])
-      // for (var i = 0; i++; i < nicedata2.get(dimN[0]).length) { cells.push([ [...nicedata2.values()].map(x => x[i]) ]) }
-      plotly_data = [{
-        type: 'table',
-        columnwidth: [200,20,20,20,20],
-        header: {values: header},
-        cells: {values: cells, align: 'left', font: {size: 8}},
-      }]
-        Plotly.newPlot(
-          this.plotly_bit, // graphDiv
-          plotly_data,
-        )
+      var summaryCells = [dimN,mesN], summaryHeader = [['Dimensions'],['Measures'],['Pivots']]
+      console.log(summaryCells)
+      var detailedCells = [ [...nicedata2.keys()] ], detailedHeader = [['Column'], ['val1'], ['val2'], ['val3'], ['val4'], ['val5']]
+      for (let i = 0; i < 5; i++) { detailedCells.push( [...nicedata2.entries()].map(x => x[1].pretty[i]) ) }
+      console.log(detailedCells)
+      
+      plotly_data = [
+        { type: 'table', header: {values: summaryHeader}, cells: {values: summaryCells, align: 'left', font: {size: 8}} },
+        { type: 'table', header: {values: detailedHeader}, cells: {values: detailedCells, align: 'left', font: {size: 8}}, columnwidth: [200,20,20,20,20] },
+      ]
+      Plotly.newPlot(
+        this.plotly_bit, // graphDiv
+        plotly_data,
+        {grid: {rows: 2, columns: 1} }
+      )
       // }
 
       
