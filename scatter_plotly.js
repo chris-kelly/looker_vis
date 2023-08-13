@@ -286,6 +286,10 @@ looker.plugins.visualizations.add({
       return result
     }
 
+    let cols = [{"-": null}]
+    queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
+    queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
+
     const options = { ...this.options }
     options.x1.values = cols
     options.y1.values = cols
@@ -293,10 +297,6 @@ looker.plugins.visualizations.add({
     options.y2.hidden = !config.add_2
     options.add_2.hidden = !config.add_2
     this.trigger('registerOptions', options)
-
-    // let cols = [{"-": null}]
-    // queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
-    // queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
 
     // const options = { ...this.options }
     // options['x1'] = { order: 1, label: "Base trace " + iN + ": x axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "0. Raw data", default: queryResponse.fields.dimension_like[0].name }
