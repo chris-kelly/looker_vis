@@ -285,24 +285,25 @@ looker.plugins.visualizations.add({
     options = {}
     options['dimX1'] = {
       label: "X axis",
-      type: "string",
+      type: "array",
+      display: 'text',
       values: dvalues, // retrieve both dimensions and non-pivotable table calcs, with nice labels too 
       default: queryResponse.fields.dimension_like[0].name,
       section: "Style",
     }
     console.log(options)
-     // Create an option for each measure in your query
-     queryResponse.fields.measure_like.forEach(function(field) {
-       id = "color_" + field.name
-       options[id] = {
-        label: field.label_short + " Color",
-        default: "#8B7DA8",
-        section: "Style",
-        type: "string",
-        display: "color"
-      }
-    })
-    console.log(options)
+    //  // Create an option for each measure in your query
+    //  queryResponse.fields.measure_like.forEach(function(field) {
+    //    id = "color_" + field.name
+    //    options[id] = {
+    //     label: field.label_short + " Color",
+    //     default: "#8B7DA8",
+    //     section: "Style",
+    //     type: "string",
+    //     display: "color"
+    //   }
+    // })
+    // console.log(options)
     this.trigger('registerOptions', options) // register options with parent page to update visConfig
     
     window.scriptLoad.then(() => { // Do this first to ensure js loads in time
