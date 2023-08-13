@@ -286,12 +286,12 @@ looker.plugins.visualizations.add({
     queryResponse.fields.measure_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
 
     var trace1 = {
-      'x':        {order: 0, label: "x axis", default: get_pretty_cols(queryResponse.fields.dimension_like[0])},
+      'x':        {order: 0, label: "x axis", default: queryResponse.fields.dimension_like[0].name },
       'x_LB':     {order: 1, label: "x error lower bound", display_size: "half"},
       'x_UB':     {order: 2, label: "x error upper bound", display_size: "half"},
-      'y':        {order: 3, label: "y axis", default: get_pretty_cols(queryResponse.fields.measure_like[0])},
+      'y':        {order: 3, label: "y axis", default: queryResponse.fields.measure_like[0].name },
       'y_LB':     {order: 4, label: "y error lower bound", display_size: "half"},
-      'x_UB':     {order: 5, label: "y error upper bound", display_size: "half"},
+      'y_UB':     {order: 5, label: "y error upper bound", display_size: "half"},
       'values':   {order: 6, label: "custom Values", display_size: "half"},
       'hovertext':{order: 7, label: "hover text", display_size: "half"},
     }
