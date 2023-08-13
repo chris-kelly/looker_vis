@@ -289,11 +289,11 @@ looker.plugins.visualizations.add({
     for (i = 1; i <= 2; i++) {
       let iN = (i.toString()
       options['x_' + iN]      = {order: i*7+0, label: "(" + iN + ") x axis", default: queryResponse.fields.dimension_like[0].name }
-      options['x_LB' + iN]    = {order: i*7+1, label: "(" + iN + ") x error lower bound", display_size: "half"}
-      options['x_UB' + iN]    = {order: i*7+2, label: "(" + iN + ") x error upper bound", display_size: "half"}
+      options['x_LB' + iN]    = {order: i*7+1, label: "(" + iN + ") x err lower bound", display_size: "half"}
+      options['x_UB' + iN]    = {order: i*7+2, label: "(" + iN + ") x err upper bound", display_size: "half"}
       options['y' + iN]       = {order: i*7+3, label: "(" + iN + ") y axis", default: queryResponse.fields.measure_like[0].name }
-      options['y_LB' + iN]    = {order: i*7+4, label: "(" + iN + ") y error lower bound", display_size: "half"}
-      options['y_UB' + iN]    = {order: i*7+5, label: "(" + iN + ") y error upper bound", display_size: "half"}
+      options['y_LB' + iN]    = {order: i*7+4, label: "(" + iN + ") y err lower bound", display_size: "half"}
+      options['y_UB' + iN]    = {order: i*7+5, label: "(" + iN + ") y err upper bound", display_size: "half"}
       options['values' + iN]  = {order: i*7+6, label: "(" + iN + ") custom values", display_size: "half"}
       options['hover' + iN]   = {order: i*7+7, label: "(" + iN + ") custom hovertext", display_size: "half"}
     }
