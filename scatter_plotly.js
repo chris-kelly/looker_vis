@@ -8,7 +8,7 @@ looker.plugins.visualizations.add({
   options: { 
     x1: { order: 0, label: "Base trace 1: x axis", display_size: "half", type: 'string', display: 'select', section: "0. Raw data", hidden: false},
     y1: { order: 1, label: "Base trace 1: y axis", display_size: "half", type: 'string', display: 'select', section: "0. Raw data", hidden: false},
-    add_2: { order: 2, label: "Add another trace?", type: 'boolean', default: false, section: "0. Raw data", hidden: false},
+    add_2: { order: 2, label: "Add another trace?", type: 'boolean', default: false, section: "0. Raw data"},
     x2: { order: 0, label: "Base trace 2: x axis", display_size: "half", type: 'string', display: 'select', section: "0. Raw data", hidden: true},
     y2: { order: 1, label: "Base trace 2: y axis", display_size: "half", type: 'string', display: 'select', section: "0. Raw data", hidden: true},    
     // title: {
