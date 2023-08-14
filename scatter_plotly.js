@@ -355,7 +355,7 @@ looker.plugins.visualizations.add({
     //   // if (Object.values(cols[i]) == queryResponse.fields.dimension_like[0].name) { options['trace_' + iN]['default'] = 1; options['axis_' + iN]['default'] = "x1"; options['type_' + iN]['default'] = "values" }
     //   // if (Object.values(cols[i]) == queryResponse.fields.measure_like[0].name) { options['trace_' + iN]['default'] = 1; options['axis_' + iN]['default'] = "y1"; options['type_' + iN]['default'] = "values" }
       
-    }
+    // }
     // this.trigger('registerOptions', options)
     
     
