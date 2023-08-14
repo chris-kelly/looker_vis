@@ -196,6 +196,30 @@ looker.plugins.visualizations.add({
             // hovertemplate: hovertemplate,
           }
 
+          // Add error bars (x axis)
+          if (config["xlb_" + i.toString()] != "" && config["xub_" + i.toString()] != "") {
+            let klb = j.length == 1 ? [config["xlb_" + i.toString()]] : [config["xlb_" + i.toString()],j[1]]
+            let kub = j.length == 1 ? [config["xub_" + i.toString()]] : [config["xub_" + i.toString()],j[1]]
+            new_trace['error_x'] = {
+              type: 'data', 
+              symmetric: false,
+              array: nicedata.get(kub),
+              arrayminus: nicedata.get(klb),
+            }
+          }
+
+          // Add error bars (y axis)
+          if (config["ylb_" + i.toString()] != "" && config["yub_" + i.toString()] != "") {
+            let klb = j.length == 1 ? [config["ylb_" + i.toString()]] : [config["ylb_" + i.toString()],j[1]]
+            let kub = j.length == 1 ? [config["yub_" + i.toString()]] : [config["yub_" + i.toString()],j[1]]
+            new_trace['error_y'] = {
+              type: 'data', 
+              symmetric: false,
+              array: nicedata.get(kub),
+              arrayminus: nicedata.get(klb),
+            }
+          }
+
           plotly_data.push(new_trace)
 
         }
