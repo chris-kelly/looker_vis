@@ -90,7 +90,7 @@ looker.plugins.visualizations.add({
         options["xax_" + i.toString()] = {label: "x axis " + (i+1).toString(), order: 9*i+3, type: "string", display: "select", display_size: "half", values: [{"1":"1"},{"2":"2"}], default:"1" , section: "Series"}
         options["yax_" + i.toString()] = {label: "y axis " + (i+1).toString(), order: 9*i+4, type: "string", display: "select", display_size: "half", values: [{"1":"1"},{"2":"2"}], default:"1" , section: "Series"}
         options["col_" + i.toString()] = {label: "Colour " + (i+1).toString(), order: 9*i+5, type: "string", display: "color", section: "Series"}
-        options["tn_" + i.toString()] = {label: "Name includes " + (i+1).toString(), order: 9*i+6, type: "string", values: [{'x':'x'},{'y':'y'},{'x+y':'x+y'}], section: "Series"}
+        options["tn_" + i.toString()] = {label: "Name includes " + (i+1).toString(), order: 9*i+6, type: "string", display: "select", values: [{'-':""},{'x':'x'},{'y':'y'},{'x+y':'x+y'}], section: "Series", default: ""}
         
         if(config["d_" + i.toString()] == "detailed") {
           options["xlb_" + i.toString()] = {label: "x lower bound " + (i+1).toString(), order: 11*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
