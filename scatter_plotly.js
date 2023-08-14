@@ -329,7 +329,7 @@ looker.plugins.visualizations.add({
 
     const options = { ...this.options }; i = 0;
 
-    options['test'] = { type: "boolean", label: "flip me to hide the chart type", order: 1}
+    options['test'] = { type: "boolean", label: "flip me to hide the chart type", order: 1, default: false}
     if (config.test) {
       cols.forEach(x => {
         id = "test_" + Object.values(x);
