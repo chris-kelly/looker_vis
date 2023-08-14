@@ -6,7 +6,7 @@ looker.plugins.visualizations.add({
   // Options for user to choose in the "edit" part of looker vis
   // In this example, whether the plot is bar or scatter
   options: { 
-    nt: {type: "number", label: "hello", default: 1},
+    nt: 1,
     add_trace: { type: "boolean", label: "flip me to hide the chart type", order: 1, default: false}
     // a01: {type: "string", label: "Axis", order: 0, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
     // t01: {type: "string", label: "Type", order: 0, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
