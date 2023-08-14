@@ -178,7 +178,7 @@ looker.plugins.visualizations.add({
 
         console.log(x)
         
-        for (var j in [...nicedata.keys()].filter(y => y[0] == yname)) {
+        for (var j of [...nicedata.keys()].filter(y => y[0] == yname)) {
 
           console.log(j)
 
