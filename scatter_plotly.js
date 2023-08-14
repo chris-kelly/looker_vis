@@ -202,8 +202,8 @@ looker.plugins.visualizations.add({
 
             // Add error bars (x axis)
             if (config["xlb_" + iN] && config["xlb_" + iN] && config["xlb_" + iN] != "" && config["xub_" + iN] != "") {
-              let lb = l.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["xlb_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["xlb_" + iN] && x[1].keys[1] == j[1])
-              let ub = l.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["xub_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["xub_" + iN] && x[1].keys[1] == j[1])
+              let lb = l.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["xlb_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["xlb_" + iN] && x[1].keys[1] == l[1])
+              let ub = l.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["xub_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["xub_" + iN] && x[1].keys[1] == l[1])
               console.log(lb); 
               console.log([...nicedata.entries()])
               console.log([...nicedata.entries()].find(x => x[1]['keys'][0] == config["xub_" + iN]))
