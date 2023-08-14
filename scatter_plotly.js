@@ -6,7 +6,6 @@ looker.plugins.visualizations.add({
   // Options for user to choose in the "edit" part of looker vis
   // In this example, whether the plot is bar or scatter
   options: { 
-    nt: 1,
     num_traces: { type: "number", label: "# traces", order: 0, default: 1},
     // add_trace: { type: "boolean", label: "flip me to hide the chart type", order: 1, default: false},
     // a01: {type: "string", label: "Axis", order: 0, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
@@ -328,20 +327,20 @@ looker.plugins.visualizations.add({
 
     const options = { ...this.options };
     for (let i = 0; i < config.num_traces; i++) {
-      options["div_" + i.toString()] = {label: "<--- Trace " + (i+1).toString() + " --->", order: 9*i, type: "string", display: "divider"}
-      options["x_" + i.toString()] = {label: "Trace: x", order: 9*i+1, type: "string", display: "select", display_size: "third", values: cols}
+      options["div_" + i.toString()] = {label: "<--- Trace " + (i+1).toString() + " --->", order: 10*i+1, type: "string", display: "divider"}
+      options["x_" + i.toString()] = {label: "Trace: x", order: 11*i+2, type: "string", display: "select", display_size: "third", values: cols}
       try {options["x_" + i.toString()].default = queryResponse.fields.dimension_like[0].name} catch(err) {options["x_" + i.toString()].default = Object.values(cols[0])}
-      options["y_" + i.toString()] = {label: "Trace: y", order: 9*i+2, type: "string", display: "select", display_size: "third", values: cols}
+      options["y_" + i.toString()] = {label: "Trace: y", order: 11*i+3, type: "string", display: "select", display_size: "third", values: cols}
       try {options["y_" + i.toString()].default = queryResponse.fields.measure_like[i].name} catch(err) {options["y_" + i.toString()].default = Object.values(cols[0])}
-      options["d_" + i.toString()] = {label: "Options", order: 9*i+3, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple"}
+      options["d_" + i.toString()] = {label: "Options", order: 11*i+4, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple"}
       try{
         if(config["d_" + i.toString()] == "detailed") {
-          options["xlb_" + i.toString()] = {label: "x: lower bound", order: 9*i+4, type: "string", display: "select", display_size: "half", values: cols, default:"" }
-          options["xub_" + i.toString()] = {label: "x: upper bound", order: 9*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" }
-          options["ylb_" + i.toString()] = {label: "y: lower bound", order: 9*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" }
-          options["yub_" + i.toString()] = {label: "y: upper bound", order: 9*i+7, type: "string", display: "select", display_size: "half", values: cols, default:"" }
-          options["ltx_" + i.toString()] = {label: "Custom labels", order: 9*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" }
-          options["htx_" + i.toString()] = {label: "Custom hovertext", order: 9*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+          options["xlb_" + i.toString()] = {label: "x: lower bound", order: 11*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+          options["xub_" + i.toString()] = {label: "x: upper bound", order: 11*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+          options["ylb_" + i.toString()] = {label: "y: lower bound", order: 11*i+7, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+          options["yub_" + i.toString()] = {label: "y: upper bound", order: 11*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+          options["ltx_" + i.toString()] = {label: "Custom labels", order: 11*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+          options["htx_" + i.toString()] = {label: "Custom hovertext", order: 11*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" }
         }
       } catch(err) {continue}
       }
