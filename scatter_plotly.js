@@ -136,7 +136,7 @@ looker.plugins.visualizations.add({
       var dimN = dim_names.map(d => d[0]), dimL = dim_names.map(d => d[1]);
       var mes_names = queryResponse.fields.measure_like.map(m => [m.name, get_pretty_cols(m)]) // retrieve both measures and pivotable table calcs, with nice labels too
       var mesN = mes_names.map(m => m[0]), mesL = mes_names.map(m => m[1]);
-      if (queryResponse.pivots.length > 0) { var pivK = queryResponse.pivots.map(p => p.key) } // get pivot column names
+      if (queryResponse.fields.pivots.length > 0) { var pivK = queryResponse.pivots.map(p => p.key) } // get pivot column names
         
       let nicedata = new Map(), row0 = data[0] // use first row of data as blueprint. Use Map for multiple keys
       for (var k of Object.keys(row0)) {
