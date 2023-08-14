@@ -215,14 +215,16 @@ looker.plugins.visualizations.add({
 
           // Add error bars (y axis)
           if (config["ylb_" + iN] != "" && config["yub_" + iN] != "") {
-            let klb = j.length == 1 ? [config["ylb_" + iN]] : [config["ylb_" + iN],j[1]]
-            let kub = j.length == 1 ? [config["yub_" + iN]] : [config["yub_" + iN],j[1]]
-            console.log(klb); console.log(kub)
+            let lb = j.length == 1 ? [config["ylb_" + iN]] : [config["ylb_" + iN],j[1]]
+            let ub = j.length == 1 ? [config["yub_" + iN]] : [config["yub_" + iN],j[1]]
+            console.log(lb); console.log(ub);
+            lb = nicedata.get(lb); ub = nicedata.get(ub)
+            console.log(lb); console.log(ub);
             new_trace['error_y'] = {
               type: 'data', 
               symmetric: false,
-              array: nicedata.get(kub).values,
-              arrayminus: nicedata.get(klb).values,
+              array: lb.values,
+              arrayminus: ub.values,
             }
           }
 
