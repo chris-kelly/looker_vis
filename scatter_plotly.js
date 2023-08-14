@@ -207,8 +207,8 @@ looker.plugins.visualizations.add({
             new_trace['error_x'] = {
               type: 'data', 
               symmetric: false,
-              array: nicedata.get(kub),
-              arrayminus: nicedata.get(klb),
+              array: nicedata.get(kub).values,
+              arrayminus: nicedata.get(klb).values,
             }
           }
 
@@ -219,8 +219,8 @@ looker.plugins.visualizations.add({
             new_trace['error_y'] = {
               type: 'data', 
               symmetric: false,
-              array: nicedata.get(kub),
-              arrayminus: nicedata.get(klb),
+              array: nicedata.get(kub).values,
+              arrayminus: nicedata.get(klb).values,
             }
           }
 
