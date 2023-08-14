@@ -327,17 +327,19 @@ looker.plugins.visualizations.add({
     // options.x1 = 
     // this.trigger('registerOptions', options)
 
-    const options = { ...this.options }
-    console.log(options)
-    queryResponse.fields.measure_like.forEach(function(field) {
-      id = "color_" + field.name
+    const options = { ...this.options }; i = 0;
+    
+    cols.forEach(x => {
+      id = "test_" + Object.values(x);
       options[id] = {
-        label: field.label_short + " Color",
+        label: Object.keys(x),
+        order: i,
         // default: "#8B7DA8",
         type: "string",
         display: "select",
         values: cols
-        }
+        };
+      i++;
       })
     this.trigger('registerOptions', options)
     // for (i = 0; i < cols.length; i++) {
