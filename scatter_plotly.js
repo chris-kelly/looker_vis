@@ -309,6 +309,7 @@ looker.plugins.visualizations.add({
     // options.x1 = 
     // this.trigger('registerOptions', options)
 
+    console.log(config)
 
     const options = { ...this.options }
     for (i = 0; i < cols.length; i++) {
