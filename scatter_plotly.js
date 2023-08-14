@@ -201,7 +201,7 @@ looker.plugins.visualizations.add({
           }
 
           // Add error bars (x axis)
-          if (config["xlb_" + iN] && config["xlb_" + xub_] && config["xlb_" + iN] != "" && config["xub_" + iN] != "") {
+          if (config["xlb_" + iN] && config["xlb_" + iN] && config["xlb_" + iN] != "" && config["xub_" + iN] != "") {
             let lb = j.length == 1 ? [...nicedata.keys()].filter(k => k[0] == config["xlb_" + iN]) : [...nicedata.keys()].filter(k => k[0] == config["xlb_" + iN] && k[1] == j[1])
             let ub = j.length == 1 ? [...nicedata.keys()].filter(k => k[0] == config["xub_" + iN]) : [...nicedata.keys()].filter(k => k[0] == config["xub_" + iN] && k[1] == j[1])
             console.log(lb); console.log(ub)
@@ -215,7 +215,7 @@ looker.plugins.visualizations.add({
           }
 
           // Add error bars (y axis)
-          if (config["ylb_" + iN] && config["yub_" + xub_] && config["ylb_" + iN] != "" && config["yub_" + iN] != "") {
+          if (config["ylb_" + iN] && config["yub_" + iN] && config["ylb_" + iN] != "" && config["yub_" + iN] != "") {
             let lb = j.length == 1 ? [...nicedata.entries()].filter(x => x[1]['keys'][0] == config["ylb_" + iN]) : [...nicedata.entries()].filter(x => x[1].keys[0] == config["ylb_" + iN] && x[1].keys[1] == j[1])
             let ub = j.length == 1 ? [...nicedata.entries()].filter(x => x[1]['keys'][0] == config["yub_" + iN]) : [...nicedata.entries()].filter(x => x[1].keys[0] == config["yub_" + iN] && x[1].keys[1] == j[1])
 
