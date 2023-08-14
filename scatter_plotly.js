@@ -322,46 +322,30 @@ looker.plugins.visualizations.add({
       return result
     }
 
-    let cols = []
+    let cols = [{'-': null}]
     queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
     queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
-    
-    // const options = { ...this.options }
-    // options.x1 = 
-    // this.trigger('registerOptions', options)
 
     const options = { ...this.options };
     for (let i = 0; i < config.num_traces; i++) {
-      options["div_" + i.toString()] = {label: "///-- Trace " + i.toString() + " --///", order: 8*i, type: "string", display: "divider"}
-      options["x_" + i.toString()] = {label: "x", order: 8*i+1, type: "string", display: "select", display_size: "third", values: cols}
+      options["div_" + i.toString()] = {label: "<--- Trace " + i.toString() + " --->", order: 9*i, type: "string", display: "divider"}
+      options["x_" + i.toString()] = {label: "Trace: x", order: 9*i+1, type: "string", display: "select", display_size: "third", values: cols}
       try {options["x_" + i.toString()].default = queryResponse.fields.dimension_like[0].name} catch(err) {options["x_" + i.toString()].default = Object.values(cols[0])}
-      options["y_" + i.toString()] = {label: "y", order: 8*i+2, type: "string", display: "select", display_size: "third", values: cols}
+      options["y_" + i.toString()] = {label: "Trace: y", order: 9*i+2, type: "string", display: "select", display_size: "third", values: cols}
       try {options["y_" + i.toString()].default = queryResponse.fields.measure_like[i].name} catch(err) {options["y_" + i.toString()].default = Object.values(cols[0])}
-      options["d_" + i.toString()] = {label: "Options", order: 8*i+3, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple"}
+      options["d_" + i.toString()] = {label: "Options", order: 9*i+3, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple"}
       try{
         if(config["d_" + i.toString()] == "detailed") {
-          options["xlb_" + i.toString()] = {label: "x: lower bound", order: 8*i+4, type: "string", display: "select", display_size: "half", values: cols}
-          options["xub_" + i.toString()] = {label: "x: upper bound", order: 8*i+5, type: "string", display: "select", display_size: "half", values: cols}
-          options["ylb_" + i.toString()] = {label: "y: lower bound", order: 8*i+6, type: "string", display: "select", display_size: "half", values: cols}
-          options["yub_" + i.toString()] = {label: "y: upper bound", order: 8*i+7, type: "string", display: "select", display_size: "half", values: cols}
-          options["ltx_" + i.toString()] = {label: "Custom labels", order: 8*i+6, type: "string", display: "select", display_size: "half", values: cols}
-          options["htx_" + i.toString()] = {label: "Custom hovertext", order: 8*i+7, type: "string", display: "select", display_size: "half", values: cols}
+          options["xlb_" + i.toString()] = {label: "x: lower bound", order: 9*i+4, type: "string", display: "select", display_size: "half", values: cols}
+          options["xub_" + i.toString()] = {label: "x: upper bound", order: 9*i+5, type: "string", display: "select", display_size: "half", values: cols}
+          options["ylb_" + i.toString()] = {label: "y: lower bound", order: 9*i+6, type: "string", display: "select", display_size: "half", values: cols}
+          options["yub_" + i.toString()] = {label: "y: upper bound", order: 9*i+7, type: "string", display: "select", display_size: "half", values: cols}
+          options["ltx_" + i.toString()] = {label: "Custom labels", order: 9*i+8, type: "string", display: "select", display_size: "half", values: cols}
+          options["htx_" + i.toString()] = {label: "Custom hovertext", order: 9*i+9, type: "string", display: "select", display_size: "half", values: cols}
         }
       } catch(err) {continue}
       }
-      // cols.forEach(x => {
-      //   id = "test_" + Object.values(x);
-      //   options[id] = {
-      //     label: Object.keys(x),
-      //     order: i,
-      //     // default: "#8B7DA8",
-      //     type: "string",
-      //     display: "select",
-      //     values: cols
-      //     };
-      //   i++;
-      //   })
-      // options.test.hidden = true
+
     console.log(options)
     this.trigger('registerOptions', options)
     
