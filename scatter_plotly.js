@@ -175,10 +175,16 @@ looker.plugins.visualizations.add({
 
         let xname = config["x_" + i.toString()], yname = config["y_" + i.toString()]
         let x = nicedata.get([...nicedata.keys()].find(x => x[0] == xname))
+
+        console.log(x)
         
-        for (j in [...nicedata.keys()].filter(y => y[0] == yname)) {
+        for (var j in [...nicedata.keys()].filter(y => y[0] == yname)) {
+
+          console.log(j)
 
           let y = nicedata.get(j)
+
+          console.log(y)
 
           var new_trace = {
             x: x.values,
