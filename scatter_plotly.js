@@ -6,7 +6,7 @@ looker.plugins.visualizations.add({
   // Options for user to choose in the "edit" part of looker vis
   // In this example, whether the plot is bar or scatter
   options: { 
-    num_traces: { type: "number", label: "# traces", order: 0, default: 1},
+    num_traces: { type: "number", label: "# traces", order: 0, default: 1, section: "Data"}
     // add_trace: { type: "boolean", label: "flip me to hide the chart type", order: 1, default: false},
     // a01: {type: "string", label: "Axis", order: 0, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
     // t01: {type: "string", label: "Type", order: 0, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
@@ -330,23 +330,35 @@ looker.plugins.visualizations.add({
 
       const options = { ...this.options };
       for (let i = 0; i < config.num_traces; i++) {
-        options["div_" + i.toString()] = {label: "<--- Trace " + (i+1).toString() + " --->", order: 11*i+1, type: "string", display: "divider", section: "Data"}
+        options["div_" + i.toString()] = {label: "<---------- Trace " + (i+1).toString() + " ---------->", order: 11*i+1, type: "string", display: "divider", section: "Data"}
         options["x_" + i.toString()] = {label: "Trace " + (i+1).toString() + ": x", order: 11*i+2, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
         try {options["x_" + i.toString()].default = queryResponse.fields.dimension_like[0].name} catch(err) {options["x_" + i.toString()].default = Object.values(cols[0])}
         options["y_" + i.toString()] = {label: "Trace " + (i+1).toString() + ": y", order: 11*i+3, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
         try {options["y_" + i.toString()].default = queryResponse.fields.measure_like[i].name} catch(err) {options["y_" + i.toString()].default = Object.values(cols[0])}
         options["d_" + i.toString()] = {label: "Options " + (i+1).toString(), order: 11*i+4, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple", section: "Data"}
+       
+        options["div2_" + i.toString()] = {label: "<---------- Trace " + (i+1).toString() + " ---------->", order: 7*i+1, type: "string", display: "divider", section: "Data"}
+        options["mod_" + i.toString()] = {label: "Scatter mode " + (i+1).toString(), order: 7*i+2, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series"}
+        options["col_" + i.toString()] = {label: "Colour " + (i+1).toString(), order: 7*i+3, type: "string", display: "color", section: "Series"}
+        options["leg_" + i.toString()] = {label: "Show in Legend " + (i+1).toString(), order: 7*i+4, type: "boolean", default: true, section: "Series"}
+       
         try{
           if(config["d_" + i.toString()] == "detailed") {
-            options["xlb_" + i.toString()] = {label: "x: lower bound " + (i+1).toString(), order: 11*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-            options["xub_" + i.toString()] = {label: "x: upper bound " + (i+1).toString(), order: 11*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-            options["ylb_" + i.toString()] = {label: "y: lower bound " + (i+1).toString(), order: 11*i+7, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-            options["yub_" + i.toString()] = {label: "y: upper bound " + (i+1).toString(), order: 11*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+            options["xlb_" + i.toString()] = {label: "x lower bound " + (i+1).toString(), order: 11*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+            options["xub_" + i.toString()] = {label: "x upper bound " + (i+1).toString(), order: 11*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+            options["ylb_" + i.toString()] = {label: "y lower bound " + (i+1).toString(), order: 11*i+7, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+            options["yub_" + i.toString()] = {label: "y upper bound " + (i+1).toString(), order: 11*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
             options["ltx_" + i.toString()] = {label: "Custom labels " + (i+1).toString(), order: 11*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
             options["htx_" + i.toString()] = {label: "Custom hovertext " + (i+1).toString(), order: 11*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
           }
         } catch(err) {continue}
-        }
+
+        try{
+          if(config["ltx_" + i.toString()] != "") {
+            options["vvp_" + i.toString()] = {label: "Value vertical pos " + (i+1).toString(), order: 7*i+5, type: "string", display: "select", display_size: "half", values: [{"Top": "top"},{"Centre": "middle"},{"Bottom": "bottom"}], default: "middle" , section: "Series"}
+            options["vhp_" + i.toString()] = {label: "Value horizontal pos " + (i+1).toString(), order: 7*i+6, type: "string", display: "select", display_size: "half", values: [{"Left": "left"},{"Centre": "center"},{"Right": "right"},], default: "center" , section: "Series"}
+          }
+        } catch(err) {continue}
 
       console.log(options)
       this.trigger('registerOptions', options)
