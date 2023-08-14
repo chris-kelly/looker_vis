@@ -296,6 +296,8 @@ looker.plugins.visualizations.add({
     // Clear errors from previous updates
     this.clearErrors();
 
+    console.log(config)
+
     function get_pretty_cols(d) {
       if (d.hasOwnProperty('label_short')) { result = d.label_short } else { result = d.label }
       return result
