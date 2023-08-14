@@ -168,31 +168,30 @@ looker.plugins.visualizations.add({
         })
       }
 
+      ////////////////////////////////////////
+      // Make plotly data
+      ////////////////////////////////////////    
+
       // Loop over every measure and add as new trace
       plotly_data = []
       
       for (let i = 0; i < config.num_traces; i++) {
 
-        let xname = config["x_" + i.toString()], yname = config["y_" + i.toString()]
+        let xname = config["x_" + i.toString()]
+        let yname = config["y_" + i.toString()]
         let x = nicedata.get([...nicedata.keys()].find(x => x[0] == xname))
-
-        console.log(x)
         
         for (var j of [...nicedata.keys()].filter(y => y[0] == yname)) {
 
-          console.log(j)
-
           let y = nicedata.get(j)
-
-          console.log(y)
 
           var new_trace = {
             x: x.values,
             y: y.values,
             type: 'scatter',
-            mode: 'markers',
+            mode: config["mod_" + i.toString()],
             name: y.label,
-            // text: y_r.map(row => row[i]),
+            text: y.pretty,
             // textposition: "none",
             // hovertemplate: hovertemplate,
           }
