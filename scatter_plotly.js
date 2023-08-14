@@ -118,6 +118,7 @@ looker.plugins.visualizations.add({
       }
       console.log(options)
       this.trigger('registerOptions', options)
+      console.log(config)
 
       ////////////////////////////////////////
       // Get data in nice format:
@@ -167,6 +168,7 @@ looker.plugins.visualizations.add({
           'pretty': data.map(row => k.length == 1 ? get_pretty_data(row[k[0]]) : get_pretty_data(row[k[0]][k[1]]))
         })
       }
+      console.log(nicedata)
 
       ////////////////////////////////////////
       // Make plotly data
@@ -177,8 +179,10 @@ looker.plugins.visualizations.add({
       
       for (let i = 0; i < config.num_traces; i++) {
 
-        let xname = config["x_" + i.toString()]
-        let yname = config["y_" + i.toString()]
+        let iN = i.toString()
+
+        let xname = config["x_" + iN]
+        let yname = config["y_" + iN]
         let x = nicedata.get([...nicedata.keys()].find(x => x[0] == xname))
         
         for (var j of [...nicedata.keys()].filter(y => y[0] == yname)) {
@@ -189,7 +193,7 @@ looker.plugins.visualizations.add({
             x: x.values,
             y: y.values,
             type: 'scatter',
-            mode: config["mod_" + i.toString()],
+            mode: config["mod_" + iN],
             name: y.label,
             text: y.pretty,
             // textposition: "none",
@@ -197,9 +201,9 @@ looker.plugins.visualizations.add({
           }
 
           // Add error bars (x axis)
-          if (config["xlb_" + i.toString()] != "" && config["xub_" + i.toString()] != "") {
-            let klb = j.length == 1 ? [config["xlb_" + i.toString()]] : [config["xlb_" + i.toString()],j[1]]
-            let kub = j.length == 1 ? [config["xub_" + i.toString()]] : [config["xub_" + i.toString()],j[1]]
+          if (config["xlb_" + iN] != "" && config["xub_" + iN] != "") {
+            let klb = j.length == 1 ? [config["xlb_" + iN]] : [config["xlb_" + iN],j[1]]
+            let kub = j.length == 1 ? [config["xub_" + iN]] : [config["xub_" + iN],j[1]]
             new_trace['error_x'] = {
               type: 'data', 
               symmetric: false,
@@ -209,9 +213,9 @@ looker.plugins.visualizations.add({
           }
 
           // Add error bars (y axis)
-          if (config["ylb_" + i.toString()] != "" && config["yub_" + i.toString()] != "") {
-            let klb = j.length == 1 ? [config["ylb_" + i.toString()]] : [config["ylb_" + i.toString()],j[1]]
-            let kub = j.length == 1 ? [config["yub_" + i.toString()]] : [config["yub_" + i.toString()],j[1]]
+          if (config["ylb_" + iN] != "" && config["yub_" + iN] != "") {
+            let klb = j.length == 1 ? [config["ylb_" + iN]] : [config["ylb_" + iN],j[1]]
+            let kub = j.length == 1 ? [config["yub_" + iN]] : [config["yub_" + iN],j[1]]
             new_trace['error_y'] = {
               type: 'data', 
               symmetric: false,
@@ -225,6 +229,8 @@ looker.plugins.visualizations.add({
         }
 
       }
+
+      console.log(plotly_data)
 
       Plotly.newPlot( // use plotly library
         this.plotly_bit, // graphDiv
