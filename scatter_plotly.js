@@ -333,14 +333,14 @@ looker.plugins.visualizations.add({
     console.log(options)
     if (config.add_trace) {
       ++options.nt
-      for (i = 0; i < options.nt; i++) {
+      for (let i = 0; i < options.nt; i++) {
         id = "x_" + i.toString()
         options[id] = {
           label: id,
-          order = i,
+          order: i,
           type: "string",
           display: "select",
-          values: cols
+          values: cols,
         }
       }
       options.add_trace = false
