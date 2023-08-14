@@ -342,7 +342,7 @@ looker.plugins.visualizations.add({
           values: cols,
         }
       }
-      ++options.nt
+      options.nt = config.nt + 1,
       options.add_trace = false
       // cols.forEach(x => {
       //   id = "test_" + Object.values(x);
