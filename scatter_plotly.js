@@ -123,6 +123,8 @@ looker.plugins.visualizations.add({
       // Get data in nice format:
       ////////////////////////////////////////    
 
+      console.log(queryResponse)
+
       // adapt column keys to get nicely formatted data in one string
       function colname_format(field) {
         var k = field.join(' ~ ').replace('|FIELD|',' | ').replace('$$$_row_total_$$$', 'ROW TOTAL')
@@ -204,10 +206,6 @@ looker.plugins.visualizations.add({
             if (config["xlb_" + iN] && config["xlb_" + iN] && config["xlb_" + iN] != "" && config["xub_" + iN] != "") {
               let lb = l.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["xlb_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["xlb_" + iN] && x[1].keys[1] == l[1])
               let ub = l.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["xub_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["xub_" + iN] && x[1].keys[1] == l[1])
-              console.log(lb); 
-              console.log([...nicedata.entries()])
-              console.log([...nicedata.entries()].find(x => x[1]['keys'][0] == config["xub_" + iN]))
-              console.log([...nicedata.entries()].find(x => x[1].keys[0] == config["xub_" + iN] && x[1].keys[1] == j[1]))
               new_trace['error_x'] = {
                 type: 'data', 
                 symmetric: false,
