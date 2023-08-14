@@ -351,16 +351,18 @@ looker.plugins.visualizations.add({
           options["yub_" + i.toString()] = {label: "y upper bound " + (i+1).toString(), order: 11*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
           options["ltx_" + i.toString()] = {label: "Custom labels " + (i+1).toString(), order: 11*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
           options["htx_" + i.toString()] = {label: "Custom hovertext " + (i+1).toString(), order: 11*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+        } else {
+          delete options["xlb_" + i.toString()]; delete options["xub_" + i.toString()]; delete options["ylb_" + i.toString()]; delete options["yub_" + i.toString()]; delete options["ltx_" + i.toString()]; delete options["htx_" + i.toString()];
         }
-        if(config["ltx_" + i.toString()] != "") {
+        if(config["ltx_" + i.toString()] && config["ltx_" + i.toString()] != "") {
           options["vvp_" + i.toString()] = {label: "Value vertical pos " + (i+1).toString(), order: 9*i+7, type: "string", display: "select", display_size: "half", values: [{"Top": "top"},{"Centre": "middle"},{"Bottom": "bottom"}], default: "middle" , section: "Series"}
           options["vhp_" + i.toString()] = {label: "Value horizontal pos " + (i+1).toString(), order: 9*i+8, type: "string", display: "select", display_size: "half", values: [{"Left": "left"},{"Centre": "center"},{"Right": "right"}], default: "center" , section: "Series"}
-        } 
-        
+        } else {
+          delete options["vvp_" + i.toString()]; delete options["vhp_" + i.toString()];
+        }
         try {options["x_" + i.toString()].default = queryResponse.fields.dimension_like[0].name} catch(err) {options["x_" + i.toString()].default = Object.values(cols[0])}
         try {options["y_" + i.toString()].default = queryResponse.fields.measure_like[i].name} catch(err) {options["y_" + i.toString()].default = Object.values(cols[0])}
         try {options["col_" + i.toString()].default = colors[i]} catch(err) {options["col_" + i.toString()].default = colors[0]}
-
       }
       console.log(options)
       this.trigger('registerOptions', options)
