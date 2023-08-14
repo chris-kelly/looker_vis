@@ -174,9 +174,9 @@ looker.plugins.visualizations.add({
       for (let i = 0; i < config.num_traces; i++) {
 
         let xname = config["x_" + i.toString()], yname = config["y_" + i.toString()]
-        let x = nicedata.get([...nicedata.keys].find(x => x[0] == xname))
+        let x = nicedata.get([...nicedata.keys()].find(x => x[0] == xname))
         
-        for (j in [...nicedata.keys].filter(y => y[0] == yname)) {
+        for (j in [...nicedata.keys()].filter(y => y[0] == yname)) {
 
           let y = nicedata.get(j)
 
