@@ -311,7 +311,8 @@ looker.plugins.visualizations.add({
 
     console.log(config)
 
-    const options = { ...this.options }
+    // const options = { ...this.options }
+    options = {};
     for (i = 0; i < cols.length; i++) {
       iN = i.toString()
       // options['div_' + i.toString()] = {type: "string", label: "<--- " + cols[i][0] + " --->", display: "divider", order: i*4}
