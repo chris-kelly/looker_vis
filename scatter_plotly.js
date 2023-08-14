@@ -359,7 +359,7 @@ looker.plugins.visualizations.add({
             options["vhp_" + i.toString()] = {label: "Value horizontal pos " + (i+1).toString(), order: 7*i+6, type: "string", display: "select", display_size: "half", values: [{"Left": "left"},{"Centre": "center"},{"Right": "right"}], default: "center" , section: "Series"}
           }
         } catch(err) {continue}
-
+      }
       console.log(options)
       this.trigger('registerOptions', options)
 
