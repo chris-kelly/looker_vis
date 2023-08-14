@@ -312,22 +312,22 @@ looker.plugins.visualizations.add({
     console.log(config)
 
     const options = { ...this.options }
-    // for (i = 0; i < cols.length; i++) {
-    //   iN = i.toString()
-    //   // options['div_' + i.toString()] = {type: "string", label: "<--- " + cols[i][0] + " --->", display: "divider", order: i*4}
-    //   options['div_' + iN] = {type: "string", label: "<--- " + Object.keys(cols[i]) + " --->", display: "divider", order: i*4}
-    //   // options['x_' + iN] = {type: "string", label: "Axis", order: i*4+1, display_size: "third", display: 'select', values: cols}
-    //   // options['trace_' + i.toString()] = {type: "number", label: "Trace #", order: i*4+1, display_size: "third"}
-    //   options['axis_' + iN] = {type: "string", label: "Axis", order: i*4+1, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: "-"}
-    //   options['type_' + iN] = {type: "string", label: "Type", order: i*4+2, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: "-"}
+    for (i = 0; i < cols.length; i++) {
+      iN = i.toString()
+      // options['div_' + i.toString()] = {type: "string", label: "<--- " + cols[i][0] + " --->", display: "divider", order: i*4}
+      options['div_' + iN] = {type: "string", label: "<--- " + Object.keys(cols[i]) + " --->", display: "divider", order: i*4}
+      // options['x_' + iN] = {type: "string", label: "Axis", order: i*4+1, display_size: "third", display: 'select', values: cols}
+      // options['trace_' + i.toString()] = {type: "number", label: "Trace #", order: i*4+1, display_size: "third"}
+      options['axis_' + iN] = {type: "string", label: "Axis", order: i*4+1, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null}
+      options['type_' + iN] = {type: "string", label: "Type", order: i*4+2, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null}
       
-    //   if (Object.values(cols[i]) == queryResponse.fields.dimension_like[0].name) { options['axis_' + iN]['default'] = "x1"; options['type_' + iN]['default'] = "values" }
-    //   if (Object.values(cols[i]) == queryResponse.fields.measure_like[0].name) { options['axis_' + iN]['default'] = "y1"; options['type_' + iN]['default'] = "values" }
+      if (Object.values(cols[i]) == queryResponse.fields.dimension_like[0].name) { options['axis_' + iN]['default'] = "x1"; options['type_' + iN]['default'] = "values" }
+      if (Object.values(cols[i]) == queryResponse.fields.measure_like[0].name) { options['axis_' + iN]['default'] = "y1"; options['type_' + iN]['default'] = "values" }
       
-    //   // if (Object.values(cols[i]) == queryResponse.fields.dimension_like[0].name) { options['trace_' + iN]['default'] = 1; options['axis_' + iN]['default'] = "x1"; options['type_' + iN]['default'] = "values" }
-    //   // if (Object.values(cols[i]) == queryResponse.fields.measure_like[0].name) { options['trace_' + iN]['default'] = 1; options['axis_' + iN]['default'] = "y1"; options['type_' + iN]['default'] = "values" }
+      // if (Object.values(cols[i]) == queryResponse.fields.dimension_like[0].name) { options['trace_' + iN]['default'] = 1; options['axis_' + iN]['default'] = "x1"; options['type_' + iN]['default'] = "values" }
+      // if (Object.values(cols[i]) == queryResponse.fields.measure_like[0].name) { options['trace_' + iN]['default'] = 1; options['axis_' + iN]['default'] = "y1"; options['type_' + iN]['default'] = "values" }
       
-    // }
+    }
     queryResponse.fields.measure_like.forEach(function(field) {
       id = "color_" + field.name
       options[id] = {
