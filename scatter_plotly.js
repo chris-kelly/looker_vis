@@ -328,7 +328,7 @@ looker.plugins.visualizations.add({
     // this.trigger('registerOptions', options)
 
     const options = { ...this.options }; i = 0;
-
+    console.log(options)
     options['test'] = { type: "boolean", label: "flip me to hide the chart type", order: 1, default: false}
     if (config.test) {
       cols.forEach(x => {
@@ -344,6 +344,8 @@ looker.plugins.visualizations.add({
         i++;
         })
     }    
+    options.test.hidden = true
+    console.log(options)
     this.trigger('registerOptions', options)
     // for (i = 0; i < cols.length; i++) {
     //   if (i = 9) {break}
