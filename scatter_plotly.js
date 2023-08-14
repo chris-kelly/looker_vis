@@ -332,11 +332,17 @@ looker.plugins.visualizations.add({
 
     const options = { ...this.options };
     for (let i = 0; i < config.num_traces; i++) {
-      options["x_" + i.toString()] = {label: "x_" + i.toString(), order: i, type: "string", display: "select", display_size: "third", values: cols}
+      options["div_" + i.toString()] = {label: "// Trace " + i.toString() + "//", order: 4*i, type: "string", display: "divider"}
+      options["x_" + i.toString()] = {label: "x", order: 4*i+1, type: "string", display: "select", display_size: "third", values: cols}
       try {options["x_" + i.toString()].default = queryResponse.fields.dimension_like[0].name} catch(err) {options["x_" + i.toString()].default = Object.values(cols[0])}
-      options["y_" + i.toString()] = {label: "y_" + i.toString(), order: i, type: "string", display: "select", display_size: "third", values: cols}
+      options["y_" + i.toString()] = {label: "y", order: 4*i+2, type: "string", display: "select", display_size: "third", values: cols}
       try {options["y_" + i.toString()].default = queryResponse.fields.measure_like[i].name} catch(err) {options["y_" + i.toString()].default = Object.values(cols[0])}
-      options["d_" + i.toString()] = {label: "Options_" + i.toString(), order: i, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}]}
+      options["d_" + i.toString()] = {label: "Options", order: 4*i+3, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple"}
+      try{
+        if(config["d_" + i.toString()] == "detailed") {
+          options["u_" + i.toString()] = {label: "Options", order: 4*i+4, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple"}
+        }
+      } catch(err) {continue}
       }
       // cols.forEach(x => {
       //   id = "test_" + Object.values(x);
