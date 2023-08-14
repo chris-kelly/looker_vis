@@ -6,24 +6,24 @@ looker.plugins.visualizations.add({
   // Options for user to choose in the "edit" part of looker vis
   // In this example, whether the plot is bar or scatter
   options: { 
-    a01: {type: "string", label: "Axis", order: 0, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    t01: {type: "string", label: "Type", order: 0, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
-    a02: {type: "string", label: "Axis", order: 1, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    t02: {type: "string", label: "Type", order: 1, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
-    a03: {type: "string", label: "Axis", order: 2, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    t03: {type: "string", label: "Type", order: 2, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
-    a04: {type: "string", label: "Axis", order: 3, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    t04: {type: "string", label: "Type", order: 3, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
-    a05: {type: "string", label: "Axis", order: 4, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    t05: {type: "string", label: "Type", order: 4, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
-    a06: {type: "string", label: "Axis", order: 5, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    t06: {type: "string", label: "Type", order: 5, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
-    a07: {type: "string", label: "Axis", order: 6, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    t07: {type: "string", label: "Type", order: 6, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
-    a08: {type: "string", label: "Axis", order: 7, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    t08: {type: "string", label: "Type", order: 7, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
-    a09: {type: "string", label: "Axis", order: 8, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    t09: {type: "string", label: "Type", order: 8, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
+    // a01: {type: "string", label: "Axis", order: 0, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
+    // t01: {type: "string", label: "Type", order: 0, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
+    // a02: {type: "string", label: "Axis", order: 1, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
+    // t02: {type: "string", label: "Type", order: 1, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
+    // a03: {type: "string", label: "Axis", order: 2, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
+    // t03: {type: "string", label: "Type", order: 2, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
+    // a04: {type: "string", label: "Axis", order: 3, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
+    // t04: {type: "string", label: "Type", order: 3, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
+    // a05: {type: "string", label: "Axis", order: 4, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
+    // t05: {type: "string", label: "Type", order: 4, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
+    // a06: {type: "string", label: "Axis", order: 5, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
+    // t06: {type: "string", label: "Type", order: 5, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
+    // a07: {type: "string", label: "Axis", order: 6, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
+    // t07: {type: "string", label: "Type", order: 6, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
+    // a08: {type: "string", label: "Axis", order: 7, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
+    // t08: {type: "string", label: "Type", order: 7, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
+    // a09: {type: "string", label: "Axis", order: 8, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
+    // t09: {type: "string", label: "Type", order: 8, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
     // nt: { order: 0, label: "# traces", type: 'number', section: 'Raw data', display: 'range', min: 1, max: 9, step: 1, default: 1},
     // x1: { order: 0, label: "Base trace 1: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false},
     // y1: { order: 0, label: "Base trace 1: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false},
@@ -328,35 +328,36 @@ looker.plugins.visualizations.add({
     // this.trigger('registerOptions', options)
 
     const options = { ...this.options }
-    for (i = 0; i < cols.length; i++) {
-      if (i = 9) {break}
-      iN = i.toString()
-      options['div_' + iN] = {type: "string", label: "<--- " + Object.keys(cols[i]) + " --->", display: "divider", order: i}
-      options['a0' + iN]['hidden'] = false
-      options['t0' + iN]['hidden'] = false
-      // // options['x_' + iN] = {type: "string", label: "Axis", order: i*4+1, display_size: "third", display: 'select', values: cols}
-      // // options['trace_' + i.toString()] = {type: "number", label: "Trace #", order: i*4+1, display_size: "third"}
-      // options['axis_' + iN] = {type: "string", label: "Axis", order: i*4+1, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null}
-      // options['type_' + iN] = {type: "string", label: "Type", order: i*4+2, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null}
+    queryResponse.fields.measure_like.forEach(function(field) {
+      id = "color_" + field.name
+      options[id] = {
+        label: field.label_short + " Color",
+        default: "#8B7DA8",
+        type: "string",
+        display: "color"
+        }
+      })
+    this.trigger('registerOptions', options)
+    // for (i = 0; i < cols.length; i++) {
+    //   if (i = 9) {break}
+    //   iN = i.toString()
+    //   options['div_' + iN] = {type: "string", label: "<--- " + Object.keys(cols[i]) + " --->", display: "divider", order: i}
+    //   options['a0' + iN]['hidden'] = false
+    //   options['t0' + iN]['hidden'] = false
+    //   // // options['x_' + iN] = {type: "string", label: "Axis", order: i*4+1, display_size: "third", display: 'select', values: cols}
+    //   // // options['trace_' + i.toString()] = {type: "number", label: "Trace #", order: i*4+1, display_size: "third"}
+    //   // options['axis_' + iN] = {type: "string", label: "Axis", order: i*4+1, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null}
+    //   // options['type_' + iN] = {type: "string", label: "Type", order: i*4+2, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null}
       
-      // if (Object.values(cols[i]) == queryResponse.fields.dimension_like[0].name) { options['axis_' + iN]['default'] = "x1"; options['type_' + iN]['default'] = "values" }
-      // if (Object.values(cols[i]) == queryResponse.fields.measure_like[0].name) { options['axis_' + iN]['default'] = "y1"; options['type_' + iN]['default'] = "values" }
+    //   // if (Object.values(cols[i]) == queryResponse.fields.dimension_like[0].name) { options['axis_' + iN]['default'] = "x1"; options['type_' + iN]['default'] = "values" }
+    //   // if (Object.values(cols[i]) == queryResponse.fields.measure_like[0].name) { options['axis_' + iN]['default'] = "y1"; options['type_' + iN]['default'] = "values" }
       
-      // if (Object.values(cols[i]) == queryResponse.fields.dimension_like[0].name) { options['trace_' + iN]['default'] = 1; options['axis_' + iN]['default'] = "x1"; options['type_' + iN]['default'] = "values" }
-      // if (Object.values(cols[i]) == queryResponse.fields.measure_like[0].name) { options['trace_' + iN]['default'] = 1; options['axis_' + iN]['default'] = "y1"; options['type_' + iN]['default'] = "values" }
+    //   // if (Object.values(cols[i]) == queryResponse.fields.dimension_like[0].name) { options['trace_' + iN]['default'] = 1; options['axis_' + iN]['default'] = "x1"; options['type_' + iN]['default'] = "values" }
+    //   // if (Object.values(cols[i]) == queryResponse.fields.measure_like[0].name) { options['trace_' + iN]['default'] = 1; options['axis_' + iN]['default'] = "y1"; options['type_' + iN]['default'] = "values" }
       
     }
-    this.trigger('registerOptions', options)
-    // queryResponse.fields.measure_like.forEach(function(field) {
-    //   id = "color_" + field.name
-    //   options[id] = {
-    //     label: field.label_short + " Color",
-    //     default: "#8B7DA8",
-    //     type: "string",
-    //     display: "color"
-    //     }
-    //   })
     // this.trigger('registerOptions', options)
+    
     
     // let cols = queryResponse.fields.dimension_like.map(x => [get_pretty_cols(x),x.name])
     // cols = cols.concat(queryResponse.fields.measure_like.map(x => [get_pretty_cols(x),x.name]))
