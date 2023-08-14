@@ -333,9 +333,9 @@ looker.plugins.visualizations.add({
     const options = { ...this.options };
     for (let i = 0; i < config.num_traces; i++) {
       options["x_" + i.toString()] = {label: "x_" + i.toString(), order: i, type: "string", display: "select", display_size: "half", values: cols, default: }
-      try {options["x_" + i.toString()].default = queryResponse.fields.dimension_like[0].name} catch(err) {Object.values(cols[0])}
+      try {options["x_" + i.toString()].default = queryResponse.fields.dimension_like[0].name} catch(err) {options["x_" + i.toString()].default = Object.values(cols[0])}
       options["y_" + i.toString()] = {label: "y_" + i.toString(), order: i, type: "string", display: "select", display_size: "half", values: cols, default: queryResponse.fields.measure_like[i].name}
-      try {options["y_" + i.toString()].default = queryResponse.fields.measure_like[i].name} catch(err) {Object.values(cols[0])}
+      try {options["y_" + i.toString()].default = queryResponse.fields.measure_like[i].name} catch(err) {options["y_" + i.toString()].default = Object.values(cols[0])}
       }
       // cols.forEach(x => {
       //   id = "test_" + Object.values(x);
