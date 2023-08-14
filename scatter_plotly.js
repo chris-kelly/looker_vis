@@ -4,7 +4,6 @@
 
 looker.plugins.visualizations.add({
   // Options for user to choose in the "edit" part of looker vis
-  // In this example, whether the plot is bar or scatter
   options: { 
     num_traces: { type: "number", label: "# traces", order: 0, default: 1, section: "Data"}
   },
@@ -180,55 +179,56 @@ looker.plugins.visualizations.add({
       for (let i = 0; i < config.num_traces; i++) {
 
         let iN = i.toString()
-
         let xname = config["x_" + iN]
         let yname = config["y_" + iN]
-        let x = nicedata.get([...nicedata.keys()].find(x => x[0] == xname))
         
-        for (var j of [...nicedata.keys()].filter(y => y[0] == yname)) {
+        
+        for (var l of [...nicedata.keys()].filter(x => x[0] == xname)) {
+          let x = nicedata.get(l)
 
-          let y = nicedata.get(j)
+          for (var j of [...nicedata.keys()].filter(y => y[0] == yname)) {
+            let y = nicedata.get(j)
 
-          var new_trace = {
-            x: x.values,
-            y: y.values,
-            type: 'scatter',
-            mode: config["mod_" + iN],
-            name: y.label,
-            text: y.pretty,
-            // textposition: "none",
-            // hovertemplate: hovertemplate,
-          }
-
-          // Add error bars (x axis)
-          if (config["xlb_" + iN] && config["xlb_" + iN] && config["xlb_" + iN] != "" && config["xub_" + iN] != "") {
-            let lb = j.length == 1 ? [...nicedata.keys()].filter(k => k[0] == config["xlb_" + iN]) : [...nicedata.keys()].filter(k => k[0] == config["xlb_" + iN] && k[1] == j[1])
-            let ub = j.length == 1 ? [...nicedata.keys()].filter(k => k[0] == config["xub_" + iN]) : [...nicedata.keys()].filter(k => k[0] == config["xub_" + iN] && k[1] == j[1])
-            console.log(lb); console.log(ub)
-            lb = nicedata.get(lb); ub = nicedata.get(ub)
-            new_trace['error_x'] = {
-              type: 'data', 
-              symmetric: false,
-              array: lb.values,
-              arrayminus: ub.values,
+            var new_trace = {
+              x: x.values,
+              y: y.values,
+              type: 'scatter',
+              mode: config["mod_" + iN],
+              name: y.label,
+              text: y.pretty,
+              // textposition: "none",
+              // hovertemplate: hovertemplate,
             }
-          }
 
-          // Add error bars (y axis)
-          if (config["ylb_" + iN] && config["yub_" + iN] && config["ylb_" + iN] != "" && config["yub_" + iN] != "") {
-            let lb = j.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["ylb_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["ylb_" + iN] && x[1].keys[1] == j[1])
-            let ub = j.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["yub_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["yub_" + iN] && x[1].keys[1] == j[1])
-            new_trace['error_y'] = {
-              type: 'data', 
-              symmetric: false,
-              array: lb[1].values,
-              arrayminus: ub[1].values,
+            // Add error bars (x axis)
+            if (config["xlb_" + iN] && config["xlb_" + iN] && config["xlb_" + iN] != "" && config["xub_" + iN] != "") {
+              let lb = j.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["xlb_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["xlb_" + iN] && x[1].keys[1] == j[1])
+              let ub = j.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["xub_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["xub_" + iN] && x[1].keys[1] == j[1])
+              new_trace['error_x'] = {
+                type: 'data', 
+                symmetric: false,
+                array: lb[1].values,
+                arrayminus: ub[1].values,
+              }
             }
+
+            // Add error bars (y axis)
+            if (config["ylb_" + iN] && config["yub_" + iN] && config["ylb_" + iN] != "" && config["yub_" + iN] != "") {
+              let lb = j.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["ylb_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["ylb_" + iN] && x[1].keys[1] == j[1])
+              let ub = j.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["yub_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["yub_" + iN] && x[1].keys[1] == j[1])
+              new_trace['error_y'] = {
+                type: 'data', 
+                symmetric: false,
+                array: lb[1].values,
+                arrayminus: ub[1].values,
+              }
+            }
+            plotly_data.push(new_trace)
+
           }
-          plotly_data.push(new_trace)
 
         }
-
+      
       }
 
       console.log(plotly_data)
