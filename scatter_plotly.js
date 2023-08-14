@@ -162,8 +162,8 @@ looker.plugins.visualizations.add({
         return result
       }
       for (var k of [ ...nicedata.keys() ]) {
-        nicedata[k]['values'] = data.map(row => k.length == 1 ? row[k[0]].value : row[k[0]][k[1]].value) // if two cols (due to pivot), i.e. length > 1, go into level below
-        nicedata[k]['pretty'] = data.map(row => k.length == 1 ? get_pretty_data(row[k[0]]) : get_pretty_data(row[k[0]][k[1]]))
+        nicedata.set(k,{'values': data.map(row => k.length == 1 ? row[k[0]].value : row[k[0]][k[1]].value) }) // if two cols (due to pivot), i.e. length > 1, go into level below
+        nicedata.set(k,{'pretty': data.map(row => k.length == 1 ? get_pretty_data(row[k[0]]) : get_pretty_data(row[k[0]][k[1]])) })
       }
 
       // Loop over every measure and add as new trace
