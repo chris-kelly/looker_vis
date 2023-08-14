@@ -328,7 +328,6 @@ looker.plugins.visualizations.add({
     // this.trigger('registerOptions', options)
 
     const options = { ...this.options }
-    options = {};
     for (i = 0; i < cols.length; i++) {
       if (i = 9) {break}
       iN = i.toString()
