@@ -218,15 +218,13 @@ looker.plugins.visualizations.add({
           if (config["ylb_" + iN] && config["yub_" + iN] && config["ylb_" + iN] != "" && config["yub_" + iN] != "") {
             let lb = j.length == 1 ? [...nicedata.entries()].filter(x => x[1]['keys'][0] == config["ylb_" + iN]) : [...nicedata.entries()].filter(x => x[1].keys[0] == config["ylb_" + iN] && x[1].keys[1] == j[1])
             let ub = j.length == 1 ? [...nicedata.entries()].filter(x => x[1]['keys'][0] == config["yub_" + iN]) : [...nicedata.entries()].filter(x => x[1].keys[0] == config["yub_" + iN] && x[1].keys[1] == j[1])
-            console.log(lb); console.log(ub)
             new_trace['error_y'] = {
               type: 'data', 
               symmetric: false,
-              array: lb[1].values,
-              arrayminus: ub[1].values,
+              array: lb[0][1].values,
+              arrayminus: ub[0][1].values,
             }
           }
-
           plotly_data.push(new_trace)
 
         }
