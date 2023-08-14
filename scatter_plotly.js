@@ -331,19 +331,19 @@ looker.plugins.visualizations.add({
       const options = { ...this.options };
       for (let i = 0; i < config.num_traces; i++) {
         options["div_" + i.toString()] = {label: "<--- Trace " + (i+1).toString() + " --->", order: 10*i+1, type: "string", display: "divider"}
-        options["x_" + i.toString()] = {label: "Trace: x", order: 11*i+2, type: "string", display: "select", display_size: "third", values: cols}
+        options["x_" + i.toString()] = {label: "Trace " + (i+1).toString() + ": x", order: 11*i+2, type: "string", display: "select", display_size: "third", values: cols}
         try {options["x_" + i.toString()].default = queryResponse.fields.dimension_like[0].name} catch(err) {options["x_" + i.toString()].default = Object.values(cols[0])}
-        options["y_" + i.toString()] = {label: "Trace: y", order: 11*i+3, type: "string", display: "select", display_size: "third", values: cols}
+        options["y_" + i.toString()] = {label: "Trace " + (i+1).toString() + ": y", order: 11*i+3, type: "string", display: "select", display_size: "third", values: cols}
         try {options["y_" + i.toString()].default = queryResponse.fields.measure_like[i].name} catch(err) {options["y_" + i.toString()].default = Object.values(cols[0])}
-        options["d_" + i.toString()] = {label: "Options", order: 11*i+4, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple"}
+        options["d_" + i.toString()] = {label: "Options " + (i+1).toString(), order: 11*i+4, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple"}
         try{
           if(config["d_" + i.toString()] == "detailed") {
-            options["xlb_" + i.toString()] = {label: "x: lower bound", order: 11*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" }
-            options["xub_" + i.toString()] = {label: "x: upper bound", order: 11*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" }
-            options["ylb_" + i.toString()] = {label: "y: lower bound", order: 11*i+7, type: "string", display: "select", display_size: "half", values: cols, default:"" }
-            options["yub_" + i.toString()] = {label: "y: upper bound", order: 11*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" }
-            options["ltx_" + i.toString()] = {label: "Custom labels", order: 11*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" }
-            options["htx_" + i.toString()] = {label: "Custom hovertext", order: 11*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+            options["xlb_" + i.toString()] = {label: "x: lower bound " + (i+1).toString(), order: 11*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+            options["xub_" + i.toString()] = {label: "x: upper bound " + (i+1).toString(), order: 11*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+            options["ylb_" + i.toString()] = {label: "y: lower bound " + (i+1).toString(), order: 11*i+7, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+            options["yub_" + i.toString()] = {label: "y: upper bound " + (i+1).toString(), order: 11*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+            options["ltx_" + i.toString()] = {label: "Custom labels " + (i+1).toString(), order: 11*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+            options["htx_" + i.toString()] = {label: "Custom hovertext " + (i+1).toString(), order: 11*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" }
           }
         } catch(err) {continue}
         }
