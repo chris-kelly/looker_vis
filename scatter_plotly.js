@@ -355,6 +355,7 @@ looker.plugins.visualizations.add({
       //   })
       // options.test.hidden = true
     console.log(options)
+    this.trigger('registerOptions', options)
     
     // for (i = 0; i < cols.length; i++) {
     //   if (i = 9) {break}
