@@ -207,8 +207,8 @@ looker.plugins.visualizations.add({
               new_trace['error_x'] = {
                 type: 'data', 
                 symmetric: false,
-                array: lb[1].values,
-                arrayminus: ub[1].values,
+                array: ub[1].values,
+                arrayminus: lb[1].values,
               }
             }
 
@@ -219,8 +219,8 @@ looker.plugins.visualizations.add({
               new_trace['error_y'] = {
                 type: 'data', 
                 symmetric: false,
-                array: lb[1].values,
-                arrayminus: ub[1].values,
+                array: ub[1].values,
+                arrayminus: lb[1].values,
               }
             }
             plotly_data.push(new_trace)
