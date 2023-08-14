@@ -202,30 +202,39 @@ looker.plugins.visualizations.add({
 
           // Add error bars (x axis)
           if (config["xlb_" + iN] != "" && config["xub_" + iN] != "") {
-            let lb = j.length == 1 ? [...nicedata.keys()].filter(k => k[0] == config["xlb_" + iN]) : [...nicedata.keys()].filter(k => k[0] == config["xlb_" + iN] && k[1] == j[1])
-            let ub = j.length == 1 ? [...nicedata.keys()].filter(k => k[0] == config["xub_" + iN]) : [...nicedata.keys()].filter(k => k[0] == config["xub_" + iN] && k[1] == j[1])
-            console.log(lb); console.log(ub)
-            lb = nicedata.get(lb); ub = nicedata.get(ub)
+            if (j.length == 1) {
+              let lb = [...nicedata.keys()].filter(k => k[0] == config["xlb_" + iN])
+              let ub = [...nicedata.keys()].filter(k => k[0] == config["xub_" + iN])
+            } else {
+              let lb = [...nicedata.keys()].filter(k => k[0] == config["xlb_" + iN] && k[1] == j[1])
+              let ub = [...nicedata.keys()].filter(k => k[0] == config["xub_" + iN] && k[1] == j[1])
+            }
+            console.log(lb); console.log(nicedata.get(lb))
+            console.log(ub); console.log(nicedata.get(ub))
             new_trace['error_x'] = {
               type: 'data', 
               symmetric: false,
-              array: nicedata.get(kub).values,
-              arrayminus: nicedata.get(klb).values,
+              array: nicedata.get(lb).values,
+              arrayminus: nicedata.get(ub).values,
             }
           }
 
           // Add error bars (y axis)
           if (config["ylb_" + iN] != "" && config["yub_" + iN] != "") {
-            let lb = j.length == 1 ? [...nicedata.keys()].filter(k => k[0] == config["ylb_" + iN]) : [...nicedata.keys()].filter(k => k[0] == config["ylb_" + iN] && k[1] == j[1])
-            let ub = j.length == 1 ? [...nicedata.keys()].filter(k => k[0] == config["yub_" + iN]) : [...nicedata.keys()].filter(k => k[0] == config["yub_" + iN] && k[1] == j[1])
-            console.log(lb); console.log(ub)
-            lb = nicedata.get(lb); ub = nicedata.get(ub)
-            console.log(lb); console.log(ub);
+            if (j.length == 1) {
+              let lb = [...nicedata.keys()].filter(k => k[0] == config["ylb_" + iN])
+              let ub = [...nicedata.keys()].filter(k => k[0] == config["yub_" + iN])
+            } else {
+              let lb = [...nicedata.keys()].filter(k => k[0] == config["ylb_" + iN] && k[1] == j[1])
+              let ub = [...nicedata.keys()].filter(k => k[0] == config["yub_" + iN] && k[1] == j[1])
+            }
+            console.log(lb); console.log(nicedata.get(lb))
+            console.log(ub); console.log(nicedata.get(ub))
             new_trace['error_y'] = {
               type: 'data', 
               symmetric: false,
-              array: lb.values,
-              arrayminus: ub.values,
+              array: nicedata.get(lb).values,
+              arrayminus: nicedata.get(ub).values,
             }
           }
 
