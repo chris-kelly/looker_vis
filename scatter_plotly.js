@@ -333,7 +333,6 @@ looker.plugins.visualizations.add({
       options[id] = {
         label: field.label_short + " Color",
         default: "#8B7DA8",
-        section: "Style",
         type: "string",
         display: "color"
         }
