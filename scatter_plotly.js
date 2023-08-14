@@ -342,24 +342,18 @@ looker.plugins.visualizations.add({
         options["col_" + i.toString()] = {label: "Colour " + (i+1).toString(), order: 7*i+3, type: "string", display: "color", section: "Series"}
         options["leg_" + i.toString()] = {label: "Show in Legend " + (i+1).toString(), order: 7*i+4, type: "boolean", default: true, section: "Series"}
        
-        try{
-          if(config["d_" + i.toString()] == "detailed") {
-            options["xlb_" + i.toString()] = {label: "x lower bound " + (i+1).toString(), order: 11*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-            options["xub_" + i.toString()] = {label: "x upper bound " + (i+1).toString(), order: 11*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-            options["ylb_" + i.toString()] = {label: "y lower bound " + (i+1).toString(), order: 11*i+7, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-            options["yub_" + i.toString()] = {label: "y upper bound " + (i+1).toString(), order: 11*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-            options["ltx_" + i.toString()] = {label: "Custom labels " + (i+1).toString(), order: 11*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-            options["htx_" + i.toString()] = {label: "Custom hovertext " + (i+1).toString(), order: 11*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-            try{
-              if(config["ltx_" + i.toString()] != "") {
-                options["vvp_" + i.toString()] = {label: "Value vertical pos " + (i+1).toString(), order: 7*i+5, type: "string", display: "select", display_size: "half", values: [{"Top": "top"},{"Centre": "middle"},{"Bottom": "bottom"}], default: "middle" , section: "Series"}
-                options["vhp_" + i.toString()] = {label: "Value horizontal pos " + (i+1).toString(), order: 7*i+6, type: "string", display: "select", display_size: "half", values: [{"Left": "left"},{"Centre": "center"},{"Right": "right"}], default: "center" , section: "Series"}
-              }
-            } catch(err) {continue}
-          }
-        } catch(err) {continue}
-
-        
+        if(config["d_" + i.toString()] == "detailed") {
+          options["xlb_" + i.toString()] = {label: "x lower bound " + (i+1).toString(), order: 11*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["xub_" + i.toString()] = {label: "x upper bound " + (i+1).toString(), order: 11*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["ylb_" + i.toString()] = {label: "y lower bound " + (i+1).toString(), order: 11*i+7, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["yub_" + i.toString()] = {label: "y upper bound " + (i+1).toString(), order: 11*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["ltx_" + i.toString()] = {label: "Custom labels " + (i+1).toString(), order: 11*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["htx_" + i.toString()] = {label: "Custom hovertext " + (i+1).toString(), order: 11*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+        }
+        if(config["ltx_" + i.toString()] != "") {
+          options["vvp_" + i.toString()] = {label: "Value vertical pos " + (i+1).toString(), order: 7*i+5, type: "string", display: "select", display_size: "half", values: [{"Top": "top"},{"Centre": "middle"},{"Bottom": "bottom"}], default: "middle" , section: "Series"}
+          options["vhp_" + i.toString()] = {label: "Value horizontal pos " + (i+1).toString(), order: 7*i+6, type: "string", display: "select", display_size: "half", values: [{"Left": "left"},{"Centre": "center"},{"Right": "right"}], default: "center" , section: "Series"}
+        } 
       }
       console.log(options)
       this.trigger('registerOptions', options)
