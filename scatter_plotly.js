@@ -222,8 +222,8 @@ looker.plugins.visualizations.add({
             new_trace['error_y'] = {
               type: 'data', 
               symmetric: false,
-              array: lb.values,
-              arrayminus: ub.values,
+              array: lb[1].values,
+              arrayminus: ub[1].values,
             }
           }
 
