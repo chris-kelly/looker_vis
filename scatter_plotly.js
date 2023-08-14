@@ -327,20 +327,22 @@ looker.plugins.visualizations.add({
       let cols = [{'-': ""}]
       queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
       queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
+      let colors = ['#56B9D0','#636076','#4A70FC','#9EEBDD']
 
       const options = { ...this.options };
       for (let i = 0; i < config.num_traces; i++) {
         options["div_" + i.toString()] = {label: "<---------- Trace " + (i+1).toString() + " ---------->", order: 11*i+1, type: "string", display: "divider", section: "Data"}
         options["x_" + i.toString()] = {label: "Trace " + (i+1).toString() + ": x", order: 11*i+2, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
-        try {options["x_" + i.toString()].default = queryResponse.fields.dimension_like[0].name} catch(err) {options["x_" + i.toString()].default = Object.values(cols[0])}
         options["y_" + i.toString()] = {label: "Trace " + (i+1).toString() + ": y", order: 11*i+3, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
-        try {options["y_" + i.toString()].default = queryResponse.fields.measure_like[i].name} catch(err) {options["y_" + i.toString()].default = Object.values(cols[0])}
+        
         options["d_" + i.toString()] = {label: "Options " + (i+1).toString(), order: 11*i+4, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple", section: "Data"}
        
-        options["div2_" + i.toString()] = {label: "<---------- Trace " + (i+1).toString() + " ---------->", order: 7*i+1, type: "string", display: "divider", section: "Series"}
-        options["mod_" + i.toString()] = {label: "Scatter mode " + (i+1).toString(), order: 7*i+2, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series"}
-        options["col_" + i.toString()] = {label: "Colour " + (i+1).toString(), order: 7*i+3, type: "string", display: "color", section: "Series"}
-        options["leg_" + i.toString()] = {label: "Show in Legend " + (i+1).toString(), order: 7*i+4, type: "boolean", default: true, section: "Series"}
+        options["div2_" + i.toString()] = {label: "<---------- Trace " + (i+1).toString() + " ---------->", order: 9*i+1, type: "string", display: "divider", section: "Series"}
+        options["mod_" + i.toString()] = {label: "Scatter mode " + (i+1).toString(), order: 9*i+2, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series"}
+        options["xax_" + i.toString()] = {label: "x axis " + (i+1).toString(), order: 9*i+3, type: "string", display: "select", display_size: "half", values: [{"1":"1"},{"2":"2"}], default:"1" , section: "Series"}
+        options["yax_" + i.toString()] = {label: "y axis " + (i+1).toString(), order: 9*i+4, type: "string", display: "select", display_size: "half", values: [{"1":"1"},{"2":"2"}], default:"1" , section: "Series"}
+        options["col_" + i.toString()] = {label: "Colour " + (i+1).toString(), order: 9*i+5, type: "string", display: "color", section: "Series"}
+        options["leg_" + i.toString()] = {label: "Show in Legend " + (i+1).toString(), order: 9*i+6, type: "boolean", default: true, section: "Series"}
        
         if(config["d_" + i.toString()] == "detailed") {
           options["xlb_" + i.toString()] = {label: "x lower bound " + (i+1).toString(), order: 11*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
@@ -351,12 +353,18 @@ looker.plugins.visualizations.add({
           options["htx_" + i.toString()] = {label: "Custom hovertext " + (i+1).toString(), order: 11*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
         }
         if(config["ltx_" + i.toString()] != "") {
-          options["vvp_" + i.toString()] = {label: "Value vertical pos " + (i+1).toString(), order: 7*i+5, type: "string", display: "select", display_size: "half", values: [{"Top": "top"},{"Centre": "middle"},{"Bottom": "bottom"}], default: "middle" , section: "Series"}
-          options["vhp_" + i.toString()] = {label: "Value horizontal pos " + (i+1).toString(), order: 7*i+6, type: "string", display: "select", display_size: "half", values: [{"Left": "left"},{"Centre": "center"},{"Right": "right"}], default: "center" , section: "Series"}
+          options["vvp_" + i.toString()] = {label: "Value vertical pos " + (i+1).toString(), order: 9*i+7, type: "string", display: "select", display_size: "half", values: [{"Top": "top"},{"Centre": "middle"},{"Bottom": "bottom"}], default: "middle" , section: "Series"}
+          options["vhp_" + i.toString()] = {label: "Value horizontal pos " + (i+1).toString(), order: 9*i+8, type: "string", display: "select", display_size: "half", values: [{"Left": "left"},{"Centre": "center"},{"Right": "right"}], default: "center" , section: "Series"}
         } 
+        
+        try {options["x_" + i.toString()].default = queryResponse.fields.dimension_like[0].name} catch(err) {options["x_" + i.toString()].default = Object.values(cols[0])}
+        try {options["y_" + i.toString()].default = queryResponse.fields.measure_like[i].name} catch(err) {options["y_" + i.toString()].default = Object.values(cols[0])}
+        try {options["col_" + i.toString()].default = colors[i]} catch(err) {options["col_" + i.toString()].default = colors[0]}
+
       }
       console.log(options)
       this.trigger('registerOptions', options)
+      console.log(config)
 
     //   // adapt column keys to get nicely formatted data in one string
     //   function colname_format(field) {
