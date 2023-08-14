@@ -316,195 +316,40 @@ looker.plugins.visualizations.add({
     // Clear errors from previous updates
     this.clearErrors();
 
-    function get_pretty_cols(d) {
-      if (d.hasOwnProperty('label_short')) { result = d.label_short } else { result = d.label }
-      return result
-    }
+    window.scriptLoad.then(() => { // Do this first to ensure js loads in time
 
-    let cols = [{'-': ""}]
-    queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
-    queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
-
-    const options = { ...this.options };
-    for (let i = 0; i < config.num_traces; i++) {
-      options["div_" + i.toString()] = {label: "<--- Trace " + (i+1).toString() + " --->", order: 10*i+1, type: "string", display: "divider"}
-      options["x_" + i.toString()] = {label: "Trace: x", order: 11*i+2, type: "string", display: "select", display_size: "third", values: cols}
-      try {options["x_" + i.toString()].default = queryResponse.fields.dimension_like[0].name} catch(err) {options["x_" + i.toString()].default = Object.values(cols[0])}
-      options["y_" + i.toString()] = {label: "Trace: y", order: 11*i+3, type: "string", display: "select", display_size: "third", values: cols}
-      try {options["y_" + i.toString()].default = queryResponse.fields.measure_like[i].name} catch(err) {options["y_" + i.toString()].default = Object.values(cols[0])}
-      options["d_" + i.toString()] = {label: "Options", order: 11*i+4, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple"}
-      try{
-        if(config["d_" + i.toString()] == "detailed") {
-          options["xlb_" + i.toString()] = {label: "x: lower bound", order: 11*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" }
-          options["xub_" + i.toString()] = {label: "x: upper bound", order: 11*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" }
-          options["ylb_" + i.toString()] = {label: "y: lower bound", order: 11*i+7, type: "string", display: "select", display_size: "half", values: cols, default:"" }
-          options["yub_" + i.toString()] = {label: "y: upper bound", order: 11*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" }
-          options["ltx_" + i.toString()] = {label: "Custom labels", order: 11*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" }
-          options["htx_" + i.toString()] = {label: "Custom hovertext", order: 11*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" }
-        }
-      } catch(err) {continue}
+      // Get data to populate config:
+      function get_pretty_cols(d) {
+        if (d.hasOwnProperty('label_short')) { result = d.label_short } else { result = d.label }
+        return result
       }
 
-    console.log(options)
-    this.trigger('registerOptions', options)
-    
-    // for (i = 0; i < cols.length; i++) {
-    //   if (i = 9) {break}
-    //   iN = i.toString()
-    //   options['div_' + iN] = {type: "string", label: "<--- " + Object.keys(cols[i]) + " --->", display: "divider", order: i}
-    //   options['a0' + iN]['hidden'] = false
-    //   options['t0' + iN]['hidden'] = false
-    //   // // options['x_' + iN] = {type: "string", label: "Axis", order: i*4+1, display_size: "third", display: 'select', values: cols}
-    //   // // options['trace_' + i.toString()] = {type: "number", label: "Trace #", order: i*4+1, display_size: "third"}
-    //   // options['axis_' + iN] = {type: "string", label: "Axis", order: i*4+1, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null}
-    //   // options['type_' + iN] = {type: "string", label: "Type", order: i*4+2, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null}
-      
-    //   // if (Object.values(cols[i]) == queryResponse.fields.dimension_like[0].name) { options['axis_' + iN]['default'] = "x1"; options['type_' + iN]['default'] = "values" }
-    //   // if (Object.values(cols[i]) == queryResponse.fields.measure_like[0].name) { options['axis_' + iN]['default'] = "y1"; options['type_' + iN]['default'] = "values" }
-      
-    //   // if (Object.values(cols[i]) == queryResponse.fields.dimension_like[0].name) { options['trace_' + iN]['default'] = 1; options['axis_' + iN]['default'] = "x1"; options['type_' + iN]['default'] = "values" }
-    //   // if (Object.values(cols[i]) == queryResponse.fields.measure_like[0].name) { options['trace_' + iN]['default'] = 1; options['axis_' + iN]['default'] = "y1"; options['type_' + iN]['default'] = "values" }
-      
-    // }
-    // this.trigger('registerOptions', options)
-    
-    
-    // let cols = queryResponse.fields.dimension_like.map(x => [get_pretty_cols(x),x.name])
-    // cols = cols.concat(queryResponse.fields.measure_like.map(x => [get_pretty_cols(x),x.name]))
+      let cols = [{'-': ""}]
+      queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
+      queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
 
-    // // queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
-    // // queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
-    
-    // const options = { ...this.options }
-    // for (i = 0; i < cols.length; i++) {
-    //   options['div_' + i.toString()] = {type: "string", label: "<--- " + cols[i][0] + " --->", display: "divider", order: i*4}
-    //   options['trace_' + i.toString()] = {type: "number", label: "Trace #", order: i*4+1, display_size: "third"}
-    //   options['axis_' + i.toString()] = {type: "string", label: "Axis", order: i*4+2, display_size: "third", display: 'select', values: [{"-":null},{"x1":'x1'},{"x2":'x2'},{"y1":'y1'},{"y2":'y2'}]}
-    //   options['type_' + i.toString()] = {type: "string", label: "Type", order: i*4+3, display_size: "third", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}]}
-    //   if (cols[i][1] == queryResponse.fields.dimension_like[0].name) { options['trace_' + i.toString()]['default'] = 1; options['axis_' + i.toString()]['default'] = "x1"; options['type_' + i.toString()]['default'] = "values" }
-    //   if (cols[i][1] == queryResponse.fields.measure_like[0].name) { options['trace_' + i.toString()]['default'] = 1; options['axis_' + i.toString()]['default'] = "y1"; options['type_' + i.toString()]['default'] = "values" }
-    // }
-    // this.trigger('registerOptions', options)
-    
-    // for (i = 0; i < config.nt; i++) {
-    //   iN = (i+1).toString()
-    //   options['x'+iN]['values'] = cols
-    //   options['x'+iN]['hidden'] = true
-    //   options['y'+iN]['values'] = cols
-    //   options['y'+iN]['hidden'] = true
-    // }
-    // this.trigger('registerOptions', options)
-    
+      const options = { ...this.options };
+      for (let i = 0; i < config.num_traces; i++) {
+        options["div_" + i.toString()] = {label: "<--- Trace " + (i+1).toString() + " --->", order: 10*i+1, type: "string", display: "divider"}
+        options["x_" + i.toString()] = {label: "Trace: x", order: 11*i+2, type: "string", display: "select", display_size: "third", values: cols}
+        try {options["x_" + i.toString()].default = queryResponse.fields.dimension_like[0].name} catch(err) {options["x_" + i.toString()].default = Object.values(cols[0])}
+        options["y_" + i.toString()] = {label: "Trace: y", order: 11*i+3, type: "string", display: "select", display_size: "third", values: cols}
+        try {options["y_" + i.toString()].default = queryResponse.fields.measure_like[i].name} catch(err) {options["y_" + i.toString()].default = Object.values(cols[0])}
+        options["d_" + i.toString()] = {label: "Options", order: 11*i+4, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple"}
+        try{
+          if(config["d_" + i.toString()] == "detailed") {
+            options["xlb_" + i.toString()] = {label: "x: lower bound", order: 11*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+            options["xub_" + i.toString()] = {label: "x: upper bound", order: 11*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+            options["ylb_" + i.toString()] = {label: "y: lower bound", order: 11*i+7, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+            options["yub_" + i.toString()] = {label: "y: upper bound", order: 11*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+            options["ltx_" + i.toString()] = {label: "Custom labels", order: 11*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+            options["htx_" + i.toString()] = {label: "Custom hovertext", order: 11*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" }
+          }
+        } catch(err) {continue}
+        }
 
-    // if (!config.x1) {
-    //   options['x1'].default = queryResponse.fields.dimension_like[0]
-    //   options['x1'].values = cols
-    //   options['y1'].default = queryResponse.fields.measure_like[0]
-    //   options['y1'].values = cols
-    // }
-
-
-    
-    // for (i = 0; i < 9; i ++) {
-    //   iN = (i+1).toString()
-    //   if (config['x'+iN] || config['y'+iN]) {
-    //     options['x'+iN].hidden = false
-    //     options['y'+iN].hidden = false
-    //   }
-    // }
-  
-
-    // for (i = 0; i < config.nt; i++) {
-    //   iN = (i+1).toString()
-    //   options['x'+iN].values = cols
-    //   options['x'+iN].hidden = true
-    //   options['y'+iN].values = cols
-    //   options['y'+iN].hidden = true
-    // }
-
-    // options.add_2.hidden = !config.add_2
-    // this.trigger('registerOptions', options)
-
-    // const options = { ...this.options }
-    // options['x1'] = { order: 1, label: "Base trace " + iN + ": x axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "0. Raw data", default: queryResponse.fields.dimension_like[0].name }
-    // options['y1'] = { order: 2, label: "Base trace " + iN + ": y axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "0. Raw data", default: queryResponse.fields.measure_like[i].name }
-
-
-    // for (i = 0; i < cols.length; i++) {
-    //   var iN = (i+1).toString()
-    //   options['x'+iN] = { order: 2*i+1, label: "Base trace " + iN + ": x axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "0. Raw data", default: queryResponse.fields.dimension_like[0].name }
-    //   options['y'+iN] = { order: 2*i+2, label: "Base trace " + iN + ": y axis", display_size: "half", type: 'string', display: 'select', values: cols, section: "0. Raw data", default: queryResponse.fields.measure_like[i].name }
-    // }
-
-    // for (i = 0; i < queryResponse.fields.measure_like.length; i++) {
-    //   var iN = (i+1).toString()
-    //   options['labels' + iN]  = {order: i*6+1, label: "(" + iN + ") custom labels",     display_size: "half", type: 'string', display: 'select', values: cols, section: "1. Trace details", default: null}
-    //   options['hover' + iN]   = {order: i*6+2, label: "(" + iN + ") custom hovertext",  display_size: "half", type: 'string', display: 'select', values: cols, section: "1. Trace details", default: null}
-    //   options['y_LB' + iN]    = {order: i*6+3, label: "(" + iN + ") y err lower bound", display_size: "half", type: 'string', display: 'select', values: cols, section: "1. Trace details", default: null}
-    //   options['y_UB' + iN]    = {order: i*6+4, label: "(" + iN + ") y err upper bound", display_size: "half", type: 'string', display: 'select', values: cols, section: "1. Trace details", default: null}
-    //   options['x_LB' + iN]    = {order: i*6+5, label: "(" + iN + ") x err lower bound", display_size: "half", type: 'string', display: 'select', values: cols, section: "1. Trace details", default: null}
-    //   options['x_UB' + iN]    = {order: i*6+6, label: "(" + iN + ") x err upper bound", display_size: "half", type: 'string', display: 'select', values: cols, section: "1. Trace details", default: null}
-    // }
-    
-    // for (i = 0; i < 2; i++) {
-    //   let iN = (i+1).toString()
-    //   options['x' + iN]       = {order: i*8+1, label: "(" + iN + ") x axis", display_size: "one"}
-    //   options['y' + iN]       = {order: i*8+2, label: "(" + iN + ") y axis", display_size: "one"}
-    //   options['values' + iN]  = {order: i*8+3, label: "(" + iN + ") custom values", display_size: "half"}
-    //   options['hover' + iN]   = {order: i*8+4, label: "(" + iN + ") custom hovertext", display_size: "half"}
-    //   options['y_LB' + iN]    = {order: i*8+5, label: "(" + iN + ") y err lower bound", display_size: "half"}
-    //   options['y_UB' + iN]    = {order: i*8+6, label: "(" + iN + ") y err upper bound", display_size: "half"}
-    //   options['x_LB' + iN]    = {order: i*8+7, label: "(" + iN + ") x err lower bound", display_size: "half"}
-    //   options['x_UB' + iN]    = {order: i*8+8, label: "(" + iN + ") x err upper bound", display_size: "half"}
-    // }
-    // for (k of Object.keys(options)) {
-    //   options[k]['type'] = 'string'
-    //   options[k]['display'] = 'select'
-    //   options[k]['values'] = cols
-    //   options[k]['section'] = "Data"
-    //   options[k]['default'] = null
-    // }
-    // options['x1']['default'] = queryResponse.fields.dimension_like[0].name
-    // options['y1']['default'] = queryResponse.fields.measure_like[0].name
-    // console.log(options)
-    // this.trigger('registerOptions', options) // register options with parent page to update visConfig
-
-    // queryResponse.fields.dimension_like.forEach(function(field) {
-    //     id = "xaxis_" + field.name
-    //     options[id] = {
-    //     label: field.label_short + " Color",
-    //     default: "#8B7DA8",
-    //     section: "Style",
-    //     type: "string",
-    //     display: "color"
-    //   }
-    // })
-
-    // options['dimX1'] = {
-    //   label: "X axis",
-    //   type: "array",
-    //   display: 'text',
-    //   values: dvalues, // retrieve both dimensions and non-pivotable table calcs, with nice labels too 
-    //   default: queryResponse.fields.dimension_like[0].name,
-    //   section: "Style",
-    //   display_size: "third"
-    // }
-    
-    //  // Create an option for each measure in your query
-    //  queryResponse.fields.measure_like.forEach(function(field) {
-    //    id = "color_" + field.name
-    //    options[id] = {
-    //     label: field.label_short + " Color",
-    //     default: "#8B7DA8",
-    //     section: "Style",
-    //     type: "string",
-    //     display: "color"
-    //   }
-    // })
-    // console.log(options)
-    
-    
-    // window.scriptLoad.then(() => { // Do this first to ensure js loads in time
+      console.log(options)
+      this.trigger('registerOptions', options)
 
     //   // adapt column keys to get nicely formatted data in one string
     //   function colname_format(field) {
@@ -717,7 +562,7 @@ looker.plugins.visualizations.add({
       //   config
       // )
       
-    // })
+    })
 
     // Let Looker know rendering is complete
     done()
