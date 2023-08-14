@@ -328,19 +328,22 @@ looker.plugins.visualizations.add({
     // this.trigger('registerOptions', options)
 
     const options = { ...this.options }; i = 0;
-    
-    cols.forEach(x => {
-      id = "test_" + Object.values(x);
-      options[id] = {
-        label: Object.keys(x),
-        order: i,
-        // default: "#8B7DA8",
-        type: "string",
-        display: "select",
-        values: cols
-        };
-      i++;
-      })
+
+    options['test']: { type: "boolean", label: "flip me to hide the chart type", order: 1}
+    if (config.hide_chart_type) {
+      cols.forEach(x => {
+        id = "test_" + Object.values(x);
+        options[id] = {
+          label: Object.keys(x),
+          order: i,
+          // default: "#8B7DA8",
+          type: "string",
+          display: "select",
+          values: cols
+          };
+        i++;
+        })
+    }    
     this.trigger('registerOptions', options)
     // for (i = 0; i < cols.length; i++) {
     //   if (i = 9) {break}
