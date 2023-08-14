@@ -328,13 +328,15 @@ looker.plugins.visualizations.add({
     // this.trigger('registerOptions', options)
 
     const options = { ...this.options }
+    console.log(options)
     queryResponse.fields.measure_like.forEach(function(field) {
       id = "color_" + field.name
       options[id] = {
         label: field.label_short + " Color",
-        default: "#8B7DA8",
+        // default: "#8B7DA8",
         type: "string",
-        display: "color"
+        display: "select",
+        values: cols
         }
       })
     this.trigger('registerOptions', options)
