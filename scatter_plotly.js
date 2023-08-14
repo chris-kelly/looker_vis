@@ -90,7 +90,7 @@ looker.plugins.visualizations.add({
         options["xax_" + i.toString()] = {label: "x axis " + (i+1).toString(), order: 9*i+3, type: "string", display: "select", display_size: "half", values: [{"1":"1"},{"2":"2"}], default:"1" , section: "Series"}
         options["yax_" + i.toString()] = {label: "y axis " + (i+1).toString(), order: 9*i+4, type: "string", display: "select", display_size: "half", values: [{"1":"1"},{"2":"2"}], default:"1" , section: "Series"}
         options["col_" + i.toString()] = {label: "Colour " + (i+1).toString(), order: 9*i+5, type: "string", display: "color", section: "Series"}
-        options["leg_" + i.toString()] = {label: "Show in Legend " + (i+1).toString(), order: 9*i+6, type: "boolean", default: true, section: "Series"}
+        options["tn_" + i.toString()] = {label: "Name includes " + (i+1).toString(), order: 9*i+6, type: "string", values: [{'x':'x'},{'y':'y'},{'x+y':'x+y'}], section: "Series"}
         
         if(config["d_" + i.toString()] == "detailed") {
           options["xlb_" + i.toString()] = {label: "x lower bound " + (i+1).toString(), order: 11*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
@@ -191,12 +191,18 @@ looker.plugins.visualizations.add({
           for (var j of [...nicedata.keys()].filter(y => y[0] == yname)) {
             let y = nicedata.get(j)
 
+            // name made up of either x, y, or x & y
+            var tname = []
+            if (config['tn_'+ iN].includes('x')) {tname.push(x.label)}
+            if (config['tn_'+ iN].includes('y')) {tname.push(y.label)}
+            tname = colname_format(tname)
+
             var new_trace = {
               x: x.values,
               y: y.values,
               type: 'scatter',
               mode: config["mod_" + iN],
-              name: y.label,
+              name: tname,
               text: y.pretty,
               // textposition: "none",
               // hovertemplate: hovertemplate,
