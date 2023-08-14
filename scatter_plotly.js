@@ -356,7 +356,7 @@ looker.plugins.visualizations.add({
         try{
           if(config["ltx_" + i.toString()] != "") {
             options["vvp_" + i.toString()] = {label: "Value vertical pos " + (i+1).toString(), order: 7*i+5, type: "string", display: "select", display_size: "half", values: [{"Top": "top"},{"Centre": "middle"},{"Bottom": "bottom"}], default: "middle" , section: "Series"}
-            options["vhp_" + i.toString()] = {label: "Value horizontal pos " + (i+1).toString(), order: 7*i+6, type: "string", display: "select", display_size: "half", values: [{"Left": "left"},{"Centre": "center"},{"Right": "right"},], default: "center" , section: "Series"}
+            options["vhp_" + i.toString()] = {label: "Value horizontal pos " + (i+1).toString(), order: 7*i+6, type: "string", display: "select", display_size: "half", values: [{"Left": "left"},{"Centre": "center"},{"Right": "right"}], default: "center" , section: "Series"}
           }
         } catch(err) {continue}
 
