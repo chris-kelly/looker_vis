@@ -7,8 +7,8 @@ looker.plugins.visualizations.add({
   // In this example, whether the plot is bar or scatter
   options: { 
     // nt: { order: 0, label: "# traces", type: 'number', section: 'Raw data', display: 'range', min: 1, max: 9, step: 1, default: 1},
-    x1: { order: 0, label: "Base trace 1: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false},
-    y1: { order: 0, label: "Base trace 1: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false},
+    // x1: { order: 0, label: "Base trace 1: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false},
+    // y1: { order: 0, label: "Base trace 1: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false},
     // x2: { order: 0, label: "Base trace 2: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false},
     // y2: { order: 0, label: "Base trace 2: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false},
     // x3: { order: 0, label: "Base trace 3: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
@@ -296,36 +296,34 @@ looker.plugins.visualizations.add({
     // Clear errors from previous updates
     this.clearErrors();
 
-    console.log(config.x1)
-
     function get_pretty_cols(d) {
       if (d.hasOwnProperty('label_short')) { result = d.label_short } else { result = d.label }
       return result
     }
 
-    let cols = [{"-":null}]
+    let cols = []
     queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
     queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
     
-    const options = { ...this.options }
-    options.x1.values = cols
-    this.trigger('registerOptions', options)
-
-
-
     // const options = { ...this.options }
-    // for (i = 0; i < cols.length; i++) {
-    //   // // options['div_' + i.toString()] = {type: "string", label: "<--- " + cols[i][0] + " --->", display: "divider", order: i*4}
-    //   // options['div_' + i.toString()] = {type: "string", label: "<--- " + Object.keys(cols[i]) + " --->", display: "divider", order: i*4}
-    //   // options['x_' + i.toString()] = {type: "string", label: "Axis", order: i*4+1, display_size: "third", display: 'select', values: cols}
-    //   // // options['trace_' + i.toString()] = {type: "number", label: "Trace #", order: i*4+1, display_size: "third"}
-    //   // options['axis_' + i.toString()] = {type: "string", label: "Axis", order: i*4+2, display_size: "third", display: 'select', values: [{"-":null},{"x1":'x1'},{"x2":'x2'},{"y1":'y1'},{"y2":'y2'}]}
-    //   // options['type_' + i.toString()] = {type: "string", label: "Type", order: i*4+3, display_size: "third", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}]}
-    //   // if (cols[i][1] == queryResponse.fields.dimension_like[0].name) { options['trace_' + i.toString()]['default'] = 1; options['axis_' + i.toString()]['default'] = "x1"; options['type_' + i.toString()]['default'] = "values" }
-    //   // if (cols[i][1] == queryResponse.fields.measure_like[0].name) { options['trace_' + i.toString()]['default'] = 1; options['axis_' + i.toString()]['default'] = "y1"; options['type_' + i.toString()]['default'] = "values" }
-      
-    // // }
+    // options.x1 = 
     // this.trigger('registerOptions', options)
+
+
+
+    const options = { ...this.options }
+    for (i = 0; i < cols.length; i++) {
+      // options['div_' + i.toString()] = {type: "string", label: "<--- " + cols[i][0] + " --->", display: "divider", order: i*4}
+      options['div_' + i.toString()] = {type: "string", label: "<--- " + Object.keys(cols[i]) + " --->", display: "divider", order: i*4}
+      options['x_' + i.toString()] = {type: "string", label: "Axis", order: i*4+1, display_size: "third", display: 'select', values: cols}
+      // options['trace_' + i.toString()] = {type: "number", label: "Trace #", order: i*4+1, display_size: "third"}
+      options['axis_' + i.toString()] = {type: "string", label: "Axis", order: i*4+2, display_size: "third", display: 'select', values: [{"-":null},{"x1":'x1'},{"x2":'x2'},{"y1":'y1'},{"y2":'y2'}]}
+      options['type_' + i.toString()] = {type: "string", label: "Type", order: i*4+3, display_size: "third", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}]}
+      if (cols[i][1] == queryResponse.fields.dimension_like[0].name) { options['trace_' + i.toString()]['default'] = 1; options['axis_' + i.toString()]['default'] = "x1"; options['type_' + i.toString()]['default'] = "values" }
+      if (cols[i][1] == queryResponse.fields.measure_like[0].name) { options['trace_' + i.toString()]['default'] = 1; options['axis_' + i.toString()]['default'] = "y1"; options['type_' + i.toString()]['default'] = "values" }
+      
+    }
+    this.trigger('registerOptions', options)
     
     // let cols = queryResponse.fields.dimension_like.map(x => [get_pretty_cols(x),x.name])
     // cols = cols.concat(queryResponse.fields.measure_like.map(x => [get_pretty_cols(x),x.name]))
