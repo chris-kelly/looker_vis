@@ -313,14 +313,15 @@ looker.plugins.visualizations.add({
 
     const options = { ...this.options }
     for (i = 0; i < cols.length; i++) {
+      iN = i.toString()
       // options['div_' + i.toString()] = {type: "string", label: "<--- " + cols[i][0] + " --->", display: "divider", order: i*4}
-      options['div_' + i.toString()] = {type: "string", label: "<--- " + Object.keys(cols[i]) + " --->", display: "divider", order: i*4}
-      options['x_' + i.toString()] = {type: "string", label: "Axis", order: i*4+1, display_size: "third", display: 'select', values: cols}
+      options['div_' + iN] = {type: "string", label: "<--- " + Object.keys(cols[i]) + " --->", display: "divider", order: i*4}
+      options['x_' + iN] = {type: "string", label: "Axis", order: i*4+1, display_size: "third", display: 'select', values: cols}
       // options['trace_' + i.toString()] = {type: "number", label: "Trace #", order: i*4+1, display_size: "third"}
-      options['axis_' + i.toString()] = {type: "string", label: "Axis", order: i*4+2, display_size: "third", display: 'select', values: [{"-":null},{"x1":'x1'},{"x2":'x2'},{"y1":'y1'},{"y2":'y2'}]}
-      options['type_' + i.toString()] = {type: "string", label: "Type", order: i*4+3, display_size: "third", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}]}
-      if (cols[i][1] == queryResponse.fields.dimension_like[0].name) { options['trace_' + i.toString()]['default'] = 1; options['axis_' + i.toString()]['default'] = "x1"; options['type_' + i.toString()]['default'] = "values" }
-      if (cols[i][1] == queryResponse.fields.measure_like[0].name) { options['trace_' + i.toString()]['default'] = 1; options['axis_' + i.toString()]['default'] = "y1"; options['type_' + i.toString()]['default'] = "values" }
+      options['axis_' + iN] = {type: "string", label: "Axis", order: i*4+2, display_size: "third", display: 'select', values: [{"-":null},{"x1":'x1'},{"x2":'x2'},{"y1":'y1'},{"y2":'y2'}]}
+      options['type_' + iN] = {type: "string", label: "Type", order: i*4+3, display_size: "third", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}]}
+      if (Object.values(cols[i]) == queryResponse.fields.dimension_like[0].name) { options['trace_' + iN]['default'] = 1; options['axis_' + iN]['default'] = "x1"; options['type_' + iN]['default'] = "values" }
+      if (Object.values(cols[i]) == queryResponse.fields.measure_like[0].name) { options['trace_' + iN]['default'] = 1; options['axis_' + iN]['default'] = "y1"; options['type_' + iN]['default'] = "values" }
       
     }
     this.trigger('registerOptions', options)
