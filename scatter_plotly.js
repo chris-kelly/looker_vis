@@ -337,7 +337,7 @@ looker.plugins.visualizations.add({
         try {options["y_" + i.toString()].default = queryResponse.fields.measure_like[i].name} catch(err) {options["y_" + i.toString()].default = Object.values(cols[0])}
         options["d_" + i.toString()] = {label: "Options " + (i+1).toString(), order: 11*i+4, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple", section: "Data"}
        
-        options["div2_" + i.toString()] = {label: "<---------- Trace " + (i+1).toString() + " ---------->", order: 7*i+1, type: "string", display: "divider", section: "Data"}
+        options["div2_" + i.toString()] = {label: "<---------- Trace " + (i+1).toString() + " ---------->", order: 7*i+1, type: "string", display: "divider", section: "Series"}
         options["mod_" + i.toString()] = {label: "Scatter mode " + (i+1).toString(), order: 7*i+2, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series"}
         options["col_" + i.toString()] = {label: "Colour " + (i+1).toString(), order: 7*i+3, type: "string", display: "color", section: "Series"}
         options["leg_" + i.toString()] = {label: "Show in Legend " + (i+1).toString(), order: 7*i+4, type: "boolean", default: true, section: "Series"}
@@ -350,15 +350,16 @@ looker.plugins.visualizations.add({
             options["yub_" + i.toString()] = {label: "y upper bound " + (i+1).toString(), order: 11*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
             options["ltx_" + i.toString()] = {label: "Custom labels " + (i+1).toString(), order: 11*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
             options["htx_" + i.toString()] = {label: "Custom hovertext " + (i+1).toString(), order: 11*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+            try{
+              if(config["ltx_" + i.toString()] != "") {
+                options["vvp_" + i.toString()] = {label: "Value vertical pos " + (i+1).toString(), order: 7*i+5, type: "string", display: "select", display_size: "half", values: [{"Top": "top"},{"Centre": "middle"},{"Bottom": "bottom"}], default: "middle" , section: "Series"}
+                options["vhp_" + i.toString()] = {label: "Value horizontal pos " + (i+1).toString(), order: 7*i+6, type: "string", display: "select", display_size: "half", values: [{"Left": "left"},{"Centre": "center"},{"Right": "right"}], default: "center" , section: "Series"}
+              }
+            } catch(err) {continue}
           }
         } catch(err) {continue}
 
-        try{
-          if(config["ltx_" + i.toString()] != "") {
-            options["vvp_" + i.toString()] = {label: "Value vertical pos " + (i+1).toString(), order: 7*i+5, type: "string", display: "select", display_size: "half", values: [{"Top": "top"},{"Centre": "middle"},{"Bottom": "bottom"}], default: "middle" , section: "Series"}
-            options["vhp_" + i.toString()] = {label: "Value horizontal pos " + (i+1).toString(), order: 7*i+6, type: "string", display: "select", display_size: "half", values: [{"Left": "left"},{"Centre": "center"},{"Right": "right"}], default: "center" , section: "Series"}
-          }
-        } catch(err) {continue}
+        
       }
       console.log(options)
       this.trigger('registerOptions', options)
