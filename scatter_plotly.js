@@ -332,9 +332,9 @@ looker.plugins.visualizations.add({
       for (let i = 0; i < config.num_traces; i++) {
         options["div_" + i.toString()] = {label: "<--- Trace " + (i+1).toString() + " --->", order: 11*i+1, type: "string", display: "divider", section: "Data"}
         options["x_" + i.toString()] = {label: "Trace " + (i+1).toString() + ": x", order: 11*i+2, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
-        try {options["x_" + i.toString()].default = queryResponse.fields.dimension_like[0].name} catch(err) {options["x_" + i.toString()].default = Object.values(cols[0]), section: "Data"}
+        try {options["x_" + i.toString()].default = queryResponse.fields.dimension_like[0].name} catch(err) {options["x_" + i.toString()].default = Object.values(cols[0])}
         options["y_" + i.toString()] = {label: "Trace " + (i+1).toString() + ": y", order: 11*i+3, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
-        try {options["y_" + i.toString()].default = queryResponse.fields.measure_like[i].name} catch(err) {options["y_" + i.toString()].default = Object.values(cols[0]), section: "Data"}
+        try {options["y_" + i.toString()].default = queryResponse.fields.measure_like[i].name} catch(err) {options["y_" + i.toString()].default = Object.values(cols[0])}
         options["d_" + i.toString()] = {label: "Options " + (i+1).toString(), order: 11*i+4, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple", section: "Data"}
         try{
           if(config["d_" + i.toString()] == "detailed") {
