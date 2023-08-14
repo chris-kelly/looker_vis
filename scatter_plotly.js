@@ -204,6 +204,7 @@ looker.plugins.visualizations.add({
           if (config["xlb_" + iN] != "" && config["xub_" + iN] != "") {
             let klb = j.length == 1 ? [config["xlb_" + iN]] : [config["xlb_" + iN],j[1]]
             let kub = j.length == 1 ? [config["xub_" + iN]] : [config["xub_" + iN],j[1]]
+            console.log(klb); console.log(kub)
             new_trace['error_x'] = {
               type: 'data', 
               symmetric: false,
@@ -216,6 +217,7 @@ looker.plugins.visualizations.add({
           if (config["ylb_" + iN] != "" && config["yub_" + iN] != "") {
             let klb = j.length == 1 ? [config["ylb_" + iN]] : [config["ylb_" + iN],j[1]]
             let kub = j.length == 1 ? [config["yub_" + iN]] : [config["yub_" + iN],j[1]]
+            console.log(klb); console.log(kub)
             new_trace['error_y'] = {
               type: 'data', 
               symmetric: false,
