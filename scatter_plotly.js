@@ -332,14 +332,8 @@ looker.plugins.visualizations.add({
 
     const options = { ...this.options };
     for (let i = 0; i < config.num_traces; i++) {
-      id = "x_" + i.toString()
-      options[id] = {
-        label: id,
-        order: i,
-        type: "string",
-        display: "select",
-        values: cols,
-        }
+      options["x_" + i.toString()] = {label: "x_" + i.toString(), order: i, type: "string", display: "select", display_size: "half", values: cols}
+      options["y_" + i.toString()] = {label: "y_" + i.toString(), order: i, type: "string", display: "select", display_size: "half", values: cols}
       }
       // cols.forEach(x => {
       //   id = "test_" + Object.values(x);
