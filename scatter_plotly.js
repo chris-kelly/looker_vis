@@ -216,10 +216,13 @@ looker.plugins.visualizations.add({
 
           // Add error bars (y axis)
           if (config["ylb_" + iN] != "" && config["yub_" + iN] != "") {
-            let lb = j.length == 1 ? [...nicedata.keys()].filter(k => k[0] == config["ylb_" + iN]) : [...nicedata.keys()].filter(k => k[0] == config["ylb_" + iN] && k[1] == j[1])
-            let ub = j.length == 1 ? [...nicedata.keys()].filter(k => k[0] == config["yub_" + iN]) : [...nicedata.keys()].filter(k => k[0] == config["yub_" + iN] && k[1] == j[1])
+            let lb = j.length == 1 ? [...nicedata.entries()].filter(x => x[1]['keys'] == config["ylb_" + iN]) : [...nicedata.entries()].filter(x => x[1]['keys'] == [config["ylb_" + iN],j[1]])
+            let ub = j.length == 1 ? [...nicedata.entries()].filter(x => x[1]['keys'] == config["yub_" + iN]) : [...nicedata.entries()].filter(x => x[1]['keys'] == [config["yub_" + iN],j[1]])
+
+            // let lb = j.length == 1 ? [...nicedata.keys()].filter(k => k[0] == config["ylb_" + iN]) : [...nicedata.keys()].filter(k => k[0] == config["ylb_" + iN] && k[1] == j[1])
+            // let ub = j.length == 1 ? [...nicedata.keys()].filter(k => k[0] == config["yub_" + iN]) : [...nicedata.keys()].filter(k => k[0] == config["yub_" + iN] && k[1] == j[1])
             console.log(lb); console.log(ub)
-            lb = nicedata.get(lb); ub = nicedata.get(ub)
+            lb = nicedata.get(lb[0]); ub = nicedata.get(ub[0])
             console.log(lb); console.log(ub);
             new_trace['error_y'] = {
               type: 'data', 
