@@ -7,264 +7,10 @@ looker.plugins.visualizations.add({
   // In this example, whether the plot is bar or scatter
   options: { 
     num_traces: { type: "number", label: "# traces", order: 0, default: 1, section: "Data"}
-    // add_trace: { type: "boolean", label: "flip me to hide the chart type", order: 1, default: false},
-    // a01: {type: "string", label: "Axis", order: 0, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    // t01: {type: "string", label: "Type", order: 0, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
-    // a02: {type: "string", label: "Axis", order: 1, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    // t02: {type: "string", label: "Type", order: 1, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
-    // a03: {type: "string", label: "Axis", order: 2, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    // t03: {type: "string", label: "Type", order: 2, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
-    // a04: {type: "string", label: "Axis", order: 3, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    // t04: {type: "string", label: "Type", order: 3, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
-    // a05: {type: "string", label: "Axis", order: 4, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    // t05: {type: "string", label: "Type", order: 4, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
-    // a06: {type: "string", label: "Axis", order: 5, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    // t06: {type: "string", label: "Type", order: 5, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
-    // a07: {type: "string", label: "Axis", order: 6, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    // t07: {type: "string", label: "Type", order: 6, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
-    // a08: {type: "string", label: "Axis", order: 7, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    // t08: {type: "string", label: "Type", order: 7, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
-    // a09: {type: "string", label: "Axis", order: 8, display_size: "half", display: 'select', values: [{"-":null},{"x1":'x1'},{"y1":'y1'},{"x2":'x2'},{"y2":'y2'},{"x3":'x3'},{"y3":'y3'},{"x4":'x4'},{"y4":'y4'}], default: null, hidden: true},
-    // t09: {type: "string", label: "Type", order: 8, display_size: "half", display: 'select', values: [{"-":null},{"values":'values'},{"labels":'labels'},{"y lower bound":'y_lb'},{"y upper bound":'y_ub'},{"x lower bound":'x_lb'},{"x upper bound":'x_ub'},{"hovertext":'hovertext'}], default: null, hidden: true},
-    // nt: { order: 0, label: "# traces", type: 'number', section: 'Raw data', display: 'range', min: 1, max: 9, step: 1, default: 1},
-    // x1: { order: 0, label: "Base trace 1: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false},
-    // y1: { order: 0, label: "Base trace 1: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false},
-    // x2: { order: 0, label: "Base trace 2: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false},
-    // y2: { order: 0, label: "Base trace 2: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: false},
-    // x3: { order: 0, label: "Base trace 3: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
-    // y3: { order: 0, label: "Base trace 3: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
-    // x4: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
-    // y4: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
-    // x5: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
-    // y5: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
-    // x6: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
-    // y6: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
-    // x7: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
-    // y7: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
-    // x8: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
-    // y8: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
-    // x9: { order: 0, label: "Base trace 4: x axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
-    // y9: { order: 0, label: "Base trace 4: y axis", display_size: "half", type: 'string', section: 'Raw data', display: 'select', hidden: true},
-       
-    // title: {
-    //   type: "string",
-    //   label: "1. Chart title",
-    // },
-    // plot_type: {
-    //   type: "string",
-    //   label: "Plot",
-    //   values: [
-    //     {"Scatter": "scatter"},
-    //     {"Bar": "bar"},
-    //   ],
-    //   display: "radio",
-    //   default: "scatter",
-    //   section: '1. Plot',
-    //   order: 1
-    // },
-    // scatter_mode: {
-    //   type: "string",
-    //   label: "Plot type detail: scatter mode",
-    //   values: [
-    //     {"Markers": "markers"},
-    //     {"Lines": "lines"},
-    //     {"Markers & Lines": "markers+lines"},
-    //   ],
-    //   display: "radio",
-    //   default: "markers",
-    //   section: '1. Plot',
-    //   order: 2
-    // },
-    // bar_mode: {
-    //   type: "string",
-    //   label: "Plot type detail: bar mode",
-    //   values: [
-    //     {"Grouped": "group"},
-    //     {"Stacked": "stack"},
-    //   ],
-    //   display: "radio",
-    //   default: "markers",
-    //   section: '1. Plot',
-    //   order: 3
-    // },
-    // swap_axes: {
-    //   type: "boolean",
-    //   label: "Swap X and Y",
-    //   default: false,
-    //   section: '1. Plot',
-    //   order: 4
-    // },
-    // error_bands: {
-    //   type: "boolean",
-    //   label: "Add error bars? (LB/UB is every 2nd/3rd col)",
-    //   default: false,
-    //   section: '1. Plot',
-    //   order: 5
-    // },
-    // inverse_log: {
-    //   type: "boolean",
-    //   label: "Scale y by inverse log? (Non-pivot only)",
-    //   default: false,
-    //   section: '1. Plot',
-    //   order: 6
-    // },
-    // show_legend: {
-    //   type: "string",
-    //   label: "Legend options",
-    //   values: [
-    //     {"Hide": "z"},
-    //     {"Horizontal": "h"},
-    //     {"Vertical": "v"},
-    //   ],
-    //   display: "select",
-    //   default: "z",
-    //   section: '1. Plot',
-    //   order: 7
-    // },
-    // value_labels: {
-    //   type: "boolean",
-    //   label: "Value labels?",
-    //   default: false,
-    //   section: '2. Values',
-    //   order: 1,
-    // },
-    // value_labels_pos_v: {
-    //   type: "string",
-    //   label: "Vertical position",
-    //   values: [
-    //     {"Top": "top"},
-    //     {"Centre": "middle"},
-    //     {"Bottom": "bottom"},
-    //   ],
-    //   display: "select",
-    //   default: "middle",
-    //   section: '2. Values',
-    //   display_size: 'third',
-    //   order: 2,
-      
-    // },
-    // value_labels_pos_h: {
-    //   type: "string",
-    //   label: "Horizontal position",
-    //   values: [
-    //     {"Left": "left"},
-    //     {"Centre": "center"},
-    //     {"Right": "right"},
-    //   ],
-    //   display: "select",
-    //   default: "center",
-    //   section: '2. Values',
-    //   display_size: 'third',
-    //   order: 3,
-    // },
-    // value_labels_pos_b: {
-    //   type: "string",
-    //   label: "Position in/out of bar",
-    //   values: [
-    //     {"Inside": "inside"},
-    //     {"Outside": "outside"},
-    //   ],
-    //   display: "select",
-    //   default: "inside",
-    //   section: '2. Values',
-    //   display_size: 'third',
-    //   order: 4,
-    // },
-    // value_labels_format: {
-    //   type: "string",
-    //   label: "Custom format",
-    //   placeholder: "e.g. .2f",
-    //   section: '2. Values',
-    //   order: 5
-    // },
-    // graph_title: {
-    //   type: "string",
-    //   label: "Graph title",
-    //   section: '3. Style',
-    //   default: "",
-    //   order: 1,
-    // },
-    // xaxis_label: {
-    //   type: "string",
-    //   label: "x axis title",
-    //   section: '3. Style',
-    //   order: 2
-    // },
-    // yaxis_label: {
-    //   type: "string",
-    //   label: "y axis title",
-    //   section: '3. Style',
-    //   order: 3
-    // },
-    // xaxis_lim: {
-    //   type: "string",
-    //   label: "x axis range (comma delim)",
-    //   section: '3. Style',
-    //   order: 4,
-    //   display_size: 'half',
-    // },
-    // yaxis_lim: {
-    //   type: "string",
-    //   label: "y axis range (comma delim)",
-    //   section: '3. Style',
-    //   order: 5,
-    //   display_size: 'half',
-    // },
-    // xaxis_hover_format: {
-    //   type: "string",
-    //   label: "Custom hover format (x)",
-    //   placeholder: "e.g. %d-%b",
-    //   section: '3. Style',
-    //   order: 6,
-    //   display_size: 'half',
-    // },
-    // yaxis_hover_format: {
-    //   type: "string",
-    //   label: "Custom hover format (y)",
-    //   placeholder: "e.g. .2f",
-    //   section: '3. Style',
-    //   order: 7,
-    //   display_size: 'half',
-    // },
-    // custom_hover_format: {
-    //   type: "string",
-    //   label: "Custom hover field",
-    //   placeholder: "Insert column name",
-    //   section: '3. Style',
-    //   order: 8,
-    // },
-    // colorPreSet: {
-    //   type: 'string',
-    //   display: 'select',
-    //   label: 'Color Range',
-    //   section: '3. Style',
-    //   values: [
-    //     {'Default': 'c'},
-    //     {'Tomato to Steel Blue': '#F16358,#DF645F,#CD6566,#BB666D,#A96774,#97687B,#856982,#736A89,#616B90,#4F6C97,#3D6D9E'},
-    //     {'Pink to Black': '#170108, #300211, #49031A, #620423, #79052B, #910734, #AA083D, #C30946, #DA0A4E, #F30B57, #F52368, #F63378, #F63C79, #F75389, #F86C9A, #F985AB, #FB9DBC, #FCB4CC, #FDCDDD, #FEE6EE'},
-    //     {'Green to Red': '#7FCDAE, #7ED09C, #7DD389, #85D67C, #9AD97B, #B1DB7A, #CADF79, #E2DF78, #E5C877, #E7AF75, #EB9474, #EE7772'},
-    //     {'White to Green': '#ffffe5,#f7fcb9 ,#d9f0a3,#addd8e,#78c679,#41ab5d,#238443,#006837,#004529'}],
-    //     default: 'c',
-    //     order: 9
-    // },
-    // colorRange: {
-    //   type: 'array',
-    //   label: 'Custom Color Ranges',
-    //   section: '3. Style',
-    //   order: 10,
-    //   placeholder: '#fff, red, etc...'
-    // },
-    // margins: {
-    //   type: 'string',
-    //   label: 'Margins: L,R,B,T,pad (comma delim)',
-    //   section: '3. Style',
-    //   order: 11,
-    //   default: "0,0,0,0,0"
-    // }
   },
 
   // Set up the initial state of the visualization
-  create: function(element, config) { 
+  create: function(element, config) {
 
     // import scripts to allow math operations
     var mathjs_script = document.createElement("script");
@@ -318,7 +64,10 @@ looker.plugins.visualizations.add({
 
     window.scriptLoad.then(() => { // Do this first to ensure js loads in time
 
+      ////////////////////////////////////////
       // Get data to populate config:
+      ////////////////////////////////////////
+      
       function get_pretty_cols(d) {
         if (d.hasOwnProperty('label_short')) { result = d.label_short } else { result = d.label }
         return result
@@ -336,14 +85,14 @@ looker.plugins.visualizations.add({
         options["y_" + i.toString()] = {label: "Trace " + (i+1).toString() + ": y", order: 11*i+3, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
         
         options["d_" + i.toString()] = {label: "Options " + (i+1).toString(), order: 11*i+4, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple", section: "Data"}
-       
+        
         options["div2_" + i.toString()] = {label: "<---------- Trace " + (i+1).toString() + " ---------->", order: 9*i+1, type: "string", display: "divider", section: "Series"}
         options["mod_" + i.toString()] = {label: "Scatter mode " + (i+1).toString(), order: 9*i+2, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series"}
         options["xax_" + i.toString()] = {label: "x axis " + (i+1).toString(), order: 9*i+3, type: "string", display: "select", display_size: "half", values: [{"1":"1"},{"2":"2"}], default:"1" , section: "Series"}
         options["yax_" + i.toString()] = {label: "y axis " + (i+1).toString(), order: 9*i+4, type: "string", display: "select", display_size: "half", values: [{"1":"1"},{"2":"2"}], default:"1" , section: "Series"}
         options["col_" + i.toString()] = {label: "Colour " + (i+1).toString(), order: 9*i+5, type: "string", display: "color", section: "Series"}
         options["leg_" + i.toString()] = {label: "Show in Legend " + (i+1).toString(), order: 9*i+6, type: "boolean", default: true, section: "Series"}
-       
+        
         if(config["d_" + i.toString()] == "detailed") {
           options["xlb_" + i.toString()] = {label: "x lower bound " + (i+1).toString(), order: 11*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
           options["xub_" + i.toString()] = {label: "x upper bound " + (i+1).toString(), order: 11*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
@@ -364,88 +113,95 @@ looker.plugins.visualizations.add({
         try {options["y_" + i.toString()].default = queryResponse.fields.measure_like[i].name} catch(err) {options["y_" + i.toString()].default = Object.values(cols[0])}
         try {options["col_" + i.toString()].default = colors[i]} catch(err) {options["col_" + i.toString()].default = colors[0]}
       }
+      for (i of [...Object.keys(options)]) {
+        if (i == "div_" + i.toString() && i >= config.num_traces) { delete options["div_" + i.toString()]; delete options["x_" + i.toString()]; delete options["y_" + i.toString()];}
+      }
       console.log(options)
       this.trigger('registerOptions', options)
-      console.log(config)
 
-    //   // adapt column keys to get nicely formatted data in one string
-    //   function colname_format(field) {
-    //     var k = field.join(' ~ ').replace('|FIELD|',' | ').replace('$$$_row_total_$$$', 'ROW TOTAL')
-    //     return k
-    //   }
+      ////////////////////////////////////////
+      // Get data in nice format:
+      ////////////////////////////////////////    
+
+      // adapt column keys to get nicely formatted data in one string
+      function colname_format(field) {
+        var k = field.join(' ~ ').replace('|FIELD|',' | ').replace('$$$_row_total_$$$', 'ROW TOTAL')
+        return k
+      }
+        
+      // Get column names and metadata
+      var dim_names = queryResponse.fields.dimension_like.map(d => [d.name, get_pretty_cols(d)]) // retrieve both dimensions and non-pivotable table calcs, with nice labels too
+      var dimN = dim_names.map(d => d[0]), dimL = dim_names.map(d => d[1]);
+      var mes_names = queryResponse.fields.measure_like.map(m => [m.name, get_pretty_cols(m)]) // retrieve both measures and pivotable table calcs, with nice labels too
+      var mesN = mes_names.map(m => m[0]), mesL = mes_names.map(m => m[1]);
+      if (queryResponse.pivots.length > 0) { var pivK = queryResponse.pivots.map(p => p.key) } // get pivot column names
+        
+      let nicedata = new Map(), row0 = data[0] // use first row of data as blueprint. Use Map for multiple keys
+      for (var k of Object.keys(row0)) {
+        if (row0[k].hasOwnProperty('value')) { 
+          // simply add keys of column if no pivot. Add name and "Label_short" or "label" data.
+          if (dimN.includes(k)) { nicedata.set([k], {'keys': [k], 'type': 'dimension', 'label': dimL[dimN.indexOf(k)] }) }
+          if (mesN.includes(k)) { nicedata.set([k], {'keys': [k], 'type': 'measure', 'label': mesL[mesN.indexOf(k)] }) }
+        } else { 
+          if (mesN.includes(k)) { // data includes hidden columns! So don't include these
+            var rowS = row0[k]; // the pivot (k2) is nested below each measure (k) in the data. Split these into seperate columns
+            for (var k2 of Object.keys(rowS)) {
+              if (k2 != '$$$_row_total_$$$') { // data may include row totals. Exclude for now
+                nicedata.set([k,k2], {'keys': [k,k2], 'type': 'pivot + measure', 'label': colname_format([k2, mesL[mesN.indexOf(k)]]) })
+              }
+            }
+          }
+        }
+      }
+
+      // make nice dict of values and another of labels/text
+      function get_pretty_data(d) {
+        if (d.hasOwnProperty('html')) { result = d.html } 
+        else if (d.hasOwnProperty('rendered')) { result = d.rendered } 
+        else { result = d.value }
+        return result
+      }
+      for (var k of [ ...nicedata.keys() ]) {
+        nicedata[k]['values'] = data.map(row => ks.length == 1 ? row[ks[0]].value : row[ks[0]][ks[1]].value) // if two cols (due to pivot), i.e. length > 1, go into level below
+        nicedata[k]['pretty'] = data.map(row => ks.length == 1 ? get_pretty_data(row[ks[0]]) : get_pretty_data(row[ks[0]][ks[1]]))
+      }
+
+      // Loop over every measure and add as new trace
+      plotly_data = []
       
+      for (let i = 0; i < config.num_traces; i++) {
 
-    //   // Get column names and metadata
-    //   var dim_names = queryResponse.fields.dimension_like.map(d => [d.name, get_pretty_cols(d)]) // retrieve both dimensions and non-pivotable table calcs, with nice labels too
-    //   var dimN = dim_names.map(d => d[0]), dimL = dim_names.map(d => d[1]);
-    //   var mes_names = queryResponse.fields.measure_like.map(m => [m.name, get_pretty_cols(m)]) // retrieve both measures and pivotable table calcs, with nice labels too
-    //   var mesN = mes_names.map(m => m[0]), mesL = mes_names.map(m => m[1]);
-    //   if (queryResponse.pivots.length > 0) { var pivK = queryResponse.pivots.map(p => p.key) } // get pivot column names
+        let xname = config["x_" + i.toString()], yname = config["y_" + i.toString()]
+        let x = nicedata.get([...nicedata.keys].find(x => x[0] == xname))
+        
+        for (j in [...nicedata.keys].filter(y => y[0] == yname)) {
 
-    //   console.log(queryResponse)
-      
-    //   let nicedata = new Map(), row0 = data[0] // use first row of data as blueprint. Use Map to preserve order
-    //   for (var k of Object.keys(row0)) {
-    //     if (row0[k].hasOwnProperty('value')) { 
-    //       // simply add keys of column if no pivot. Add name and "Label_short" or "label" data.
-    //       if (dimN.includes(k)) { nicedata.set([dimN.indexOf(k),k], {'keys': [k], 'type': 'dimension', 'label': dimL[dimN.indexOf(k)] }) }
-    //       if (mesN.includes(k)) { nicedata.set([dimN.length + mesN.indexOf(k),k], {'keys': [k], 'type': 'measure', 'label': mesL[mesN.indexOf(k)] }) }
-    //     } else { 
-    //       if (mesN.includes(k)) { // data includes hidden columns! So don't include these
-    //         var rowS = row0[k]; // the pivot (k2) is nested below each measure (k) in the data. Split these into seperate columns
-    //         for (var k2 of Object.keys(rowS)) {
-    //           var kc = colname_format([k2, k]);  // both measure and pivot name
-    //           if (k2 != '$$$_row_total_$$$') { // data includes row totals. Move these to end
-    //             nicedata.set([dimN.length + pivK.indexOf(k2)*mesN.length + mesN.indexOf(k),kc], {'keys': [k,k2], 'type': 'pivot + measure', 'label': colname_format([k2, mesL[mesN.indexOf(k)]]) })
-    //           } else {
-    //             nicedata.set([dimN.length + (pivK.length-1)*mesN.length + mesN.indexOf(k),kc], {'keys': [k,k2], 'type': 'pivot + measure', 'label': colname_format([k2, mesL[mesN.indexOf(k)]]) })
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
+          let y = nicedata.get(j)
 
-    //   // make nice dict of values and another of labels/text
-    //   function get_pretty_data(d) {
-    //     if (d.hasOwnProperty('html')) { result = d.html } 
-    //     else if (d.hasOwnProperty('rendered')) { result = d.rendered } 
-    //     else { result = d.value }
-    //     return result
-    //   }
-    //   let nicedata2 = new Map()
-    //   for (var k of [ ...nicedata.keys() ].sort(function(x,y){return x[0] - y[0]})) { // sort by 
-    //     var ks = nicedata.get(k).keys
-    //     nicedata2.set(k.map(k => k.toString()).join('. '), {
-    //       ...nicedata.get(k),
-    //       'values': data.map(row => ks.length == 1 ? row[ks[0]].value : row[ks[0]][ks[1]].value), // if two cols (due to pivot), i.e. length > 1, go into level below
-    //       'pretty': data.map(row => ks.length == 1 ? get_pretty_data(row[ks[0]]) : get_pretty_data(row[ks[0]][ks[1]]))
-    //     })
-    //   }
-    //   console.log(nicedata2)
+          var new_trace = {
+            x: x.values,
+            y: y.values,
+            type: 'scatter',
+            mode: 'markers',
+            name: y.label,
+            // text: y_r.map(row => row[i]),
+            // textposition: "none",
+            // hovertemplate: hovertemplate,
+          }
 
-    //   // if (config.showTable) {
-    //   var summaryCells = [dimN,mesN], summaryHeader = [['Dimensions'],['Measures'],['Pivots']]
-    //   console.log(summaryCells)
-    //   var detailedCells = [ [...nicedata2.keys()] ], detailedHeader = [['Column'], ['val1'], ['val2'], ['val3'], ['val4'], ['val5']]
-    //   for (let i = 0; i < 5; i++) { detailedCells.push( [...nicedata2.entries()].map(x => x[1].pretty[i]) ) }
-    //   console.log(detailedCells)
-      
-    //   plotly_data = [
-    //     { type: 'table', header: {values: summaryHeader}, cells: {values: summaryCells, align: 'left', font: {size: 8}} },
-    //     // { type: 'table', header: {values: detailedHeader}, cells: {values: detailedCells, align: 'left', font: {size: 8}}, columnwidth: [200,20,20,20,20] },
-    //   ]
-    //   Plotly.newPlot(
-    //     this.plotly_bit, // graphDiv
-    //     plotly_data,
-    //     {grid: {rows: 2, columns: 1} }
-    //   )
-    //   // }
+          plotly_data.push(new_trace)
 
-      
-      // // Loop over every measure and add as new trace
-      // plotly_data = []
-      
-      // for (var i = 0; i < y[0].length; i++) {
+        }
+
+      }
+
+      Plotly.newPlot( // use plotly library
+        this.plotly_bit, // graphDiv
+        plotly_data,
+        // layout,
+        // {responsive: true}
+      )
+        
         
       //   var hovertemplate = "<b>%{xaxis.title.text}: </b> <br>%{x} <br>" + "<br>" + "<b>%{fullData.name}: </b> <br>%{text} <extra></extra>"
       //   if (config.xaxis_hover_format) { hovertemplate = hovertemplate.replace("%{x}", "%{x:" + config.xaxis_hover_format + "}") }
