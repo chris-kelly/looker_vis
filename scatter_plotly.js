@@ -275,13 +275,13 @@ looker.plugins.visualizations.add({
       for (xa of [...xax.values()]) { 
         let xn = parseInt(xa.substring(1));
         layout['xaxis' + xn] = {title: config["xaxt_" + xa], side: config["xaxs_" + xa]}
-        if (typeof config["xaxl_" + xa] === 'number' && typeof config["xaxu_" + xa] === 'number') { layout['xaxis' + xn]['range'] = [config["xaxl_" + xa], config["xaxu_" + xa]]}
+        if (typeof config["xaxl_" + xa] !== 'undefined' && typeof config["xaxu_" + xa] !== 'undefined') { layout['xaxis' + xn]['range'] = [config["xaxl_" + xa], config["xaxu_" + xa]]}
       }
 
       for (ya of [...yax.values()]) { 
         let yn = parseInt(ya.substring(1));
         layout['yaxis' + yn] = {title: config["yaxt_" + ya], side: config["yaxs_" + ya]}
-        if (typeof config["yaxl_" + ya] === 'number' && typeof config["yaxu_" + ya] === 'number') { layout['yaxis' + yn]['range'] = [config["yaxl_" + ya], config["yaxu_" + ya]]}
+        if (typeof config["yaxl_" + ya] !== 'undefined' && typeof config["yaxu_" + ya] !== 'undefined') { layout['yaxis' + yn]['range'] = [config["yaxl_" + ya], config["yaxu_" + ya]]}
       }
 
       console.log(layout)
