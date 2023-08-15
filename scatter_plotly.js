@@ -183,7 +183,7 @@ looker.plugins.visualizations.add({
         var pivs = queryResponse.pivots.map(p => p.key).filter(p => p != "'$$$_row_total_$$$'")
         pivs.sort()
         for (var piv of queryResponse.pivots.map(p => p.key).filter(p => p != "ROW TOTAL")) {
-          options["p_" + piv + "_div"] = {label: "<----  " + colname_format([piv]) + " ---->", order: j+i*6+2, type: "string", display: "divider", section: "Series"}
+          options["p_" + piv + "_div"] = {label: " //--  " + colname_format([piv]) + " --//", order: j+i*6+2, type: "string", display: "divider", section: "Series"}
           options["p_" + piv + "_mod"] = {label: "Mode:", order: j+i*5+3, type: "string", display: "select", values: [{'-':''},{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series", display_size:"third"}
           options["p_" + piv + "_col"] = {label: "Colour: ", order: j+i*6+4, type: "string", display: "color", section: "Series", display_size:"third"}
           options["p_" + piv + "_sym"] = {label: "Symbol: ", order: j+i*6+5, type: "string", display: "select", default: 'circle', values: [
