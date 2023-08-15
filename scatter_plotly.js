@@ -120,18 +120,20 @@ looker.plugins.visualizations.add({
       for (xa of [...xax.values()]) { 
         options["xdiv_" + xa] = {label: "<---------- " + xa + " axis style ---------->", type: "string", display: "divider", section: "Style", default: "", order: i*11+1}
         options["xaxt_" + xa] = {label: xa + " axis title", type: "string", section: "Style", default: "", order: i*11+2}
-        options["xaxs_" + xa] = {label: xa + " axis side ", type: "string", section: "Style", values: [{"Top": "top"}, {"Bottom": "bottom"}], default: "bottom", order: i*11+3, display: "select", display_size: "third"}
-        options["xaxl_" + xa] = {label: xa + " axis min", type: "number", section: "Style", order: i*11+4, display_size: "third"}
-        options["xaxu_" + xa] = {label: xa + " axis max", type: "number", section: "Style", order: i*11+5, display_size: "third"}
+        options["xaxs_" + xa] = {label: xa + " axis side ", type: "string", section: "Style", values: [{"Top": "top"}, {"Bottom": "bottom"}], default: "bottom", order: i*11+3, display: "select", display_size: "half"}
+        options["xaxp_" + xa] = {label: xa + " axis position ", type: "number", section: "Style", order: i*11+4, display_size: "half"}
+        options["xaxl_" + xa] = {label: xa + " axis min", type: "number", section: "Style", order: i*11+5, display_size: "half"}
+        options["xaxu_" + xa] = {label: xa + " axis max", type: "number", section: "Style", order: i*11+6, display_size: "half"}
         i++;
       }
       var i = 0;
       for (ya of [...yax.values()]) {  
         options["ydiv_" + ya] = {label: "<---------- " + ya + " axis style ---------->", type: "string", display: "divider", section: "Style", default: "", order: i*11+6}
         options["yaxt_" + ya] = {label: ya + " axis title", type: "string", section: "Style", default: "", order: i*11+7}
-        options["yaxs_" + ya] = {label: ya + " axis side ", type: "string", section: "Style", values: [{"Left": "left"}, {"Right": "right"}], default: "left", order: i*11+8, display: "select", display_size: "third"}
-        options["yaxl_" + ya] = {label: ya + " axis min", type: "number", section: "Style", order: i*11+9, display_size: "third"}
-        options["yaxu_" + ya] = {label: ya + " axis max", type: "number", section: "Style", order: i*11+10, display_size: "third"}
+        options["yaxs_" + ya] = {label: ya + " axis side ", type: "string", section: "Style", values: [{"Left": "left"}, {"Right": "right"}], default: "left", order: i*11+8, display: "select", display_size: "half"}
+        options["yaxp_" + xa] = {label: xa + " axis position ", type: "number", section: "Style", order: i*11+9, display_size: "half"}
+        options["yaxl_" + ya] = {label: ya + " axis min", type: "number", section: "Style", order: i*11+10, display_size: "half"}
+        options["yaxu_" + ya] = {label: ya + " axis max", type: "number", section: "Style", order: i*11+11, display_size: "half"}
         i++;
       }
       for (i of [...Object.keys(options)]) {
@@ -277,6 +279,7 @@ looker.plugins.visualizations.add({
         let xn = parseInt(xa.substring(1));
         layout['xaxis' + xn] = {title: config["xaxt_" + xa], side: config["xaxs_" + xa]}
         if (typeof config["xaxl_" + xa] !== 'undefined' && typeof config["xaxu_" + xa] !== 'undefined') { layout['xaxis' + xn]['range'] = [config["xaxl_" + xa], config["xaxu_" + xa]]}
+        if (typeof config["xaxp_" + xa] !== 'undefined') { layout['xaxis' + xn]['position'] = config["xaxp_" + xa] }
         if (xn > 1) {layout['xaxis' + xn]['overlaying'] = 'x'}
       }
 
@@ -284,6 +287,7 @@ looker.plugins.visualizations.add({
         let yn = parseInt(ya.substring(1));
         layout['yaxis' + yn] = {title: config["yaxt_" + ya], side: config["yaxs_" + ya]}
         if (typeof config["yaxl_" + ya] !== 'undefined' && typeof config["yaxu_" + ya] !== 'undefined') { layout['yaxis' + yn]['range'] = [config["yaxl_" + ya], config["yaxu_" + ya]]}
+        if (typeof config["yaxp_" + ya] !== 'undefined') { layout['yaxis' + ya]['position'] = config["yaxp_" + ya] }
         if (yn > 1) {layout['yaxis' + yn]['overlaying'] = 'y'}
       }
 
