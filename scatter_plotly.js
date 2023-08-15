@@ -275,8 +275,6 @@ looker.plugins.visualizations.add({
               new_trace['mode'] = new_trace.mode + "+text"; new_trace['text'] = tx; new_trace['textposition'] = config["vvp_" + iN] + " " + config["vhp_" + iN]
             }
 
-            if (!config['hto_+ iN']) { new_trace['hovertemplate'] = "" }
-
             // Add custom hovertext
             var ht = []
             if (config["htx_" + iN] && config["htx_" + iN] != "") {
@@ -295,6 +293,9 @@ looker.plugins.visualizations.add({
               new_trace['customdata'] = ht
               new_trace['hovertemplate'] = "%{customdata}" + "<extra></extra>"
             }
+
+            // Hide hovertext altogether
+            if (!config['hto_+ iN']) { new_trace['hovertemplate'] = "" }
 
             plotly_data.push(new_trace)
 
