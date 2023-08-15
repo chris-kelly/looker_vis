@@ -178,12 +178,13 @@ looker.plugins.visualizations.add({
 
       if (queryResponse.fields.pivots.length > 0) {
         var i = 0, j = config.num_traces*10
-        options["intro_piv"] = {label: "NB - changes to pivot style overwrites traces", order: j+i*5+1, type: "string", display: "divider", section: "Series"}
+        options["intro_piv"] = {label: "<---------- Pivot formatting ---------->", order: j+i*6, type: "string", display: "divider", section: "Series"}
+        options["intro_piv2"] = {label: "NB - changes to pivot style overwrites traces", order: j+i*6+1, type: "string", display: "divider", section: "Series"}
         for (var piv of queryResponse.pivots.map(p => p.key).filter(p => p != "ROW TOTAL")) {
-          options["p_" + piv + "_div"] = {label: "<----  " + colname_format([piv]) + " ---->", order: j+i*5+2, type: "string", display: "divider", section: "Series"}
+          options["p_" + piv + "_div"] = {label: "<----  " + colname_format([piv]) + " ---->", order: j+i*6+2, type: "string", display: "divider", section: "Series"}
           options["p_" + piv + "_mod"] = {label: "Scatter mode:", order: j+i*5+3, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series", display_size:"third"}
-          options["p_" + piv + "_col"] = {label: "Colour: ", order: j+i*5+4, type: "string", display: "color", section: "Series", display_size:"third"}
-          options["p_" + piv + "_sym"] = {label: "Symbol: ", order: j+i*5+5, type: "string", display: "select", default: 'circle', values: [
+          options["p_" + piv + "_col"] = {label: "Colour: ", order: j+i*6+4, type: "string", display: "color", section: "Series", display_size:"third"}
+          options["p_" + piv + "_sym"] = {label: "Symbol: ", order: j+i*6+5, type: "string", display: "select", default: 'circle', values: [
             {'circle':'circle'},{'square':'square'},{'diamond':'diamond'},{'cross':'cross'},{'x':'x'},{'triangle': 'triangle'},{'pentagon':'pentagon'},{'hexagram':'hexagram'},{'star':'star'},{'hexagram':'hexagram'},{'hourglass':'hourglass'},{'bowtie':'bowtie'},{'asterisk':'asterisk'},{'hash':'hash'},{'y':'y'},{'line':'line'}
           ], section: "Series", display_size:"third"}
           i++;
