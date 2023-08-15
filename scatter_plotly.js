@@ -120,7 +120,7 @@ looker.plugins.visualizations.add({
       for (xa of [...xax.values()]) { 
         options["xdiv_" + xa] = {label: "<---------- " + xa + " axis style ---------->", type: "string", display: "divider", section: "Style", default: "", order: i*11+1}
         options["xaxt_" + xa] = {label: xa + " axis title", type: "string", section: "Style", default: "", order: i*11+2}
-        options["xaxs_" + xa] = {label: xa + " axis side ", type: "string", section: "Style", values: [{"Top": "top", "Bottom": "bottom"}], default: "bottom", order: i*11+3, display: "select", display_size: "third"}
+        options["xaxs_" + xa] = {label: xa + " axis side ", type: "string", section: "Style", values: [{"Top": "top"}, {"Bottom": "bottom"}], default: "bottom", order: i*11+3, display: "select", display_size: "third"}
         options["xaxl_" + xa] = {label: xa + " axis min", type: "number", section: "Style", order: i*11+4, display_size: "third"}
         options["xaxu_" + xa] = {label: xa + " axis max", type: "number", section: "Style", order: i*11+5, display_size: "third"}
         i++;
@@ -129,7 +129,7 @@ looker.plugins.visualizations.add({
       for (ya of [...yax.values()]) {  
         options["ydiv_" + ya] = {label: "<---------- " + ya + " axis style ---------->", type: "string", display: "divider", section: "Style", default: "", order: i*11+6}
         options["yaxt_" + ya] = {label: ya + " axis title", type: "string", section: "Style", default: "", order: i*11+7}
-        options["yaxs_" + ya] = {label: ya + " axis side ", type: "string", section: "Style", values: [{"Left": "left", "Right": "right"}], default: "left", order: i*11+8, display: "select", display_size: "third"}
+        options["yaxs_" + ya] = {label: ya + " axis side ", type: "string", section: "Style", values: [{"Left": "left"}, {"Right": "right"}], default: "left", order: i*11+8, display: "select", display_size: "third"}
         options["yaxl_" + ya] = {label: ya + " axis min", type: "number", section: "Style", order: i*11+9, display_size: "third"}
         options["yaxu_" + ya] = {label: ya + " axis max", type: "number", section: "Style", order: i*11+10, display_size: "third"}
         i++;
@@ -281,6 +281,7 @@ looker.plugins.visualizations.add({
       for (ya of [...yax.values()]) { 
         let yn = parseInt(xa.substring(1));
         layout['yaxis' + yn] = {title: config["yaxt_" + ya], side: config["yaxs_" + ya]}
+        console.log(typeof config["yaxl_" + ya])
         if (typeof config["yaxl_" + ya] === 'number' && typeof config["yaxu_" + ya] === 'number') { layout['yaxis' + yn]['range'] = [config["yaxl_" + xa], config["yaxu_" + xa]]}
       }
 
