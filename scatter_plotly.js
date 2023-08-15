@@ -136,7 +136,7 @@ looker.plugins.visualizations.add({
         options["ydiv_" + ya] = {label: "<---------- " + ya + " axis style ---------->", type: "string", display: "divider", section: "Style", default: "", order: i*13+7}
         options["yaxt_" + ya] = {label: ya + " axis title", type: "string", section: "Style", default: "", order: i*13+8}
         options["yaxs_" + ya] = {label: ya + " axis side ", type: "string", section: "Style", values: [{"Left": "left"}, {"Right": "right"}], default: "left", order: i*13+9, display: "select", display_size: "half"}
-        if (i > 0) { options["yaxp_" + xa] = {label: ya + " axis position ", type: "number", section: "Style", order: i*13+10, display_size: "half"} }
+        if (i > 0) { options["yaxp_" + ya] = {label: ya + " axis position ", type: "number", section: "Style", order: i*13+10, display_size: "half"} }
         options["yaxl_" + ya] = {label: ya + " axis min", type: "number", section: "Style", order: i*13+11, display_size: "half"}
         options["yaxu_" + ya] = {label: ya + " axis max", type: "number", section: "Style", order: i*13+12, display_size: "half"}
         i++;
