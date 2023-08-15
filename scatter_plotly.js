@@ -260,7 +260,7 @@ looker.plugins.visualizations.add({
             }
 
             // Change if pivots have formatting
-            if(x.keys.length > 2 || y.keys.length > 2) {
+            if(x.keys.length == 2 || y.keys.length == 2) {
               try {var pivp = x.keys[1]} catch(err) {var pivp = y.keys[1]}
               console.log(pivp)
               if (typeof config["p_" + pivp + "_mod"] !== "undefined" && config["p_" + pivp + "_mod"] != "") {new_trace['mode'] = config["p_" + pivp + "_mod"]}
