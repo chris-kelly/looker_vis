@@ -79,7 +79,7 @@ looker.plugins.visualizations.add({
       let xax = new Set(), yax = new Set()
 
       const options = { ...this.options };
-      options['gti_'] = {type: "string", label: "Graph title", section: 'Style', default: "", order: 0}
+      options['gti'] = {type: "string", label: "Graph title", section: 'Style', order: 0}
       for (let i = 0; i < config.num_traces; i++) {
         let iN = i.toString(), iN2 = (i+1).toString();
         options["div_" + iN] = {label: "<---------- Trace " + iN2 + " ---------->", order: 11*i+1, type: "string", display: "divider", section: "Data"}
@@ -270,6 +270,7 @@ looker.plugins.visualizations.add({
       ////////////////////////////////////////
 
       layout = {}
+      if (typeof config['gti'] !== "undefined") {layout['title'] = config['gti']}
 
       // Add axis options
       for (xa of [...xax.values()]) { 
