@@ -88,10 +88,10 @@ looker.plugins.visualizations.add({
 
       for (let i = 0; i < config.num_traces; i++) {
         let iN = i.toString(), iN2 = (i+1).toString();
-        options["div_" + iN] = {label: "<---------- Trace " + iN2 + " ---------->", order: 12*i+1, type: "string", display: "divider", section: "Data"}
-        options["x_" + iN] = {label: "Trace " + iN2 + ": x", order: 12*i+2, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
-        options["y_" + iN] = {label: "Trace " + iN2 + ": y", order: 12*i+3, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
-        options["d_" + iN] = {label: "Options " + iN2, order: 12*i+4, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple", section: "Data"}
+        options["div_" + iN] = {label: "<---------- Trace " + iN2 + " ---------->", order: 13*i+1, type: "string", display: "divider", section: "Data"}
+        options["x_" + iN] = {label: "Trace " + iN2 + ": x", order: 13*i+2, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
+        options["y_" + iN] = {label: "Trace " + iN2 + ": y", order: 13*i+3, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
+        options["d_" + iN] = {label: "Options " + iN2, order: 13*i+4, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple", section: "Data"}
         options["div2_" + iN] = {label: "<---------- Trace " + iN2 + " ---------->", order: 9*i+1, type: "string", display: "divider", section: "Series"}
         options["mod_" + iN] = {label: "Scatter mode " + iN2, order: 9*i+2, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series"}
         options["xax_" + iN] = {label: "x axis " + iN2, order: 9*i+3, type: "string", display: "select", display_size: "half", values: [{"1":"x1"},{"2":"x2"},{"3":"x3"},{"4":"x4"}], default:"x1" , section: "Series"}
@@ -101,14 +101,15 @@ looker.plugins.visualizations.add({
         options["tn_" + iN] = {label: "Name includes " + iN2, order: 9*i+6, type: "string", display: "select", values: [{'-':""},{'x':'x'},{'y':'y'},{'x+y':'x+y'}], section: "Series", default: ""}
         
         if(config["d_" + iN] == "detailed") {
-          options["xlb_" + iN] = {label: "x lower bound " + iN2, order: 12*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["xub_" + iN] = {label: "x upper bound " + iN2, order: 12*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["ylb_" + iN] = {label: "y lower bound " + iN2, order: 12*i+7, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["yub_" + iN] = {label: "y upper bound " + iN2, order: 12*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["xtx_" + iN] = {label: "x custom labels " + iN2, order: 12*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["ytx_" + iN] = {label: "y custom labels " + iN2, order: 12*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["htx_" + iN] = {label: "x custom hover " + iN2, order: 12*i+11, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["hty_" + iN] = {label: "y custom hover " + iN2, order: 12*i+12, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["xlb_" + iN] = {label: "x lower bound " + iN2, order: 13*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["xub_" + iN] = {label: "x upper bound " + iN2, order: 13*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["ylb_" + iN] = {label: "y lower bound " + iN2, order: 13*i+7, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["yub_" + iN] = {label: "y upper bound " + iN2, order: 13*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["xtx_" + iN] = {label: "x custom labels " + iN2, order: 13*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["ytx_" + iN] = {label: "y custom labels " + iN2, order: 13*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["htx_" + iN] = {label: "x custom hover " + iN2, order: 13*i+11, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["hty_" + iN] = {label: "y custom hover " + iN2, order: 13*i+12, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["hto_" + iN] = {label: "Show hoverlabels" + iN2, order: 13*i+13, type: "boolean", default: true , section: "Data"}
         } else {
           delete options["xlb_" + iN]; delete options["xub_" + iN]; delete options["ylb_" + iN]; delete options["yub_" + iN]; delete options["xtx_" + iN]; delete options["ytx_" + iN]; delete options["htx_" + iN]; delete options["hty_" + iN];
         }
@@ -274,6 +275,8 @@ looker.plugins.visualizations.add({
               new_trace['mode'] = new_trace.mode + "+text"; new_trace['text'] = tx; new_trace['textposition'] = config["vvp_" + iN] + " " + config["vhp_" + iN]
             }
 
+            if (!config['hto_+ iN']) { new_trace[hovertemplate] = "" }
+
             // Add custom hovertext
             var ht = []
             if (config["htx_" + iN] && config["htx_" + iN] != "") {
@@ -283,7 +286,7 @@ looker.plugins.visualizations.add({
             if (config["hty_" + iN] && config["hty_" + iN] != "") {
               var yht = j.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["hty_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["hty_" + iN] && x[1].keys[1] == j[1])
               if (ht.length > 0) {
-                for (let z = 0; z < ht.length; z++) {ht[z] = [ht[z], yht[1].pretty[z]].join(' <br> ') }
+                for (let z = 0; z < ht.length; z++) {ht[z] = [ht[z], yht[1].pretty[z]].join('<br>') }
               } else {
                 ht = ht.concat(yht[1].pretty)
               }
