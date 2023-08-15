@@ -253,7 +253,7 @@ looker.plugins.visualizations.add({
               y: y.values,
               type: 'scatter',
               mode: config["mod_" + iN],
-              markers: {'color': config['col_' + iN]},
+              marker: {'color': config['col_' + iN]},
               name: tname,
               xaxis: config['xax_'+ iN],
               yaxis: config['yax_'+ iN],
