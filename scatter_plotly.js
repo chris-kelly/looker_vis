@@ -125,7 +125,7 @@ looker.plugins.visualizations.add({
       var i = 0;
       for (xa of [...xax.values()]) { 
         options["xdiv_" + xa] = {label: "<---------- " + xa + " axis style ---------->", type: "string", display: "divider", section: "Style", default: "", order: i*13+1}
-        options["xaxt_" + xa] = {label: xa + " axis title", type: "string", section: "Style", default: xa2[1], order: i*13+2}
+        options["xaxt_" + xa] = {label: xa + " axis title", type: "string", section: "Style", default: config["xax_" + iN], order: i*13+2}
         options["xaxl_" + xa] = {label: xa + " axis min", type: "number", section: "Style", order: i*13+3, display_size: "half"}
         options["xaxu_" + xa] = {label: xa + " axis max", type: "number", section: "Style", order: i*13+4, display_size: "half"}
         options["xaxs_" + xa] = {label: xa + " axis side ", type: "string", section: "Style", values: [{"Top": "top"}, {"Bottom": "bottom"}], default: "bottom", order: i*13+5, display: "select", display_size: "half"}
@@ -135,7 +135,7 @@ looker.plugins.visualizations.add({
       var i = 0;
       for (ya of [...yax.values()]) {  
         options["ydiv_" + ya] = {label: "<---------- " + ya + " axis style ---------->", type: "string", display: "divider", section: "Style", default: "", order: i*13+7}
-        options["yaxt_" + ya] = {label: ya + " axis title", type: "string", section: "Style", default: ya2[1], order: i*13+8}
+        options["yaxt_" + ya] = {label: ya + " axis title", type: "string", section: "Style", default: config["yax_" + iN], order: i*13+8}
         options["yaxl_" + ya] = {label: ya + " axis min", type: "number", section: "Style", order: i*13+9, display_size: "half"}
         options["yaxu_" + ya] = {label: ya + " axis max", type: "number", section: "Style", order: i*13+10, display_size: "half"}
         options["yaxs_" + ya] = {label: ya + " axis side ", type: "string", section: "Style", values: [{"Left": "left"}, {"Right": "right"}], default: "left", order: i*13+11, display: "select", display_size: "half"}
