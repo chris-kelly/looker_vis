@@ -129,7 +129,7 @@ looker.plugins.visualizations.add({
       for (ya of [...yax.values()]) {  
         options["ydiv_" + ya] = {label: "<---------- " + ya + " axis style ---------->", type: "string", display: "divider", section: "Style", default: "", order: i*11+6}
         options["yaxt_" + ya] = {label: ya + " axis title", type: "string", section: "Style", default: "", order: i*11+7}
-        options["yaxs_" + ya] = {label: ya + " axis side ", type: "string", section: "Style", values: [{"Left": "left", "Right": "right"}], default: "left", order: i*11+8, display_size: "third"}
+        options["yaxs_" + ya] = {label: ya + " axis side ", type: "string", section: "Style", values: [{"Left": "left", "Right": "right"}], default: "left", order: i*11+8, display: "select", display_size: "third"}
         options["yaxl_" + ya] = {label: ya + " axis min", type: "number", section: "Style", order: i*11+9, display_size: "third"}
         options["yaxu_" + ya] = {label: ya + " axis max", type: "number", section: "Style", order: i*11+10, display_size: "third"}
         i++;
@@ -261,6 +261,21 @@ looker.plugins.visualizations.add({
 
         }
       
+      }
+
+      layout = {}
+
+      // Add axis options
+      for (xa of [...xax.values()]) { 
+        let xn = parseInt(xa.substring(1))];
+        layout['xaxis' + xn] = {title: options["xaxt_" + xa], side: options["xaxs_" + xa]}
+        if (typeof options["xaxl_" + xa] === 'number' && typeof options["xaxu_" + xa] === 'number') { layout['xaxis' + xn]['range'] = [options["xaxl_" + xa], options["xaxu_" + xa]]}
+      }
+
+      for (ya of [...yax.values()]) { 
+        let yn = parseInt(xa.substring(1))];
+        layout['yaxis' + yn] = {title: options["yaxt_" + ya], side: options["yaxs_" + ya]}
+        if (typeof options["yaxl_" + ya] === 'number' && typeof options["yaxu_" + ya] === 'number') { layout['yaxis' + yn]['range'] = [options["yaxl_" + xa], options["yaxu_" + xa]]}
       }
 
       console.log(plotly_data)
