@@ -98,7 +98,7 @@ looker.plugins.visualizations.add({
         options["mod_" + iN] = {label: "Scatter mode " + iN2, order: 9*i+2, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series"}
         options["xax_" + iN] = {label: "x axis " + iN2, order: 9*i+3, type: "string", display: "select", display_size: "half", values: [{"1":"x1"},{"2":"x2"},{"3":"x3"},{"4":"x4"}], default:"x1" , section: "Series"}
         options["yax_" + iN] = {label: "y axis " + iN2, order: 9*i+4, type: "string", display: "select", display_size: "half", values: [{"1":"y1"},{"2":"y2"},{"3":"y3"},{"4":"y4"}], default:"y1" , section: "Series"}
-        xax.add(config["xax_" + iN]); yax.add(config["yax_" + iN]);
+        xax.add([config["xax_" + iN],config["x_" + iN]]); yax.add([config["yax_" + iN],config["y_" + iN]]);
         options["col_" + iN] = {label: "Colour " + iN2, order: 9*i+5, type: "string", display: "color", section: "Series"}
         options["tn_" + iN] = {label: "Name includes " + iN2, order: 9*i+6, type: "string", display: "select", values: [{'-':""},{'x':'x'},{'y':'y'},{'x+y':'x+y'}], section: "Series", default: ""}
         
@@ -124,9 +124,10 @@ looker.plugins.visualizations.add({
         try {options["col_" + iN].default = colors[i]} catch(err) {options["col_" + iN].default = colors[0]}
       }
       var i = 0;
-      for (xa of [...xax.values()]) { 
+      for (xa2 of [...xax.values()]) { 
+        let xa = xa2[0]; 
         options["xdiv_" + xa] = {label: "<---------- " + xa + " axis style ---------->", type: "string", display: "divider", section: "Style", default: "", order: i*13+1}
-        options["xaxt_" + xa] = {label: xa + " axis title", type: "string", section: "Style", default: config['x_0'], order: i*13+2}
+        options["xaxt_" + xa] = {label: xa + " axis title", type: "string", section: "Style", default: xa2[1], order: i*13+2}
         options["xaxl_" + xa] = {label: xa + " axis min", type: "number", section: "Style", order: i*13+3, display_size: "half"}
         options["xaxu_" + xa] = {label: xa + " axis max", type: "number", section: "Style", order: i*13+4, display_size: "half"}
         options["xaxs_" + xa] = {label: xa + " axis side ", type: "string", section: "Style", values: [{"Top": "top"}, {"Bottom": "bottom"}], default: "bottom", order: i*13+5, display: "select", display_size: "half"}
@@ -134,9 +135,10 @@ looker.plugins.visualizations.add({
         i++;
       }
       var i = 0;
-      for (ya of [...yax.values()]) {  
+      for (ya2 of [...yax.values()]) {  
+        let ya = ya2[0]; 
         options["ydiv_" + ya] = {label: "<---------- " + ya + " axis style ---------->", type: "string", display: "divider", section: "Style", default: "", order: i*13+7}
-        options["yaxt_" + ya] = {label: ya + " axis title", type: "string", section: "Style", default: config['y_0'], order: i*13+8}
+        options["yaxt_" + ya] = {label: ya + " axis title", type: "string", section: "Style", default: ya2[1], order: i*13+8}
         options["yaxl_" + ya] = {label: ya + " axis min", type: "number", section: "Style", order: i*13+9, display_size: "half"}
         options["yaxu_" + ya] = {label: ya + " axis max", type: "number", section: "Style", order: i*13+10, display_size: "half"}
         options["yaxs_" + ya] = {label: ya + " axis side ", type: "string", section: "Style", values: [{"Left": "left"}, {"Right": "right"}], default: "left", order: i*13+11, display: "select", display_size: "half"}
@@ -295,7 +297,8 @@ looker.plugins.visualizations.add({
       if (typeof config['gwi'] !== "undefined" && config['gwi'] != null && typeof config['ghi'] !== "undefined" && config['ghi'] != null) { layout['autosize'] = false; layout['width'] = config['gwi']; layout['height'] = config['ghi'] } else {layout['autosize'] = true; delete layout.width; delete layout.height }
       if (config['leg'] != "z") { layout['showlegend'] = true; layout['legend'] = {"orientation": config['leg']} } else { layout.showlegend = false;  delete layout.legend }
       // Add axis options
-      for (xa of [...xax.values()]) { 
+      for (xa2 of [...xax.values()]) { 
+        xa = xa2[0];
         let xn = parseInt(xa.substring(1)); xl  = xn == 1 ? "" : xn.toString()
         layout['xaxis' + xl] = {title: config["xaxt_" + xa], side: config["xaxs_" + xa]}
         if (typeof config["xaxl_" + xa] !== 'undefined' && typeof config["xaxu_" + xa] !== 'undefined') { layout['xaxis' + xl]['range'] = [config["xaxl_" + xa], config["xaxu_" + xa]]}
@@ -303,7 +306,8 @@ looker.plugins.visualizations.add({
         if (xn > 1) {layout['xaxis' + xl]['overlaying'] = 'x'} else {if (typeof config['pwi'] !== "undefined" && config['pwi'] !== "") { try {layout['xaxis' + xl]['domain'] = JSON.parse(config['pwi']) } catch(err) {} } }
       }
 
-      for (ya of [...yax.values()]) { 
+      for (y2 of [...yax.values()]) { 
+        ya = ya2[0];
         let yn = parseInt(ya.substring(1)); yl  = yn == 1 ? "" : yn.toString()
         layout['yaxis' + yl] = {title: config["yaxt_" + ya], side: config["yaxs_" + ya]}
         if (typeof config["yaxl_" + ya] !== 'undefined' && typeof config["yaxu_" + ya] !== 'undefined') { layout['yaxis' + yl]['range'] = [config["yaxl_" + ya], config["yaxu_" + ya]]}
