@@ -84,7 +84,7 @@ looker.plugins.visualizations.add({
       options['ghi'] = {type: "number", label: "Graph height (px)", section: 'Style', order: -3, display_size: "half"}
       options['pwi'] = {type: "string", label: "Plot width (%)", section: 'Style', order: -2, display_size: "half", placeholder: "[0.1,0.85]"}
       options['phi'] = {type: "string", label: "Plot height (%)", section: 'Style', order: -1, display_size: "half", placeholder: "[0.1,0.85]"}
-      options['leg'] = {type: "string", label: "Legend options", values: [{"Hide": "z"},{"Horizontal": "h"},{"Vertical": "v"}], display: "select", default: "z", section: '1. Plot', order: 0}
+      options['leg'] = {type: "string", label: "Legend options", values: [{"Hide": "z"},{"Horizontal": "h"},{"Vertical": "v"}], display: "select", default: "z", section: 'Style', order: 0}
 
       for (let i = 0; i < config.num_traces; i++) {
         let iN = i.toString(), iN2 = (i+1).toString();
@@ -107,12 +107,13 @@ looker.plugins.visualizations.add({
           options["xub_" + iN] = {label: "x upper bound " + iN2, order: 11*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
           options["ylb_" + iN] = {label: "y lower bound " + iN2, order: 11*i+7, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
           options["yub_" + iN] = {label: "y upper bound " + iN2, order: 11*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["ltx_" + iN] = {label: "Custom labels " + iN2, order: 11*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["htx_" + iN] = {label: "Custom hovertext " + iN2, order: 11*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["xtx_" + iN] = {label: "x custom labels " + iN2, order: 11*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["ytx_" + iN] = {label: "y custom labels " + iN2, order: 11*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["htx_" + iN] = {label: "Custom hovertext " + iN2, order: 11*i+11, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
         } else {
-          delete options["xlb_" + iN]; delete options["xub_" + iN]; delete options["ylb_" + iN]; delete options["yub_" + iN]; delete options["ltx_" + iN]; delete options["htx_" + iN];
+          delete options["xlb_" + iN]; delete options["xub_" + iN]; delete options["ylb_" + iN]; delete options["yub_" + iN]; delete options["xtx_" + iN]; delete options["ytx_" + iN]; delete options["htx_" + iN];
         }
-        if(config["ltx_" + iN] && config["ltx_" + iN] != "") {
+        if( (config["xtx_" + iN] && config["xtx_" + iN] != "") || (config["ytx_" + iN] && config["ytx_" + iN] != "") ) {
           options["vvp_" + iN] = {label: "Value vertical pos " + iN2, order: 9*i+7, type: "string", display: "select", display_size: "half", values: [{"Top": "top"},{"Centre": "middle"},{"Bottom": "bottom"}], default: "middle" , section: "Series"}
           options["vhp_" + iN] = {label: "Value horizontal pos " + iN2, order: 9*i+8, type: "string", display: "select", display_size: "half", values: [{"Left": "left"},{"Centre": "center"},{"Right": "right"}], default: "center" , section: "Series"}
         } else {
@@ -236,7 +237,7 @@ looker.plugins.visualizations.add({
               text: y.pretty,
               xaxis: config['xax_'+ iN],
               yaxis: config['yax_'+ iN],
-              // textposition: "none",
+              textposition: "none",
               // hovertemplate: hovertemplate,
             }
 
@@ -253,6 +254,27 @@ looker.plugins.visualizations.add({
               let ub = j.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["yub_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["yub_" + iN] && x[1].keys[1] == j[1])
               new_trace['error_y'] = { type: 'data', symmetric: false, array: ub[1].values, arrayminus: lb[1].values}
             }
+
+            // Add custom labels
+            var tx = []
+            if (config["xtx_" + iN] && config["xtx_" + iN] != "") { 
+              var xtx = l.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["xtx_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["xtx_" + iN] && x[1].keys[1] == l[1])
+              tx.push(xtx)
+            }
+            if (config["ytx_" + iN] && config["ytx_" + iN] != "") { 
+              var ytx = j.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["ytx_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["ytx_" + iN] && x[1].keys[1] == j[1])
+              if (tx.length > 0) {
+                for (i = 0; i < tx.length; i++) {tx[i] == [tx[i], ytx[i]].join(' ~ ') }
+              } else {
+                tx.push(ytx)
+              }
+            }
+            
+            if (tx.length > 0) {
+              new_trace['text'] = tx
+              new_trace['textposition'] = "middle" + " " + "center"
+            }
+
             plotly_data.push(new_trace)
 
           }
