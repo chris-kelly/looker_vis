@@ -275,7 +275,7 @@ looker.plugins.visualizations.add({
               new_trace['mode'] = new_trace.mode + "+text"; new_trace['text'] = tx; new_trace['textposition'] = config["vvp_" + iN] + " " + config["vhp_" + iN]
             }
 
-            if (!config['hto_+ iN']) { new_trace[hovertemplate] = "" }
+            if (!config['hto_+ iN']) { new_trace['hovertemplate'] = "" }
 
             // Add custom hovertext
             var ht = []
