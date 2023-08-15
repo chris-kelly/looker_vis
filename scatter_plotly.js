@@ -180,6 +180,8 @@ looker.plugins.visualizations.add({
         var i = 0, j = config.num_traces*10
         options["intro_piv"] = {label: "<---------- Pivot formatting ---------->", order: j+i*6, type: "string", display: "divider", section: "Series"}
         options["intro_piv2"] = {label: "NB - changes to pivot style overwrites traces", order: j+i*6+1, type: "string", display: "divider", section: "Series"}
+        var pivs = queryResponse.pivots.map(p => p.key).filter(p => p != "'$$$_row_total_$$$'")
+        pivs.sort()
         for (var piv of queryResponse.pivots.map(p => p.key).filter(p => p != "ROW TOTAL")) {
           options["p_" + piv + "_div"] = {label: "<----  " + colname_format([piv]) + " ---->", order: j+i*6+2, type: "string", display: "divider", section: "Series"}
           options["p_" + piv + "_mod"] = {label: "Scatter mode:", order: j+i*5+3, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series", display_size:"third"}
@@ -261,7 +263,7 @@ looker.plugins.visualizations.add({
 
             // Change if pivots have formatting
             if(x.keys.length == 2 || y.keys.length == 2) {
-              try {var pivp = x.keys[1]} catch(err) {var pivp = y.keys[1]}
+              var pivp = x.keys.length == 2 ? x.keys[1] : y.keys[1]
               console.log(pivp)
               if (typeof config["p_" + pivp + "_mod"] !== "undefined" && config["p_" + pivp + "_mod"] != "") {new_trace['mode'] = config["p_" + pivp + "_mod"]}
               if (typeof config["p_" + pivp + "_sym"] !== "undefined" && config["p_" + pivp + "_sym"] != "") {new_trace['marker_symbol'] = config["p_" + pivp + "_sym"]}
