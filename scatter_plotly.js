@@ -180,7 +180,7 @@ looker.plugins.visualizations.add({
         options["intro_piv"] = {label: "NB - changes to pivot style overwrites traces", order: 0, type: "string", display: "divider", section: "Pivot styles"}
         for (var piv of queryResponse.pivots.map(p => p.key)) {
           options["p_div_" + piv] = {label: "<----------  " + piv + " ---------->", order: 5*i+1, type: "string", display: "divider", section: "Pivot styles"}
-          options["p_mod_" + piv] = {label: "Scatter mode " + iN2, order: 5*i+2, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series"}
+          options["p_mod_" + piv] = {label: "Scatter mode:", order: 5*i+2, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series"}
           options["p_col_" + piv] = {label: "Colour: ", order: 5*i+3, type: "string", display: "color", section: "Series"}
           options["p_sym_" + piv] = {label: "Symbol: ", order: 5*i+4, type: "string", display: "select", values: [
             {'circle':'circle'},{'square':'square'},{'diamond':'diamond'},{'cross':'cross'},{'x':'x'},{'triangle': 'triangle'},{'pentagon':'pentagon'},{'hexagram':'hexagram'},{'star':'star'},{'hexagram':'hexagram'},{'hourglass':'hourglass'},{'bowtie':'bowtie'},{'asterisk':'asterisk'},{'hash':'hash'},{'y':'y'},{'line':'line'}
