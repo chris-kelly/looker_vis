@@ -179,10 +179,10 @@ looker.plugins.visualizations.add({
       if (queryResponse.fields.pivots.length > 0) {
         var i = 0, j = config.num_traces*10
         options["intro_piv"] = {label: "<---------- Pivot formatting ---------->", order: j+i*6, type: "string", display: "divider", section: "Series"}
-        options["intro_piv2"] = {label: "NB - changes to pivot style overwrites traces", order: j+i*6+1, type: "string", display: "divider", section: "Series"}
-        var pivs = queryResponse.pivots.map(p => p.key).filter(p => p != "'$$$_row_total_$$$'")
+        options["intro_piv2"] = {label: "NB - changes to pivot style overwrites the formatting of traces", order: j+i*6+1, type: "string", display: "divider", section: "Series"}
+        var pivs = queryResponse.pivots.map(p => p.key).filter(p => p != "$$$_row_total_$$$")
         pivs.sort()
-        for (var piv of queryResponse.pivots.map(p => p.key).filter(p => p != "ROW TOTAL")) {
+        for (var piv of pivs) {
           options["p_" + piv + "_div"] = {label: " //--  " + colname_format([piv]) + " --//", order: j+i*6+2, type: "string", display: "divider", section: "Series"}
           // options["p_" + piv + "_mod"] = {label: "Mode:", order: j+i*6+3, type: "string", display: "select", values: [{'-':''},{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series", display_size:"third"}
           options["p_" + piv + "_col"] = {label: "Colour: ", order: j+i*6+4, type: "string", display: "color", section: "Series", display_size:"third"}
