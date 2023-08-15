@@ -276,7 +276,7 @@ looker.plugins.visualizations.add({
         layout['xaxis' + xl] = {title: config["xaxt_" + xa], side: config["xaxs_" + xa]}
         if (typeof config["xaxl_" + xa] !== 'undefined' && typeof config["xaxu_" + xa] !== 'undefined') { layout['xaxis' + xl]['range'] = [config["xaxl_" + xa], config["xaxu_" + xa]]}
         if (typeof config["xaxp_" + xa] !== 'undefined') { layout['xaxis' + xl]['position'] = config["xaxp_" + xa]; layout['xaxis' + xl]['anchor'] = "free" }
-        if (xn > 1) {layout['xaxis' + xl]['overlaying'] = 'x'} else {if (typeof config['pwi'] !== "undefined" && config['pwi'] !== "") { try {layout['xaxis' + xl]['domain'] = JSON.parse(config['pwi']) } catch(err) {} }
+        if (xn > 1) {layout['xaxis' + xl]['overlaying'] = 'x'} else {if (typeof config['pwi'] !== "undefined" && config['pwi'] !== "") { try {layout['xaxis' + xl]['domain'] = JSON.parse(config['pwi']) } catch(err) {} } }
       }
 
       for (ya of [...yax.values()]) { 
@@ -284,7 +284,7 @@ looker.plugins.visualizations.add({
         layout['yaxis' + yl] = {title: config["yaxt_" + ya], side: config["yaxs_" + ya]}
         if (typeof config["yaxl_" + ya] !== 'undefined' && typeof config["yaxu_" + ya] !== 'undefined') { layout['yaxis' + yl]['range'] = [config["yaxl_" + ya], config["yaxu_" + ya]]}
         if (typeof config["yaxp_" + ya] !== 'undefined') { layout['yaxis' + yl]['position'] = config["yaxp_" + ya]; layout['yaxis' + yl]['anchor'] = "free" }
-        if (yn > 1) {layout['yaxis' + yl]['overlaying'] = 'y'} else {if (typeof config['phi'] !== "undefined" && config['phi'] !== "") { try {layout['yaxis' + yl]['domain'] = JSON.parse(config['phi']) } catch(err) {} }
+        if (yn > 1) {layout['yaxis' + yl]['overlaying'] = 'y'} else {if (typeof config['phi'] !== "undefined" && config['phi'] !== "") { try {layout['yaxis' + yl]['domain'] = JSON.parse(config['phi']) } catch(err) {} } }
       }
 
       console.log(layout)
