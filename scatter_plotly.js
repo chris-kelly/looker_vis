@@ -253,6 +253,7 @@ looker.plugins.visualizations.add({
               y: y.values,
               type: 'scatter',
               mode: config["mod_" + iN],
+              markers: {'color': config['col_' + iN]},
               name: tname,
               xaxis: config['xax_'+ iN],
               yaxis: config['yax_'+ iN],
@@ -261,7 +262,19 @@ looker.plugins.visualizations.add({
               hovertemplate: "<b>%{fullData.name}</b><br>" + "<b>%{xaxis.title.text} </b> <br> %{customdata[0]} <br>" + "<b>%{yaxis.title.text} </b> <br> %{customdata[1]} <br>" + "<extra></extra>",
             }
 
-            // Change if pivots have formatting
+            // Change markers if measures have formatting
+            if(x.keys.length == 2 || y.keys.length == 2) {
+              var pivp = x.keys.length == 2 ? x.keys[1] : y.keys[1]
+              console.log(pivp)
+              // if (typeof config["p_" + pivp + "_mod"] !== "undefined" && config["p_" + pivp + "_mod"] != "") {new_trace['mode'] = config["p_" + pivp + "_mod"]}
+              let markers = {}
+              if (typeof config["p_" + pivp + "_sym"] !== "undefined" && config["p_" + pivp + "_sym"] != "") {markers['symbol'] = config["p_" + pivp + "_sym"] }
+              if (typeof config["p_" + pivp + "_col"] !== "undefined" && config["p_" + pivp + "_col"] != "") {markers['color'] = config["p_" + pivp + "_col"] }
+              if (Object.keys(markers).length > 0) {new_trace['marker'] = markers}
+              // if (typeof config["p_" + pivp + "_col"] !== "undefined" && config["p_" + pivp + "_col"] != "") {markers['line'].color = config["p_" + pivp + "_col"]}
+            }
+            
+            // Change markers if pivots have formatting
             if(x.keys.length == 2 || y.keys.length == 2) {
               var pivp = x.keys.length == 2 ? x.keys[1] : y.keys[1]
               console.log(pivp)
