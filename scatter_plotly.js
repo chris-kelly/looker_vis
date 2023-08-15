@@ -109,7 +109,7 @@ looker.plugins.visualizations.add({
           options["ytx_" + iN] = {label: "y custom labels " + iN2, order: 13*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
           options["htx_" + iN] = {label: "x custom hover " + iN2, order: 13*i+11, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
           options["hty_" + iN] = {label: "y custom hover " + iN2, order: 13*i+12, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["hto_" + iN] = {label: "Show hoverlabels" + iN2, order: 13*i+13, type: "boolean", default: true , section: "Data"}
+          options["hto_" + iN] = {label: "Show hoverlabels " + iN2, order: 13*i+13, type: "boolean", default: true , section: "Data"}
         } else {
           delete options["xlb_" + iN]; delete options["xub_" + iN]; delete options["ylb_" + iN]; delete options["yub_" + iN]; delete options["xtx_" + iN]; delete options["ytx_" + iN]; delete options["htx_" + iN]; delete options["hty_" + iN];
         }
@@ -295,7 +295,7 @@ looker.plugins.visualizations.add({
             }
 
             // Hide hovertext altogether
-            if (config['hto_+ iN'] == false) { new_trace['hovertemplate'] = "" }
+            if (config['hto_+ iN'] == false) { new_trace['hovertemplate'] = "" ; new_trace['hoverinfo'] = 'hide'} else { delete new_trace.hoverinfo }
 
             plotly_data.push(new_trace)
 
@@ -317,7 +317,6 @@ looker.plugins.visualizations.add({
       if (config['leg'] != "z") { layout['showlegend'] = true; layout['legend'] = {"orientation": config['leg']} } else { layout.showlegend = false;  delete layout.legend }
       // Add axis options
       for (xa of [...xax.values()]) { 
-        console.log(xa)
         let xn = parseInt(xa.substring(1)); xl  = xn == 1 ? "" : xn.toString()
         layout['xaxis' + xl] = {title: config["xaxt_" + xa], side: config["xaxs_" + xa]}
         if (typeof config["xaxl_" + xa] !== 'undefined' && typeof config["xaxu_" + xa] !== 'undefined') { layout['xaxis' + xl]['range'] = [config["xaxl_" + xa], config["xaxu_" + xa]]}
