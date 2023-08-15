@@ -284,7 +284,7 @@ looker.plugins.visualizations.add({
         let yn = parseInt(ya.substring(1));
         layout['yaxis' + yn] = {title: config["yaxt_" + ya], side: config["yaxs_" + ya]}
         if (typeof config["yaxl_" + ya] !== 'undefined' && typeof config["yaxu_" + ya] !== 'undefined') { layout['yaxis' + yn]['range'] = [config["yaxl_" + ya], config["yaxu_" + ya]]}
-        if (yn > 1) {layout['yaxis' + xn]['overlaying'] = 'y'}
+        if (yn > 1) {layout['yaxis' + yn]['overlaying'] = 'y'}
       }
 
       console.log(layout)
