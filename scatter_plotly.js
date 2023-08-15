@@ -267,7 +267,7 @@ looker.plugins.visualizations.add({
               console.log(pivp)
               // if (typeof config["p_" + pivp + "_mod"] !== "undefined" && config["p_" + pivp + "_mod"] != "") {new_trace['mode'] = config["p_" + pivp + "_mod"]}
               let markers = {}
-              if (typeof config["p_" + pivp + "_sym"] !== "undefined" && config["p_" + pivp + "_sym"] != "") {markers['symbol'] = config["p_" + pivp + "_col"] }
+              if (typeof config["p_" + pivp + "_sym"] !== "undefined" && config["p_" + pivp + "_sym"] != "") {markers['symbol'] = config["p_" + pivp + "_sym"] }
               if (typeof config["p_" + pivp + "_col"] !== "undefined" && config["p_" + pivp + "_col"] != "") {markers['color'] = config["p_" + pivp + "_col"] }
               if (Object.keys(markers).length > 0) {new_trace['marker'] = markers}
               // if (typeof config["p_" + pivp + "_col"] !== "undefined" && config["p_" + pivp + "_col"] != "") {markers['line'].color = config["p_" + pivp + "_col"]}
