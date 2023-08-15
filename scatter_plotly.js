@@ -272,7 +272,7 @@ looker.plugins.visualizations.add({
             }
             
             if (tx.length > 0) {
-              new_trace['mode'] = new_trace.mode + "+text"; new_trace['text'] = tx; new_trace['textposition'] = options["vvp_" + iN] + " " + options["vhp_" + iN]
+              new_trace['mode'] = new_trace.mode + "+text"; new_trace['text'] = tx; new_trace['textposition'] = config["vvp_" + iN] + " " + config["vhp_" + iN]
             }
 
             plotly_data.push(new_trace)
