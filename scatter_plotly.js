@@ -279,10 +279,9 @@ looker.plugins.visualizations.add({
       }
 
       for (ya of [...yax.values()]) { 
-        let yn = parseInt(xa.substring(1));
+        let yn = parseInt(ya.substring(1));
         layout['yaxis' + yn] = {title: config["yaxt_" + ya], side: config["yaxs_" + ya]}
-        console.log(typeof config["yaxl_" + ya])
-        if (typeof config["yaxl_" + ya] === 'number' && typeof config["yaxu_" + ya] === 'number') { layout['yaxis' + yn]['range'] = [config["yaxl_" + xa], config["yaxu_" + xa]]}
+        if (typeof config["yaxl_" + ya] === 'number' && typeof config["yaxu_" + ya] === 'number') { layout['yaxis' + yn]['range'] = [config["yaxl_" + ya], config["yaxu_" + ya]]}
       }
 
       console.log(layout)
