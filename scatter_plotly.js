@@ -263,6 +263,8 @@ looker.plugins.visualizations.add({
       
       }
 
+      console.log(plotly_data)
+
       layout = {}
 
       // Add axis options
@@ -278,12 +280,14 @@ looker.plugins.visualizations.add({
         if (typeof options["yaxl_" + ya] === 'number' && typeof options["yaxu_" + ya] === 'number') { layout['yaxis' + yn]['range'] = [options["yaxl_" + xa], options["yaxu_" + xa]]}
       }
 
-      console.log(plotly_data)
+      console.log(layout)
+
+      
 
       Plotly.newPlot( // use plotly library
         this.plotly_bit, // graphDiv
         plotly_data,
-        // layout,
+        layout,
         // {responsive: true}
       )
         
