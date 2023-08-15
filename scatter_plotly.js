@@ -178,12 +178,12 @@ looker.plugins.visualizations.add({
 
       if (queryResponse.fields.pivots.length > 0) {
         var i = 0, j = config.num_traces*10
-        options["intro_piv"] = {label: "NB - changes to pivot style overwrites traces", order: j+i*5+1, type: "string", display: "divider", section: "Style"}
-        for (var piv of queryResponse.pivots.map(p => colname_format([p.key])).filter(p => p != "ROW TOTAL")) {
-          options["p_div_" + piv] = {label: "<----------  " + piv + " ---------->", order: j+i*5+2, type: "string", display: "divider", section: "Style"}
-          options["p_mod_" + piv] = {label: "Scatter mode:", order: j+i*5+3, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series"}
-          options["p_col_" + piv] = {label: "Colour: ", order: j+i*5+4, type: "string", display: "color", section: "Series"}
-          options["p_sym_" + piv] = {label: "Symbol: ", order: j+i*5+5, type: "string", display: "select", values: [
+        options["intro_piv"] = {label: "NB - changes to pivot style overwrites traces", order: j+i*5+1, type: "string", display: "divider", section: "Series"}
+        for (var piv of queryResponse.pivots.map(p => p.key).filter(p => p != "ROW TOTAL")) {
+          options["p_" + piv + "_div"] = {label: "<----------  " + piv + " ---------->", order: j+i*5+2, type: "string", display: "divider", section: "Series"}
+          options["p_" + piv + "_mod"] = {label: "Scatter mode:", order: j+i*5+3, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series"}
+          options["p_" + piv + "_col"] = {label: "Colour: ", order: j+i*5+4, type: "string", display: "color", section: "Series"}
+          options["p_" + piv + "_sym"] = {label: "Symbol: ", order: j+i*5+5, type: "string", display: "select", default: 'circle', values: [
             {'circle':'circle'},{'square':'square'},{'diamond':'diamond'},{'cross':'cross'},{'x':'x'},{'triangle': 'triangle'},{'pentagon':'pentagon'},{'hexagram':'hexagram'},{'star':'star'},{'hexagram':'hexagram'},{'hourglass':'hourglass'},{'bowtie':'bowtie'},{'asterisk':'asterisk'},{'hash':'hash'},{'y':'y'},{'line':'line'}
           ], section: "Series"}
           i++;
@@ -256,6 +256,15 @@ looker.plugins.visualizations.add({
               textposition: "none",
               customdata: custom_data,
               hovertemplate: "<b>%{fullData.name}</b><br>" + "<b>%{xaxis.title.text} </b> <br> %{customdata[0]} <br>" + "<b>%{yaxis.title.text} </b> <br> %{customdata[1]} <br>" + "<extra></extra>",
+            }
+
+            // Change if pivots
+            if(x.keys.length > 2 || y.keys.length > 2) {
+              try {var pivp = x.keys[1]} catch(err) {var pivp = y.keys[1]}
+              if (typeof config["p_" + pivp + "_mod"] !== "undefined" && config["p_" + pivp + "_mod"] != "") {new_trace['mode'] = config["p_" + piv + "_mod"]}
+              if (typeof config["p_" + pivp + "_sym"] !== "undefined" && config["p_" + pivp + "_sym"] != "") {new_trace['marker_symbol'] = config["p_" + piv + "_sym"]}
+              if (typeof config["p_" + pivp + "_col"] !== "undefined" && config["p_" + pivp + "_col"] != "") {new_trace['marker_color'] = config["p_" + piv + "_col"]}
+              if (typeof config["p_" + pivp + "_col"] !== "undefined" && config["p_" + pivp + "_col"] != "") {new_trace['marker_line_color'] = config["p_" + piv + "_col"]}
             }
 
             // Add error bars (x axis)
