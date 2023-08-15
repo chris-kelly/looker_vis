@@ -80,10 +80,10 @@ looker.plugins.visualizations.add({
 
       const options = { ...this.options };
       options['gti'] = {type: "string", label: "Graph: title", section: 'Style', order: -5,}
-      options['gwi'] = {type: "number", label: "Graph width (px)", section: 'Style', order: -4, display_size: "half"}
+      options['gwi'] = {type: "number", label: "Graph width (px)", section: 'Style', order: -4, display_size: "half" }
       options['ghi'] = {type: "number", label: "Graph height (px)", section: 'Style', order: -3, display_size: "half"}
-      options['pwi'] = {type: "string", label: "Plot width (%)", section: 'Style', order: -2, display_size: "half", default: "[0,1]"}
-      options['phi'] = {type: "string", label: "Plot height (%)", section: 'Style', order: -1, display_size: "half", default: "[0,1]"}
+      options['pwi'] = {type: "string", label: "Plot width (%)", section: 'Style', order: -2, display_size: "half", placeholder: "[0.1,0.85]"}
+      options['phi'] = {type: "string", label: "Plot height (%)", section: 'Style', order: -1, display_size: "half", placeholder: "[0.1,0.85]"}
 
       for (let i = 0; i < config.num_traces; i++) {
         let iN = i.toString(), iN2 = (i+1).toString();
@@ -125,20 +125,20 @@ looker.plugins.visualizations.add({
       for (xa of [...xax.values()]) { 
         options["xdiv_" + xa] = {label: "<---------- " + xa + " axis style ---------->", type: "string", display: "divider", section: "Style", default: "", order: i*13+1}
         options["xaxt_" + xa] = {label: xa + " axis title", type: "string", section: "Style", default: "", order: i*13+2}
-        options["xaxs_" + xa] = {label: xa + " axis side ", type: "string", section: "Style", values: [{"Top": "top"}, {"Bottom": "bottom"}], default: "bottom", order: i*13+3, display: "select", display_size: "half"}
-        if (i > 0) { options["xaxp_" + xa] = {label: xa + " axis position ", type: "number", section: "Style", order: i*13+4, display_size: "half"} }
-        options["xaxl_" + xa] = {label: xa + " axis min", type: "number", section: "Style", order: i*13+5, display_size: "half"}
-        options["xaxu_" + xa] = {label: xa + " axis max", type: "number", section: "Style", order: i*13+6, display_size: "half"}
+        options["xaxl_" + xa] = {label: xa + " axis min", type: "number", section: "Style", order: i*13+3, display_size: "half"}
+        options["xaxu_" + xa] = {label: xa + " axis max", type: "number", section: "Style", order: i*13+4, display_size: "half"}
+        options["xaxs_" + xa] = {label: xa + " axis side ", type: "string", section: "Style", values: [{"Top": "top"}, {"Bottom": "bottom"}], default: "bottom", order: i*13+5, display: "select", display_size: "half"}
+        if (i > 0) { options["xaxp_" + xa] = {label: xa + " axis position ", type: "number", section: "Style", order: i*13+6, display_size: "half"} }
         i++;
       }
       var i = 0;
       for (ya of [...yax.values()]) {  
         options["ydiv_" + ya] = {label: "<---------- " + ya + " axis style ---------->", type: "string", display: "divider", section: "Style", default: "", order: i*13+7}
         options["yaxt_" + ya] = {label: ya + " axis title", type: "string", section: "Style", default: "", order: i*13+8}
-        options["yaxs_" + ya] = {label: ya + " axis side ", type: "string", section: "Style", values: [{"Left": "left"}, {"Right": "right"}], default: "left", order: i*13+9, display: "select", display_size: "half"}
-        if (i > 0) { options["yaxp_" + ya] = {label: ya + " axis position ", type: "number", section: "Style", order: i*13+10, display_size: "half"} }
-        options["yaxl_" + ya] = {label: ya + " axis min", type: "number", section: "Style", order: i*13+11, display_size: "half"}
-        options["yaxu_" + ya] = {label: ya + " axis max", type: "number", section: "Style", order: i*13+12, display_size: "half"}
+        options["yaxl_" + ya] = {label: ya + " axis min", type: "number", section: "Style", order: i*13+9, display_size: "half"}
+        options["yaxu_" + ya] = {label: ya + " axis max", type: "number", section: "Style", order: i*13+10, display_size: "half"}
+        options["yaxs_" + ya] = {label: ya + " axis side ", type: "string", section: "Style", values: [{"Left": "left"}, {"Right": "right"}], default: "left", order: i*13+11, display: "select", display_size: "half"}
+        if (i > 0) { options["yaxp_" + ya] = {label: ya + " axis position ", type: "number", section: "Style", order: i*13+12, display_size: "half"} }
         i++;
       }
       for (i of [...Object.keys(options)]) {
