@@ -177,14 +177,16 @@ looker.plugins.visualizations.add({
       }
 
       if (queryResponse.fields.pivots.length > 0) {
-        options["intro_piv"] = {label: "NB - changes to pivot style overwrites traces", order: 0, type: "string", display: "divider", section: "Pivot styles"}
-        for (var piv of queryResponse.pivots.map(p => p.key)) {
-          options["p_div_" + piv] = {label: "<----------  " + piv + " ---------->", order: 5*i+1, type: "string", display: "divider", section: "Pivot styles"}
-          options["p_mod_" + piv] = {label: "Scatter mode:", order: 5*i+2, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series"}
-          options["p_col_" + piv] = {label: "Colour: ", order: 5*i+3, type: "string", display: "color", section: "Series"}
-          options["p_sym_" + piv] = {label: "Symbol: ", order: 5*i+4, type: "string", display: "select", values: [
+        var i = 0, j = config.num_traces*10
+        options["intro_piv"] = {label: "NB - changes to pivot style overwrites traces", order: j+i*5+1, type: "string", display: "divider", section: "Style"}
+        for (var piv of queryResponse.pivots.map(p => colname_format(p.key)).filter(p => p != "ROW TOTAL")) {
+          options["p_div_" + piv] = {label: "<----------  " + piv + " ---------->", order: j+i*5+2, type: "string", display: "divider", section: "Style"}
+          options["p_mod_" + piv] = {label: "Scatter mode:", order: j+i*5+3, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series"}
+          options["p_col_" + piv] = {label: "Colour: ", order: j+i*5+4, type: "string", display: "color", section: "Series"}
+          options["p_sym_" + piv] = {label: "Symbol: ", order: j+i*5+5, type: "string", display: "select", values: [
             {'circle':'circle'},{'square':'square'},{'diamond':'diamond'},{'cross':'cross'},{'x':'x'},{'triangle': 'triangle'},{'pentagon':'pentagon'},{'hexagram':'hexagram'},{'star':'star'},{'hexagram':'hexagram'},{'hourglass':'hourglass'},{'bowtie':'bowtie'},{'asterisk':'asterisk'},{'hash':'hash'},{'y':'y'},{'line':'line'}
           ], section: "Series"}
+          i++;
         }
       } else { for(let k of [...options.keys()]) { if (k.substring(0,2) == "p_") {delete options.i }} }
 
