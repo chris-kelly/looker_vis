@@ -262,6 +262,7 @@ looker.plugins.visualizations.add({
             // Change if pivots have formatting
             if(x.keys.length > 2 || y.keys.length > 2) {
               try {var pivp = x.keys[1]} catch(err) {var pivp = y.keys[1]}
+              console.log(pivp)
               if (typeof config["p_" + pivp + "_mod"] !== "undefined" && config["p_" + pivp + "_mod"] != "") {new_trace['mode'] = config["p_" + pivp + "_mod"]}
               if (typeof config["p_" + pivp + "_sym"] !== "undefined" && config["p_" + pivp + "_sym"] != "") {new_trace['marker_symbol'] = config["p_" + pivp + "_sym"]}
               if (typeof config["p_" + pivp + "_col"] !== "undefined" && config["p_" + pivp + "_col"] != "") {new_trace['marker_color'] = config["p_" + pivp + "_col"]}
