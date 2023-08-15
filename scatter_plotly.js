@@ -272,8 +272,7 @@ looker.plugins.visualizations.add({
             console.log(tx)
             
             if (tx.length > 0) {
-              new_trace['text'] = tx
-              new_trace['textposition'] = "middle" + " " + "center"
+              new_trace['mode'] = new_trace.mode + "+text"; new_trace['text'] = tx; new_trace['textposition'] = "middle" + " " + "center"
             }
 
             plotly_data.push(new_trace)
