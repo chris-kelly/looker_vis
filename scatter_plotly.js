@@ -184,10 +184,10 @@ looker.plugins.visualizations.add({
         pivs.sort()
         for (var piv of queryResponse.pivots.map(p => p.key).filter(p => p != "ROW TOTAL")) {
           options["p_" + piv + "_div"] = {label: "<----  " + colname_format([piv]) + " ---->", order: j+i*6+2, type: "string", display: "divider", section: "Series"}
-          options["p_" + piv + "_mod"] = {label: "Scatter mode:", order: j+i*5+3, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series", display_size:"third"}
+          options["p_" + piv + "_mod"] = {label: "Mode:", order: j+i*5+3, type: "string", display: "select", values: [{'-':''},{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series", display_size:"third"}
           options["p_" + piv + "_col"] = {label: "Colour: ", order: j+i*6+4, type: "string", display: "color", section: "Series", display_size:"third"}
           options["p_" + piv + "_sym"] = {label: "Symbol: ", order: j+i*6+5, type: "string", display: "select", default: 'circle', values: [
-            {'circle':'circle'},{'square':'square'},{'diamond':'diamond'},{'cross':'cross'},{'x':'x'},{'triangle': 'triangle'},{'pentagon':'pentagon'},{'hexagram':'hexagram'},{'star':'star'},{'hexagram':'hexagram'},{'hourglass':'hourglass'},{'bowtie':'bowtie'},{'asterisk':'asterisk'},{'hash':'hash'},{'y':'y'},{'line':'line'}
+            {'-':''},{'circle':'circle'},{'square':'square'},{'diamond':'diamond'},{'cross':'cross'},{'x':'x'},{'triangle': 'triangle'},{'pentagon':'pentagon'},{'hexagram':'hexagram'},{'star':'star'},{'hexagram':'hexagram'},{'hourglass':'hourglass'},{'bowtie':'bowtie'},{'asterisk':'asterisk'},{'hash':'hash'},{'y':'y'},{'line':'line'}
           ], section: "Series", display_size:"third"}
           i++;
         }
@@ -265,10 +265,12 @@ looker.plugins.visualizations.add({
             if(x.keys.length == 2 || y.keys.length == 2) {
               var pivp = x.keys.length == 2 ? x.keys[1] : y.keys[1]
               console.log(pivp)
-              if (typeof config["p_" + pivp + "_mod"] !== "undefined" && config["p_" + pivp + "_mod"] != "") {new_trace['mode'] = config["p_" + pivp + "_mod"]}
-              if (typeof config["p_" + pivp + "_sym"] !== "undefined" && config["p_" + pivp + "_sym"] != "") {new_trace['marker_symbol'] = config["p_" + pivp + "_sym"]}
-              if (typeof config["p_" + pivp + "_col"] !== "undefined" && config["p_" + pivp + "_col"] != "") {new_trace['marker_color'] = config["p_" + pivp + "_col"]}
-              if (typeof config["p_" + pivp + "_col"] !== "undefined" && config["p_" + pivp + "_col"] != "") {new_trace['marker_line_color'] = config["p_" + pivp + "_col"]}
+              // if (typeof config["p_" + pivp + "_mod"] !== "undefined" && config["p_" + pivp + "_mod"] != "") {new_trace['mode'] = config["p_" + pivp + "_mod"]}
+              let markers = {}
+              if (typeof config["p_" + pivp + "_sym"] !== "undefined" && config["p_" + pivp + "_sym"] != "") {markers['symbol'] = config["p_" + pivp + "_col"] }
+              if (typeof config["p_" + pivp + "_col"] !== "undefined" && config["p_" + pivp + "_col"] != "") {markers['color'] = config["p_" + pivp + "_col"] }
+              if (Object.keys(markers).length > 0) {new_trace['markers'] = markers}
+              // if (typeof config["p_" + pivp + "_col"] !== "undefined" && config["p_" + pivp + "_col"] != "") {markers['line'].color = config["p_" + pivp + "_col"]}
             }
 
             // Add error bars (x axis)
