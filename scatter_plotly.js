@@ -88,12 +88,10 @@ looker.plugins.visualizations.add({
 
       for (let i = 0; i < config.num_traces; i++) {
         let iN = i.toString(), iN2 = (i+1).toString();
-        options["div_" + iN] = {label: "<---------- Trace " + iN2 + " ---------->", order: 11*i+1, type: "string", display: "divider", section: "Data"}
-        options["x_" + iN] = {label: "Trace " + iN2 + ": x", order: 11*i+2, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
-        options["y_" + iN] = {label: "Trace " + iN2 + ": y", order: 11*i+3, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
-        
-        options["d_" + iN] = {label: "Options " + iN2, order: 11*i+4, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple", section: "Data"}
-        
+        options["div_" + iN] = {label: "<---------- Trace " + iN2 + " ---------->", order: 12*i+1, type: "string", display: "divider", section: "Data"}
+        options["x_" + iN] = {label: "Trace " + iN2 + ": x", order: 12*i+2, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
+        options["y_" + iN] = {label: "Trace " + iN2 + ": y", order: 12*i+3, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
+        options["d_" + iN] = {label: "Options " + iN2, order: 12*i+4, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple", section: "Data"}
         options["div2_" + iN] = {label: "<---------- Trace " + iN2 + " ---------->", order: 9*i+1, type: "string", display: "divider", section: "Series"}
         options["mod_" + iN] = {label: "Scatter mode " + iN2, order: 9*i+2, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series"}
         options["xax_" + iN] = {label: "x axis " + iN2, order: 9*i+3, type: "string", display: "select", display_size: "half", values: [{"1":"x1"},{"2":"x2"},{"3":"x3"},{"4":"x4"}], default:"x1" , section: "Series"}
@@ -103,15 +101,16 @@ looker.plugins.visualizations.add({
         options["tn_" + iN] = {label: "Name includes " + iN2, order: 9*i+6, type: "string", display: "select", values: [{'-':""},{'x':'x'},{'y':'y'},{'x+y':'x+y'}], section: "Series", default: ""}
         
         if(config["d_" + iN] == "detailed") {
-          options["xlb_" + iN] = {label: "x lower bound " + iN2, order: 11*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["xub_" + iN] = {label: "x upper bound " + iN2, order: 11*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["ylb_" + iN] = {label: "y lower bound " + iN2, order: 11*i+7, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["yub_" + iN] = {label: "y upper bound " + iN2, order: 11*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["xtx_" + iN] = {label: "x custom labels " + iN2, order: 11*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["ytx_" + iN] = {label: "y custom labels " + iN2, order: 11*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["htx_" + iN] = {label: "Custom hovertext " + iN2, order: 11*i+11, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["xlb_" + iN] = {label: "x lower bound " + iN2, order: 12*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["xub_" + iN] = {label: "x upper bound " + iN2, order: 12*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["ylb_" + iN] = {label: "y lower bound " + iN2, order: 12*i+7, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["yub_" + iN] = {label: "y upper bound " + iN2, order: 12*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["xtx_" + iN] = {label: "x custom labels " + iN2, order: 12*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["ytx_" + iN] = {label: "y custom labels " + iN2, order: 12*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["htx_" + iN] = {label: "x custom hover " + iN2, order: 12*i+11, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["hty_" + iN] = {label: "y custom hover " + iN2, order: 12*i+12, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
         } else {
-          delete options["xlb_" + iN]; delete options["xub_" + iN]; delete options["ylb_" + iN]; delete options["yub_" + iN]; delete options["xtx_" + iN]; delete options["ytx_" + iN]; delete options["htx_" + iN];
+          delete options["xlb_" + iN]; delete options["xub_" + iN]; delete options["ylb_" + iN]; delete options["yub_" + iN]; delete options["xtx_" + iN]; delete options["ytx_" + iN]; delete options["htx_" + iN]; delete options["hty_" + iN];
         }
         if( (config["xtx_" + iN] && config["xtx_" + iN] != "") || (config["ytx_" + iN] && config["ytx_" + iN] != "") ) {
           options["vvp_" + iN] = {label: "Value vertical pos " + iN2, order: 9*i+7, type: "string", display: "select", display_size: "half", values: [{"Top": "top"},{"Centre": "middle"},{"Bottom": "bottom"}], default: "middle" , section: "Series"}
@@ -242,7 +241,7 @@ looker.plugins.visualizations.add({
               yaxis: config['yax_'+ iN],
               textposition: "none",
               customdata: custom_data,
-              hovertemplate: "<b>%{fullData.name}</b><br>" + "<b>%{xaxis.title.text}: </b> <br> %{customdata[0]} <br>" + "<b>%{yaxis.title.text}: </b> <br> %{customdata[1]} <br>" + "<extra></extra>",
+              hovertemplate: "<b>%{fullData.name}</b><br>" + "<b>%{xaxis.title.text} </b> <br> %{customdata[0]} <br>" + "<b>%{yaxis.title.text} </b> <br> %{customdata[1]} <br>" + "<extra></extra>",
             }
 
             // Add error bars (x axis)
@@ -273,9 +272,27 @@ looker.plugins.visualizations.add({
                 tx = tx.concat(ytx[1].pretty)
               }
             }
-            
             if (tx.length > 0) {
               new_trace['mode'] = new_trace.mode + "+text"; new_trace['text'] = tx; new_trace['textposition'] = config["vvp_" + iN] + " " + config["vhp_" + iN]
+            }
+
+            // Add custom hovertext
+            var ht = []
+            if (config["htx_" + iN] && config["htx_" + iN] != "") {
+              var htx = l.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["htx_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["htx_" + iN] && x[1].keys[1] == l[1])
+              ht = ht.concat(htx[1].pretty)
+            }
+            if (config["hty_" + iN] && config["hty_" + iN] != "") {
+              var yht = j.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["hty_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["hty_" + iN] && x[1].keys[1] == j[1])
+              if (ht.length > 0) {
+                for (i = 0; i < ht.length; i++) {ht[i] = [ht[i], yht[1].pretty[i]].join(' <br> ') }
+              } else {
+                ht = ht.concat(yht[1].pretty)
+              }
+            }
+            if (ht.length > 0) {
+              new_trace['customdata'] = ht
+              newtrace['hovertemplate'] = "%{customdata}"
             }
 
             plotly_data.push(new_trace)
