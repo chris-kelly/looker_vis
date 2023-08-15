@@ -283,7 +283,7 @@ looker.plugins.visualizations.add({
             if (config["hty_" + iN] && config["hty_" + iN] != "") {
               var yht = j.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["hty_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["hty_" + iN] && x[1].keys[1] == j[1])
               if (ht.length > 0) {
-                for (let z = 0; z < ht.length; z++) {ht[i] = [ht[z], yht[1].pretty[z]].join(' <br> ') }
+                for (let z = 0; z < ht.length; z++) {ht[z] = [ht[z], yht[1].pretty[z]].join(' <br> ') }
               } else {
                 ht = ht.concat(yht[1].pretty)
               }
