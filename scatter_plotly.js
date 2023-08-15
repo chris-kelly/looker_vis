@@ -76,44 +76,63 @@ looker.plugins.visualizations.add({
       queryResponse.fields.dimension_like.forEach(x => {d={};d[get_pretty_cols(x)]=x.name; cols.push(d)})
       queryResponse.fields.measure_like.forEach(x => {d={}; d[get_pretty_cols(x)]=x.name; cols.push(d)})
       let colors = ['#56B9D0','#636076','#4A70FC','#9EEBDD']
+      let xax = new Set(), yax = new Set()
 
       const options = { ...this.options };
+      options['gti_'] = {type: "string", label: "Graph title", section: 'Style', default: "", order: 0}
       for (let i = 0; i < config.num_traces; i++) {
-        options["div_" + i.toString()] = {label: "<---------- Trace " + (i+1).toString() + " ---------->", order: 11*i+1, type: "string", display: "divider", section: "Data"}
-        options["x_" + i.toString()] = {label: "Trace " + (i+1).toString() + ": x", order: 11*i+2, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
-        options["y_" + i.toString()] = {label: "Trace " + (i+1).toString() + ": y", order: 11*i+3, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
+        let iN = i.toString(), iN2 = (i+1).toString();
+        options["div_" + iN] = {label: "<---------- Trace " + iN2 + " ---------->", order: 11*i+1, type: "string", display: "divider", section: "Data"}
+        options["x_" + iN] = {label: "Trace " + iN2 + ": x", order: 11*i+2, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
+        options["y_" + iN] = {label: "Trace " + iN2 + ": y", order: 11*i+3, type: "string", display: "select", display_size: "third", values: cols, section: "Data"}
         
-        options["d_" + i.toString()] = {label: "Options " + (i+1).toString(), order: 11*i+4, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple", section: "Data"}
+        options["d_" + iN] = {label: "Options " + iN2, order: 11*i+4, type: "string", display: "select", display_size: "third", values: [{'Simple':'simple'},{'Detailed':'detailed'}], default: "simple", section: "Data"}
         
-        options["div2_" + i.toString()] = {label: "<---------- Trace " + (i+1).toString() + " ---------->", order: 9*i+1, type: "string", display: "divider", section: "Series"}
-        options["mod_" + i.toString()] = {label: "Scatter mode " + (i+1).toString(), order: 9*i+2, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series"}
-        options["xax_" + i.toString()] = {label: "x axis " + (i+1).toString(), order: 9*i+3, type: "string", display: "select", display_size: "half", values: [{"1":"1"},{"2":"2"}], default:"1" , section: "Series"}
-        options["yax_" + i.toString()] = {label: "y axis " + (i+1).toString(), order: 9*i+4, type: "string", display: "select", display_size: "half", values: [{"1":"1"},{"2":"2"}], default:"1" , section: "Series"}
-        options["col_" + i.toString()] = {label: "Colour " + (i+1).toString(), order: 9*i+5, type: "string", display: "color", section: "Series"}
-        options["tn_" + i.toString()] = {label: "Name includes " + (i+1).toString(), order: 9*i+6, type: "string", display: "select", values: [{'-':""},{'x':'x'},{'y':'y'},{'x+y':'x+y'}], section: "Series", default: ""}
+        options["div2_" + iN] = {label: "<---------- Trace " + iN2 + " ---------->", order: 9*i+1, type: "string", display: "divider", section: "Series"}
+        options["mod_" + iN] = {label: "Scatter mode " + iN2, order: 9*i+2, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series"}
+        options["xax_" + iN] = {label: "x axis " + iN2, order: 9*i+3, type: "string", display: "select", display_size: "half", values: [{"1":"x1"},{"2":"x2"},{"3":"x3"},{"4":"x4"}], default:"x1" , section: "Series"}
+        options["yax_" + iN] = {label: "y axis " + iN2, order: 9*i+4, type: "string", display: "select", display_size: "half", values: [{"1":"y1"},{"2":"y2"},{"3":"y3"},{"4":"y4"}], default:"y1" , section: "Series"}
+        xax.add(config["xax_" + iN]); yax.add(config["yax_" + iN]);
+        options["col_" + iN] = {label: "Colour " + iN2, order: 9*i+5, type: "string", display: "color", section: "Series"}
+        options["tn_" + iN] = {label: "Name includes " + iN2, order: 9*i+6, type: "string", display: "select", values: [{'-':""},{'x':'x'},{'y':'y'},{'x+y':'x+y'}], section: "Series", default: ""}
         
-        if(config["d_" + i.toString()] == "detailed") {
-          options["xlb_" + i.toString()] = {label: "x lower bound " + (i+1).toString(), order: 11*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["xub_" + i.toString()] = {label: "x upper bound " + (i+1).toString(), order: 11*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["ylb_" + i.toString()] = {label: "y lower bound " + (i+1).toString(), order: 11*i+7, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["yub_" + i.toString()] = {label: "y upper bound " + (i+1).toString(), order: 11*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["ltx_" + i.toString()] = {label: "Custom labels " + (i+1).toString(), order: 11*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
-          options["htx_" + i.toString()] = {label: "Custom hovertext " + (i+1).toString(), order: 11*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+        if(config["d_" + iN] == "detailed") {
+          options["xlb_" + iN] = {label: "x lower bound " + iN2, order: 11*i+5, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["xub_" + iN] = {label: "x upper bound " + iN2, order: 11*i+6, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["ylb_" + iN] = {label: "y lower bound " + iN2, order: 11*i+7, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["yub_" + iN] = {label: "y upper bound " + iN2, order: 11*i+8, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["ltx_" + iN] = {label: "Custom labels " + iN2, order: 11*i+9, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
+          options["htx_" + iN] = {label: "Custom hovertext " + iN2, order: 11*i+10, type: "string", display: "select", display_size: "half", values: cols, default:"" , section: "Data"}
         } else {
-          delete options["xlb_" + i.toString()]; delete options["xub_" + i.toString()]; delete options["ylb_" + i.toString()]; delete options["yub_" + i.toString()]; delete options["ltx_" + i.toString()]; delete options["htx_" + i.toString()];
+          delete options["xlb_" + iN]; delete options["xub_" + iN]; delete options["ylb_" + iN]; delete options["yub_" + iN]; delete options["ltx_" + iN]; delete options["htx_" + iN];
         }
-        if(config["ltx_" + i.toString()] && config["ltx_" + i.toString()] != "") {
-          options["vvp_" + i.toString()] = {label: "Value vertical pos " + (i+1).toString(), order: 9*i+7, type: "string", display: "select", display_size: "half", values: [{"Top": "top"},{"Centre": "middle"},{"Bottom": "bottom"}], default: "middle" , section: "Series"}
-          options["vhp_" + i.toString()] = {label: "Value horizontal pos " + (i+1).toString(), order: 9*i+8, type: "string", display: "select", display_size: "half", values: [{"Left": "left"},{"Centre": "center"},{"Right": "right"}], default: "center" , section: "Series"}
+        if(config["ltx_" + iN] && config["ltx_" + iN] != "") {
+          options["vvp_" + iN] = {label: "Value vertical pos " + iN2, order: 9*i+7, type: "string", display: "select", display_size: "half", values: [{"Top": "top"},{"Centre": "middle"},{"Bottom": "bottom"}], default: "middle" , section: "Series"}
+          options["vhp_" + iN] = {label: "Value horizontal pos " + iN2, order: 9*i+8, type: "string", display: "select", display_size: "half", values: [{"Left": "left"},{"Centre": "center"},{"Right": "right"}], default: "center" , section: "Series"}
         } else {
-          delete options["vvp_" + i.toString()]; delete options["vhp_" + i.toString()];
+          delete options["vvp_" + iN]; delete options["vhp_" + iN];
         }
-        try {options["x_" + i.toString()].default = queryResponse.fields.dimension_like[0].name} catch(err) {options["x_" + i.toString()].default = Object.values(cols[0])}
-        try {options["y_" + i.toString()].default = queryResponse.fields.measure_like[i].name} catch(err) {options["y_" + i.toString()].default = Object.values(cols[0])}
-        try {options["col_" + i.toString()].default = colors[i]} catch(err) {options["col_" + i.toString()].default = colors[0]}
+        try {options["x_" + iN].default = queryResponse.fields.dimension_like[0].name} catch(err) {options["x_" + iN].default = Object.values(cols[0])}
+        try {options["y_" + iN].default = queryResponse.fields.measure_like[i].name} catch(err) {options["y_" + iN].default = Object.values(cols[0])}
+        try {options["col_" + iN].default = colors[i]} catch(err) {options["col_" + iN].default = colors[0]}
+      }
+      var i = 0;
+      for (xa of [...xax.values()]) { 
+        options["xdiv_" + xa] = {label: "<---------- x axis: " + xa + " ---------->", type: "string", section: "Style", default: "", order: i*5+1}
+        options["xaxt_" + xa] = {label: "x axis title "+ xa, type: "string", section: "Style", default: "", order: i*5+2}
+        options["xaxs_" + xa] = {label: "x axis side "+ xa, type: "string", section: "Style", values: [{"Top": "top", "Bottom": "bottom"}], default: "bottom", order: i*5+3}
+        options["xaxl_" + xa] = {label: "x axis min "+ xa, type: "number", section: "Style", order: i*5+4, display_size: "half"}
+        options["xaxu_" + xa] = {label: "x axis max "+ xa, type: "number", section: "Style", order: i*5+5, display_size: "half"}
+      }
+      for (ya of [...yax.values()]) {  
+        options["ydiv_" + xa] = {label: "<---------- y axis: " + xa + " ---------->", type: "string", section: "Style", default: "", order: i*5+1}
+        options["yaxt_" + xa] = {label: "x axis title "+ xa, type: "string", section: "Style", default: "", order: i*5+2}
+        options["yaxs_" + xa] = {label: "x axis side "+ xa, type: "string", section: "Style", values: [{"Left": "left", "Right": "right"}], default: "left", order: i*5+3}
+        options["yaxl_" + xa] = {label: "x axis min "+ xa, type: "number", section: "Style", order: i*5+4, display_size: "half"}
+        options["yaxu_" + xa] = {label: "x axis max "+ xa, type: "number", section: "Style", order: i*5+5, display_size: "half"}
       }
       for (i of [...Object.keys(options)]) {
-        if (i == "div_" + i.toString() && i >= config.num_traces) { delete options["div_" + i.toString()]; delete options["x_" + i.toString()]; delete options["y_" + i.toString()];}
+        if (i == "div_" + iN && i >= config.num_traces) { delete options["div_" + iN]; delete options["x_" + iN]; delete options["y_" + iN];}
       }
       console.log(options)
       this.trigger('registerOptions', options)
@@ -204,6 +223,8 @@ looker.plugins.visualizations.add({
               mode: config["mod_" + iN],
               name: tname,
               text: y.pretty,
+              xaxis: config['xax_'+ iN],
+              yaxis: "config['yax_'+ iN],
               // textposition: "none",
               // hovertemplate: hovertemplate,
             }
