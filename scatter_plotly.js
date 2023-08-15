@@ -228,17 +228,18 @@ looker.plugins.visualizations.add({
             if (config['tn_'+ iN].includes('y')) {tname.push(y.label)}
             tname = colname_format(tname)
 
+            custom_data = []; for (i = 0; i < x.values.length; i++) {custom_data.push([x.pretty[i],y.pretty[i]])}
+
             var new_trace = {
               x: x.values,
               y: y.values,
               type: 'scatter',
               mode: config["mod_" + iN],
               name: tname,
-              text: y.pretty,
               xaxis: config['xax_'+ iN],
               yaxis: config['yax_'+ iN],
               textposition: "none",
-              // hovertemplate: hovertemplate,
+              hovertemplate: "<b>%{fullData.name}</b><br>" + "<b>%{xaxis.title.text}: </b> <br> %{customdata[0]} <br>" + + "<b>%{yaxis.title.text}: </b> <br> %{customdata[0]} <br>" + + "<extra></extra>",
             }
 
             // Add error bars (x axis)
