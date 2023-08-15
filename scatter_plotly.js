@@ -268,7 +268,7 @@ looker.plugins.visualizations.add({
 
       layout = {}
       if (typeof config['gti'] !== "undefined" && config['gti'] != "") {layout['title'] = config['gti']} else { delete layout.title }
-      if (typeof config['gwi'] !== "undefined" && config['gwi'] == null && typeof config['ghi'] !== "undefined" && config['ghi'] == null) { layout['autosize'] = false; layout['width'] = config['gwi']; layout['height'] = config['ghi'] } else {layout['autosize'] = true; delete layout.width; delete layout.height }
+      if (typeof config['gwi'] !== "undefined" && config['gwi'] != null && typeof config['ghi'] !== "undefined" && config['ghi'] != null) { layout['autosize'] = false; layout['width'] = config['gwi']; layout['height'] = config['ghi'] } else {layout['autosize'] = true; delete layout.width; delete layout.height }
       // Add axis options
       for (xa of [...xax.values()]) { 
         let xn = parseInt(xa.substring(1)); xl  = xn == 1 ? "" : xn.toString()
