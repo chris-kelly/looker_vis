@@ -265,24 +265,26 @@ looker.plugins.visualizations.add({
 
       console.log(plotly_data)
 
+      ////////////////////////////////////////
+      // Update plotly layout
+      ////////////////////////////////////////
+
       layout = {}
 
       // Add axis options
       for (xa of [...xax.values()]) { 
         let xn = parseInt(xa.substring(1));
-        layout['xaxis' + xn] = {title: options["xaxt_" + xa], side: options["xaxs_" + xa]}
-        if (typeof options["xaxl_" + xa] === 'number' && typeof options["xaxu_" + xa] === 'number') { layout['xaxis' + xn]['range'] = [options["xaxl_" + xa], options["xaxu_" + xa]]}
+        layout['xaxis' + xn] = {title: config["xaxt_" + xa], side: config["xaxs_" + xa]}
+        if (typeof config["xaxl_" + xa] === 'number' && typeof config["xaxu_" + xa] === 'number') { layout['xaxis' + xn]['range'] = [config["xaxl_" + xa], config["xaxu_" + xa]]}
       }
 
       for (ya of [...yax.values()]) { 
         let yn = parseInt(xa.substring(1));
-        layout['yaxis' + yn] = {title: options["yaxt_" + ya], side: options["yaxs_" + ya]}
-        if (typeof options["yaxl_" + ya] === 'number' && typeof options["yaxu_" + ya] === 'number') { layout['yaxis' + yn]['range'] = [options["yaxl_" + xa], options["yaxu_" + xa]]}
+        layout['yaxis' + yn] = {title: config["yaxt_" + ya], side: config["yaxs_" + ya]}
+        if (typeof config["yaxl_" + ya] === 'number' && typeof config["yaxu_" + ya] === 'number') { layout['yaxis' + yn]['range'] = [config["yaxl_" + xa], config["yaxu_" + xa]]}
       }
 
       console.log(layout)
-
-      
 
       Plotly.newPlot( // use plotly library
         this.plotly_bit, // graphDiv
