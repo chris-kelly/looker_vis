@@ -295,7 +295,7 @@ looker.plugins.visualizations.add({
             }
 
             // Hide hovertext altogether
-            if (config['hto_+ iN'] == false) { new_trace['hovertemplate'] = "" ; new_trace['hoverinfo'] = 'hide'} else { delete new_trace.hoverinfo }
+            if (config['hto_' + iN] == false) { new_trace['hovertemplate'] = ""}
 
             plotly_data.push(new_trace)
 
