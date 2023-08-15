@@ -269,6 +269,7 @@ looker.plugins.visualizations.add({
                 tx.push(ytx[1].pretty)
               }
             }
+            console.log(tx)
             
             if (tx.length > 0) {
               new_trace['text'] = tx
