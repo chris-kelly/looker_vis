@@ -118,18 +118,18 @@ looker.plugins.visualizations.add({
       }
       var i = 0;
       for (xa of [...xax.values()]) { 
-        options["xdiv_" + xa] = {label: "<---------- x axis: " + xa + " ---------->", type: "string", section: "Style", default: "", order: i*5+1}
-        options["xaxt_" + xa] = {label: "x axis title "+ xa, type: "string", section: "Style", default: "", order: i*5+2}
-        options["xaxs_" + xa] = {label: "x axis side "+ xa, type: "string", section: "Style", values: [{"Top": "top", "Bottom": "bottom"}], default: "bottom", order: i*5+3}
-        options["xaxl_" + xa] = {label: "x axis min "+ xa, type: "number", section: "Style", order: i*5+4, display_size: "half"}
-        options["xaxu_" + xa] = {label: "x axis max "+ xa, type: "number", section: "Style", order: i*5+5, display_size: "half"}
+        options["xdiv_" + xa] = {label: "<---------- x axis style: " + xa + " ---------->", type: "string", section: "divider", default: "", order: i*11+1}
+        options["xaxt_" + xa] = {label: "x axis title "+ xa, type: "string", section: "Style", default: "", order: i*11+2}
+        options["xaxs_" + xa] = {label: "x axis side "+ xa, type: "string", section: "Style", values: [{"Top": "top", "Bottom": "bottom"}], default: "bottom", order: i*11+3}
+        options["xaxl_" + xa] = {label: "x axis min "+ xa, type: "number", section: "Style", order: i*11+4, display_size: "half"}
+        options["xaxu_" + xa] = {label: "x axis max "+ xa, type: "number", section: "Style", order: i*11+5, display_size: "half"}
       }
       for (ya of [...yax.values()]) {  
-        options["ydiv_" + xa] = {label: "<---------- y axis: " + xa + " ---------->", type: "string", section: "Style", default: "", order: i*5+1}
-        options["yaxt_" + xa] = {label: "x axis title "+ xa, type: "string", section: "Style", default: "", order: i*5+2}
-        options["yaxs_" + xa] = {label: "x axis side "+ xa, type: "string", section: "Style", values: [{"Left": "left", "Right": "right"}], default: "left", order: i*5+3}
-        options["yaxl_" + xa] = {label: "x axis min "+ xa, type: "number", section: "Style", order: i*5+4, display_size: "half"}
-        options["yaxu_" + xa] = {label: "x axis max "+ xa, type: "number", section: "Style", order: i*5+5, display_size: "half"}
+        options["ydiv_" + xa] = {label: "<---------- y axis style: " + xa + " ---------->", type: "string", section: "divider", default: "", order: i*11+6}
+        options["yaxt_" + xa] = {label: "y axis title "+ xa, type: "string", section: "Style", default: "", order: i*11+7}
+        options["yaxs_" + xa] = {label: "y axis side "+ xa, type: "string", section: "Style", values: [{"Left": "left", "Right": "right"}], default: "left", order: i*11+8}
+        options["yaxl_" + xa] = {label: "y axis min "+ xa, type: "number", section: "Style", order: i*11+9, display_size: "half"}
+        options["yaxu_" + xa] = {label: "y axis max "+ xa, type: "number", section: "Style", order: i*11+10, display_size: "half"}
       }
       for (i of [...Object.keys(options)]) {
         if (i.substring(0,4) == "div_" && parseInt(i.substring(4)) >= config.num_traces) { let iN = parseInt(i.substring(4)); delete options["div_" + iN]; delete options["x_" + iN]; delete options["y_" + iN];}
