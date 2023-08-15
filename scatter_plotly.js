@@ -132,7 +132,7 @@ looker.plugins.visualizations.add({
         options["yaxu_" + xa] = {label: "x axis max "+ xa, type: "number", section: "Style", order: i*5+5, display_size: "half"}
       }
       for (i of [...Object.keys(options)]) {
-        if (i == "div_" + iN && i >= config.num_traces) { delete options["div_" + iN]; delete options["x_" + iN]; delete options["y_" + iN];}
+        if (i.substring(0,4) == "div_" && parseInt(i.substring(4)) >= config.num_traces) { let iN = parseInt(i.substring(4)); delete options["div_" + iN]; delete options["x_" + iN]; delete options["y_" + iN];}
       }
       console.log(options)
       this.trigger('registerOptions', options)
