@@ -276,12 +276,14 @@ looker.plugins.visualizations.add({
         let xn = parseInt(xa.substring(1));
         layout['xaxis' + xn] = {title: config["xaxt_" + xa], side: config["xaxs_" + xa]}
         if (typeof config["xaxl_" + xa] !== 'undefined' && typeof config["xaxu_" + xa] !== 'undefined') { layout['xaxis' + xn]['range'] = [config["xaxl_" + xa], config["xaxu_" + xa]]}
+        if (xn > 1) {layout['xaxis' + xn]['overlaying'] = 'x'}
       }
 
       for (ya of [...yax.values()]) { 
         let yn = parseInt(ya.substring(1));
         layout['yaxis' + yn] = {title: config["yaxt_" + ya], side: config["yaxs_" + ya]}
         if (typeof config["yaxl_" + ya] !== 'undefined' && typeof config["yaxu_" + ya] !== 'undefined') { layout['yaxis' + yn]['range'] = [config["yaxl_" + ya], config["yaxu_" + ya]]}
+        if (yn > 1) {layout['yaxis' + xn]['overlaying'] = 'y'}
       }
 
       console.log(layout)
