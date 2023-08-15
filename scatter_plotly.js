@@ -258,13 +258,13 @@ looker.plugins.visualizations.add({
               hovertemplate: "<b>%{fullData.name}</b><br>" + "<b>%{xaxis.title.text} </b> <br> %{customdata[0]} <br>" + "<b>%{yaxis.title.text} </b> <br> %{customdata[1]} <br>" + "<extra></extra>",
             }
 
-            // Change if pivots
+            // Change if pivots have formatting
             if(x.keys.length > 2 || y.keys.length > 2) {
               try {var pivp = x.keys[1]} catch(err) {var pivp = y.keys[1]}
-              if (typeof config["p_" + pivp + "_mod"] !== "undefined" && config["p_" + pivp + "_mod"] != "") {new_trace['mode'] = config["p_" + piv + "_mod"]}
-              if (typeof config["p_" + pivp + "_sym"] !== "undefined" && config["p_" + pivp + "_sym"] != "") {new_trace['marker_symbol'] = config["p_" + piv + "_sym"]}
-              if (typeof config["p_" + pivp + "_col"] !== "undefined" && config["p_" + pivp + "_col"] != "") {new_trace['marker_color'] = config["p_" + piv + "_col"]}
-              if (typeof config["p_" + pivp + "_col"] !== "undefined" && config["p_" + pivp + "_col"] != "") {new_trace['marker_line_color'] = config["p_" + piv + "_col"]}
+              if (typeof config["p_" + pivp + "_mod"] !== "undefined" && config["p_" + pivp + "_mod"] != "") {new_trace['mode'] = config["p_" + pivp + "_mod"]}
+              if (typeof config["p_" + pivp + "_sym"] !== "undefined" && config["p_" + pivp + "_sym"] != "") {new_trace['marker_symbol'] = config["p_" + pivp + "_sym"]}
+              if (typeof config["p_" + pivp + "_col"] !== "undefined" && config["p_" + pivp + "_col"] != "") {new_trace['marker_color'] = config["p_" + pivp + "_col"]}
+              if (typeof config["p_" + pivp + "_col"] !== "undefined" && config["p_" + pivp + "_col"] != "") {new_trace['marker_line_color'] = config["p_" + pivp + "_col"]}
             }
 
             // Add error bars (x axis)
