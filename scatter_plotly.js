@@ -84,6 +84,7 @@ looker.plugins.visualizations.add({
       options['ghi'] = {type: "number", label: "Graph height (px)", section: 'Style', order: -3, display_size: "half"}
       options['pwi'] = {type: "string", label: "Plot width (%)", section: 'Style', order: -2, display_size: "half", placeholder: "[0.1,0.85]"}
       options['phi'] = {type: "string", label: "Plot height (%)", section: 'Style', order: -1, display_size: "half", placeholder: "[0.1,0.85]"}
+      options['leg'] = {type: "string", label: "Legend options", values: [{"Hide": "z"},{"Horizontal": "h"},{"Vertical": "v"}], display: "select", default: "z", section: '1. Plot', order: 0}
 
       for (let i = 0; i < config.num_traces; i++) {
         let iN = i.toString(), iN2 = (i+1).toString();
@@ -269,6 +270,7 @@ looker.plugins.visualizations.add({
       layout = {}
       if (typeof config['gti'] !== "undefined" && config['gti'] != "") {layout['title'] = config['gti']} else { delete layout.title }
       if (typeof config['gwi'] !== "undefined" && config['gwi'] != null && typeof config['ghi'] !== "undefined" && config['ghi'] != null) { layout['autosize'] = false; layout['width'] = config['gwi']; layout['height'] = config['ghi'] } else {layout['autosize'] = true; delete layout.width; delete layout.height }
+      if (config['leg'] != "z") { layout['showlegend'] = true; layout['legend'] = {"orientation": config['leg']} } else { layout.showlegend = false;  delete layout.legend }
       // Add axis options
       for (xa of [...xax.values()]) { 
         let xn = parseInt(xa.substring(1)); xl  = xn == 1 ? "" : xn.toString()
