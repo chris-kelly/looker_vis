@@ -79,9 +79,11 @@ looker.plugins.visualizations.add({
       let xax = new Set(), yax = new Set()
 
       const options = { ...this.options };
-      options['gti'] = {type: "string", label: "Graph: title", section: 'Style', order: -3,}
-      options['gwi'] = {type: "number", label: "Graph width (px)", section: 'Style', order: -2, display_size: "half"}
-      options['ghi'] = {type: "number", label: "Graph height (px)", section: 'Style', order: -1, display_size: "half"}
+      options['gti'] = {type: "string", label: "Graph: title", section: 'Style', order: -5,}
+      options['gwi'] = {type: "number", label: "Graph width (px)", section: 'Style', order: -4, display_size: "half"}
+      options['ghi'] = {type: "number", label: "Graph height (px)", section: 'Style', order: -3, display_size: "half"}
+      options['pwi'] = {type: "string", label: "Plot width (%)", section: 'Style', order: -2, display_size: "half", default: "[0,1]"}
+      options['phi'] = {type: "string", label: "Plot height (%)", section: 'Style', order: -1, display_size: "half", default: "[0,1]"}
 
       for (let i = 0; i < config.num_traces; i++) {
         let iN = i.toString(), iN2 = (i+1).toString();
@@ -283,7 +285,7 @@ looker.plugins.visualizations.add({
         layout['xaxis' + xn] = {title: config["xaxt_" + xa], side: config["xaxs_" + xa]}
         if (typeof config["xaxl_" + xa] !== 'undefined' && typeof config["xaxu_" + xa] !== 'undefined') { layout['xaxis' + xn]['range'] = [config["xaxl_" + xa], config["xaxu_" + xa]]}
         if (typeof config["xaxp_" + xa] !== 'undefined') { layout['xaxis' + xn]['position'] = config["xaxp_" + xa] }
-        if (xn > 1) {layout['xaxis' + xn]['overlaying'] = 'x'}
+        if (xn > 1) {layout['xaxis' + xn]['overlaying'] = 'x'} else {if (typeof config['pwi'] !== "undefined") { layout['xaxis' + xn]['domain'] = JSON.parse(typeof config['pwi']) } }
       }
 
       for (ya of [...yax.values()]) { 
@@ -291,7 +293,7 @@ looker.plugins.visualizations.add({
         layout['yaxis' + yn] = {title: config["yaxt_" + ya], side: config["yaxs_" + ya]}
         if (typeof config["yaxl_" + ya] !== 'undefined' && typeof config["yaxu_" + ya] !== 'undefined') { layout['yaxis' + yn]['range'] = [config["yaxl_" + ya], config["yaxu_" + ya]]}
         if (typeof config["yaxp_" + ya] !== 'undefined') { layout['yaxis' + ya]['position'] = config["yaxp_" + ya] }
-        if (yn > 1) {layout['yaxis' + yn]['overlaying'] = 'y'}
+        if (yn > 1) {layout['yaxis' + yn]['overlaying'] = 'y'} else {if (typeof config['phi'] !== "undefined") { layout['yaxis' + yn]['domain'] = JSON.parse(typeof config['phi']) } }
       }
 
       console.log(layout)
