@@ -224,7 +224,7 @@ looker.plugins.visualizations.add({
               name: tname,
               text: y.pretty,
               xaxis: config['xax_'+ iN],
-              yaxis: "config['yax_'+ iN],
+              yaxis: config['yax_'+ iN],
               // textposition: "none",
               // hovertemplate: hovertemplate,
             }
