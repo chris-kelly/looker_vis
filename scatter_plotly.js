@@ -317,6 +317,7 @@ looker.plugins.visualizations.add({
       if (config['leg'] != "z") { layout['showlegend'] = true; layout['legend'] = {"orientation": config['leg']} } else { layout.showlegend = false;  delete layout.legend }
       // Add axis options
       for (xa of [...xax.values()]) { 
+        console.log(xa)
         let xn = parseInt(xa.substring(1)); xl  = xn == 1 ? "" : xn.toString()
         layout['xaxis' + xl] = {title: config["xaxt_" + xa], side: config["xaxs_" + xa]}
         if (typeof config["xaxl_" + xa] !== 'undefined' && typeof config["xaxu_" + xa] !== 'undefined') { layout['xaxis' + xl]['range'] = [config["xaxl_" + xa], config["xaxu_" + xa]]}
