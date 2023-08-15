@@ -292,7 +292,7 @@ looker.plugins.visualizations.add({
             }
             if (ht.length > 0) {
               new_trace['customdata'] = ht
-              newtrace['hovertemplate'] = "%{customdata}"
+              new_trace['hovertemplate'] = "%{customdata}"
             }
 
             plotly_data.push(new_trace)
@@ -323,7 +323,7 @@ looker.plugins.visualizations.add({
         if (xn > 1) {layout['xaxis' + xl]['overlaying'] = 'x'} else {if (typeof config['pwi'] !== "undefined" && config['pwi'] !== "") { try {layout['xaxis' + xl]['domain'] = JSON.parse(config['pwi']) } catch(err) {} } }
       }
 
-      for (y2 of [...yax.values()]) { 
+      for (ya2 of [...yax.values()]) { 
         ya = ya2[0];
         let yn = parseInt(ya.substring(1)); yl  = yn == 1 ? "" : yn.toString()
         layout['yaxis' + yl] = {title: config["yaxt_" + ya], side: config["yaxs_" + ya]}
