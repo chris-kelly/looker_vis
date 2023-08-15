@@ -179,7 +179,7 @@ looker.plugins.visualizations.add({
       if (queryResponse.fields.pivots.length > 0) {
         var i = 0, j = config.num_traces*10
         options["intro_piv"] = {label: "NB - changes to pivot style overwrites traces", order: j+i*5+1, type: "string", display: "divider", section: "Style"}
-        for (var piv of queryResponse.pivots.map(p => colname_format(p.key)).filter(p => p != "ROW TOTAL")) {
+        for (var piv of queryResponse.pivots.map(p => colname_format([p.key])).filter(p => p != "ROW TOTAL")) {
           options["p_div_" + piv] = {label: "<----------  " + piv + " ---------->", order: j+i*5+2, type: "string", display: "divider", section: "Style"}
           options["p_mod_" + piv] = {label: "Scatter mode:", order: j+i*5+3, type: "string", display: "select", values: [{'Markers':'markers'},{'Lines':'lines'},{'Markers & Lines':'markers+lines'}], default: "markers", section: "Series"}
           options["p_col_" + piv] = {label: "Colour: ", order: j+i*5+4, type: "string", display: "color", section: "Series"}
