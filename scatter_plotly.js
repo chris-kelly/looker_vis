@@ -79,7 +79,10 @@ looker.plugins.visualizations.add({
       let xax = new Set(), yax = new Set()
 
       const options = { ...this.options };
-      options['gti'] = {type: "string", label: "Graph title", section: 'Style', order: 0}
+      options['gti'] = {type: "string", label: "Graph: title", section: 'Style', order: -3,}
+      options['gwi'] = {type: "number", label: "Graph width (px)", section: 'Style', order: -2, display_size: "half"}
+      options['ghi'] = {type: "number", label: "Graph height (px)", section: 'Style', order: -1, display_size: "half"}
+
       for (let i = 0; i < config.num_traces; i++) {
         let iN = i.toString(), iN2 = (i+1).toString();
         options["div_" + iN] = {label: "<---------- Trace " + iN2 + " ---------->", order: 11*i+1, type: "string", display: "divider", section: "Data"}
@@ -121,7 +124,7 @@ looker.plugins.visualizations.add({
         options["xdiv_" + xa] = {label: "<---------- " + xa + " axis style ---------->", type: "string", display: "divider", section: "Style", default: "", order: i*13+1}
         options["xaxt_" + xa] = {label: xa + " axis title", type: "string", section: "Style", default: "", order: i*13+2}
         options["xaxs_" + xa] = {label: xa + " axis side ", type: "string", section: "Style", values: [{"Top": "top"}, {"Bottom": "bottom"}], default: "bottom", order: i*13+3, display: "select", display_size: "half"}
-        options["xaxp_" + xa] = {label: xa + " axis position ", type: "number", section: "Style", order: i*11+4, display_size: "half"}
+        if (i > 0) { options["xaxp_" + xa] = {label: xa + " axis position ", type: "number", section: "Style", order: i*13+4, display_size: "half"} }
         options["xaxl_" + xa] = {label: xa + " axis min", type: "number", section: "Style", order: i*13+5, display_size: "half"}
         options["xaxu_" + xa] = {label: xa + " axis max", type: "number", section: "Style", order: i*13+6, display_size: "half"}
         i++;
@@ -131,7 +134,7 @@ looker.plugins.visualizations.add({
         options["ydiv_" + ya] = {label: "<---------- " + ya + " axis style ---------->", type: "string", display: "divider", section: "Style", default: "", order: i*13+7}
         options["yaxt_" + ya] = {label: ya + " axis title", type: "string", section: "Style", default: "", order: i*13+8}
         options["yaxs_" + ya] = {label: ya + " axis side ", type: "string", section: "Style", values: [{"Left": "left"}, {"Right": "right"}], default: "left", order: i*13+9, display: "select", display_size: "half"}
-        options["yaxp_" + xa] = {label: ya + " axis position ", type: "number", section: "Style", order: i*13+10, display_size: "half"}
+        if (i > 0) { options["yaxp_" + xa] = {label: ya + " axis position ", type: "number", section: "Style", order: i*13+10, display_size: "half"} }
         options["yaxl_" + ya] = {label: ya + " axis min", type: "number", section: "Style", order: i*13+11, display_size: "half"}
         options["yaxu_" + ya] = {label: ya + " axis max", type: "number", section: "Style", order: i*13+12, display_size: "half"}
         i++;
@@ -273,7 +276,7 @@ looker.plugins.visualizations.add({
 
       layout = {}
       if (typeof config['gti'] !== "undefined") {layout['title'] = config['gti']}
-
+      if (typeof config['gwi'] !== "undefined" && typeof config['ghi'] !== "undefined") { layout['autosize'] = false; layout['width'] = config['gwi']; layout['height'] = config['ghi'] }
       // Add axis options
       for (xa of [...xax.values()]) { 
         let xn = parseInt(xa.substring(1));
