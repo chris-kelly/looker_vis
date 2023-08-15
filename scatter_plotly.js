@@ -267,7 +267,7 @@ looker.plugins.visualizations.add({
       ////////////////////////////////////////
 
       layout = {}
-      if (typeof config['gti'] !== "undefined") {layout['title'] = config['gti']}
+      if (typeof config['gti'] !== "undefined" && config['gti'] != "") {layout['title'] = config['gti']}
       if (typeof config['gwi'] !== "undefined" && typeof config['ghi'] !== "undefined") { layout['autosize'] = false; layout['width'] = config['gwi']; layout['height'] = config['ghi'] }
       else {layout['autosize'] = true; delete layout.width; delete layout.height }
       // Add axis options
