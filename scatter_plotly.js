@@ -264,12 +264,11 @@ looker.plugins.visualizations.add({
             if (config["ytx_" + iN] && config["ytx_" + iN] != "") { 
               var ytx = j.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["ytx_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["ytx_" + iN] && x[1].keys[1] == j[1])
               if (tx.length > 0) {
-                for (i = 0; i < tx.length; i++) {tx[i] == [tx[i], ytx[1].pretty[i]].join(' ~ ') }
+                for (i = 0; i < tx.length; i++) {tx[i] == [tx[i], ytx[1].pretty[i]].join(' ~ '); console.log(ytx[1].pretty[i]) }
               } else {
                 tx = tx.concat(ytx[1].pretty)
               }
             }
-            console.log(tx)
             
             if (tx.length > 0) {
               new_trace['mode'] = new_trace.mode + "+text"; new_trace['text'] = tx; new_trace['textposition'] = "middle" + " " + "center"
