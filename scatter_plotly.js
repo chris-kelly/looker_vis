@@ -239,6 +239,7 @@ looker.plugins.visualizations.add({
               xaxis: config['xax_'+ iN],
               yaxis: config['yax_'+ iN],
               textposition: "none",
+              custom_data: custom_data,
               hovertemplate: "<b>%{fullData.name}</b><br>" + "<b>%{xaxis.title.text}: </b> <br> %{customdata[0]} <br>" + "<b>%{yaxis.title.text}: </b> <br> %{customdata[1]} <br>" + "<extra></extra>",
             }
 
