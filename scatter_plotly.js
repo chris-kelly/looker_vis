@@ -227,7 +227,7 @@ looker.plugins.visualizations.add({
             if (config['tn_'+ iN].includes('y')) {tname.push(y.label)}
             tname = colname_format(tname)
 
-            custom_data = []; for (i = 0; i < x.values.length; i++) {custom_data.push([x.pretty[i],y.pretty[i]])}
+            custom_data = []; for (let z = 0; z < x.values.length; z++) {custom_data.push([x.pretty[z],y.pretty[z]])}
 
             var new_trace = {
               x: x.values,
@@ -265,7 +265,7 @@ looker.plugins.visualizations.add({
             if (config["ytx_" + iN] && config["ytx_" + iN] != "") { 
               var ytx = j.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["ytx_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["ytx_" + iN] && x[1].keys[1] == j[1])
               if (tx.length > 0) {
-                for (i = 0; i < tx.length; i++) {tx[i] = [tx[i], ytx[1].pretty[i]].join(' ~ ') }
+                for (let z = 0; z < tx.length; z++) {tx[z] = [tx[z], ytx[1].pretty[z]].join(' ~ ') }
               } else {
                 tx = tx.concat(ytx[1].pretty)
               }
@@ -283,7 +283,7 @@ looker.plugins.visualizations.add({
             if (config["hty_" + iN] && config["hty_" + iN] != "") {
               var yht = j.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["hty_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["hty_" + iN] && x[1].keys[1] == j[1])
               if (ht.length > 0) {
-                for (i = 0; i < ht.length; i++) {ht[i] = [ht[i], yht[1].pretty[i]].join(' <br> ') }
+                for (let z = 0; z < ht.length; z++) {ht[i] = [ht[z], yht[1].pretty[z]].join(' <br> ') }
               } else {
                 ht = ht.concat(yht[1].pretty)
               }
