@@ -259,14 +259,14 @@ looker.plugins.visualizations.add({
             var tx = []
             if (config["xtx_" + iN] && config["xtx_" + iN] != "") { 
               var xtx = l.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["xtx_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["xtx_" + iN] && x[1].keys[1] == l[1])
-              tx.push(xtx)
+              tx.push(xtx[1].pretty)
             }
             if (config["ytx_" + iN] && config["ytx_" + iN] != "") { 
               var ytx = j.length == 1 ? [...nicedata.entries()].find(x => x[1]['keys'][0] == config["ytx_" + iN]) : [...nicedata.entries()].find(x => x[1].keys[0] == config["ytx_" + iN] && x[1].keys[1] == j[1])
               if (tx.length > 0) {
                 for (i = 0; i < tx.length; i++) {tx[i] == [tx[i], ytx[i]].join(' ~ ') }
               } else {
-                tx.push(ytx)
+                tx.push(ytx[1].pretty)
               }
             }
             
